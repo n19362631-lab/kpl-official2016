@@ -80,6 +80,11 @@
       margin-top: 10px;
     }
 
+    .submit-btn:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
     .back-link {
       display: inline-block;
       margin-bottom: 20px;
@@ -96,6 +101,24 @@
     .hidden {
       display: none;
     }
+
+    .success-message {
+      text-align: center;
+      padding: 35px 15px;
+    }
+
+    .success-message h2 {
+      margin-bottom: 10px;
+    }
+
+    .error-message {
+      background: #ffecec;
+      color: #b00020;
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 15px;
+      display: none;
+    }
   </style>
 </head>
 
@@ -104,7 +127,10 @@
   <header class="nav">
     <a class="brand" href="index.html">
       <span class="brand-mark">K</span>
-      <span><b>KPL</b><small>OFFICIAL</small></span>
+      <span>
+        <b>KPL</b>
+        <small>OFFICIAL</small>
+      </span>
     </a>
 
     <a class="login-btn" href="index.html">
@@ -129,6 +155,7 @@
       <div id="loginRequired" class="login-required hidden">
         <h2>Login Required</h2>
         <p>Please login with Google before registering.</p>
+
         <a class="btn primary" href="index.html">
           Login / Register
         </a>
@@ -144,16 +171,23 @@
         <form id="registrationForm">
 
           <div class="form-group">
-            <label for="tournament">Select Tournament</label>
+            <label for="tournament">
+              Select Tournament
+            </label>
 
             <select id="tournament" required>
-              <option value="">Select tournament</option>
+              <option value="">
+                Select tournament
+              </option>
+
               <option value="Open Age Football Championship">
                 Open Age Football Championship
               </option>
+
               <option value="U-17 Football Championship">
                 U-17 Football Championship
               </option>
+
               <option value="Cricket Tournament">
                 Cricket Tournament
               </option>
@@ -161,7 +195,10 @@
           </div>
 
           <div class="form-group">
-            <label for="teamName">Team Name</label>
+            <label for="teamName">
+              Team Name
+            </label>
+
             <input
               type="text"
               id="teamName"
@@ -171,7 +208,10 @@
           </div>
 
           <div class="form-group">
-            <label for="captainName">Captain Name</label>
+            <label for="captainName">
+              Captain Name
+            </label>
+
             <input
               type="text"
               id="captainName"
@@ -181,22 +221,57 @@
           </div>
 
           <div class="form-group">
-            <label for="phone">Contact Number</label>
+            <label for="phone">
+              Contact Number
+            </label>
+
             <input
               type="tel"
               id="phone"
-              placeholder="Enter contact number"
+              placeholder="Enter 10 digit contact number"
               maxlength="10"
+              pattern="[0-9]{10}"
               required
             >
           </div>
 
-          <button type="submit" class="submit-btn">
+          <button
+            type="submit"
+            class="submit-btn"
+            id="submitBtn"
+          >
             Submit Registration
           </button>
 
+          <div
+            id="errorMessage"
+            class="error-message"
+          ></div>
+
         </form>
 
+      </div>
+
+      <div
+        id="successMessage"
+        class="success-message hidden"
+      >
+        <h2>Registration Submitted ✅</h2>
+
+        <p>
+          Your tournament registration has been successfully submitted.
+        </p>
+
+        <p>
+          KPL Official will review your registration.
+        </p>
+
+        <a
+          href="index.html"
+          class="btn primary"
+        >
+          Back to Home
+        </a>
       </div>
 
     </div>
@@ -210,11 +285,45 @@
       onAuthStateChanged
     } from "./firebase.js";
 
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+    import {
+      initializeApp
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCIYvlfmQgu2uRV2Rlx4VqZo5R_XsxnhZo",
+      authDomain: "kpl-official-2026-fb827.firebaseapp.com",
+      projectId: "kpl-official-2026-fb827",
+      storageBucket: "kpl-official-2026-fb827.firebasestorage.app",
+      messagingSenderId: "332413798187",
+      appId: "1:332413798187:web:5ad8da8b888dcf0fbd276e",
+      measurementId: "G-2ZL7YEVQZ4"
+    };
+
+
+    const firestoreApp = initializeApp(
+      firebaseConfig,
+      "registrationApp"
+    );
+
+    const db = getFirestore(firestoreApp);
+
+
     const loginRequired =
       document.getElementById("loginRequired");
 
     const formContainer =
       document.getElementById("registrationFormContainer");
+
+    const successMessage =
+      document.getElementById("successMessage");
 
     const userEmail =
       document.getElementById("userEmail");
@@ -222,12 +331,27 @@
     const form =
       document.getElementById("registrationForm");
 
+    const submitBtn =
+      document.getElementById("submitBtn");
+
+    const errorMessage =
+      document.getElementById("errorMessage");
+
+
+    let currentUser = null;
+
+
     onAuthStateChanged(auth, user => {
+
+      currentUser = user;
 
       if (user) {
 
         loginRequired.classList.add("hidden");
+
         formContainer.classList.remove("hidden");
+
+        successMessage.classList.add("hidden");
 
         userEmail.textContent =
           user.email || "";
@@ -235,19 +359,134 @@
       } else {
 
         loginRequired.classList.remove("hidden");
+
         formContainer.classList.add("hidden");
+
+        successMessage.classList.add("hidden");
 
       }
 
     });
 
-    form?.addEventListener("submit", event => {
+
+    form?.addEventListener("submit", async event => {
 
       event.preventDefault();
 
-      alert(
-        "Registration form is ready. Firebase database connection will be added next."
-      );
+
+      errorMessage.style.display = "none";
+      errorMessage.textContent = "";
+
+
+      if (!currentUser) {
+
+        alert(
+          "Please login with Google before registering."
+        );
+
+        return;
+      }
+
+
+      const tournament =
+        document.getElementById("tournament").value.trim();
+
+      const teamName =
+        document.getElementById("teamName").value.trim();
+
+      const captainName =
+        document.getElementById("captainName").value.trim();
+
+      const phone =
+        document.getElementById("phone").value.trim();
+
+
+      if (!tournament ||
+          !teamName ||
+          !captainName ||
+          !phone) {
+
+        errorMessage.textContent =
+          "Please fill all required fields.";
+
+        errorMessage.style.display = "block";
+
+        return;
+      }
+
+
+      if (!/^[0-9]{10}$/.test(phone)) {
+
+        errorMessage.textContent =
+          "Please enter a valid 10 digit contact number.";
+
+        errorMessage.style.display = "block";
+
+        return;
+      }
+
+
+      submitBtn.disabled = true;
+
+      submitBtn.textContent =
+        "Submitting...";
+
+
+      try {
+
+        await addDoc(
+          collection(db, "registrations"),
+          {
+
+            tournament: tournament,
+
+            teamName: teamName,
+
+            captainName: captainName,
+
+            phone: phone,
+
+            userId: currentUser.uid,
+
+            email: currentUser.email || "",
+
+            playerName:
+              currentUser.displayName || "",
+
+            status: "pending",
+
+            createdAt: serverTimestamp()
+
+          }
+        );
+
+
+        form.reset();
+
+        formContainer.classList.add("hidden");
+
+        successMessage.classList.remove("hidden");
+
+
+      } catch (error) {
+
+        console.error(
+          "Registration error:",
+          error
+        );
+
+        errorMessage.textContent =
+          "Registration save nahi ho paya. Please try again.";
+
+        errorMessage.style.display = "block";
+
+      }
+
+
+      submitBtn.disabled = false;
+
+      submitBtn.textContent =
+        "Submit Registration";
 
     });
 
