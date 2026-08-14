@@ -1,1003 +1,1043 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KPL Official | Tournament Registration</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KPL Official | Registration</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+*{
+  box-sizing:border-box;
+}
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at top left, rgba(120,80,255,.16), transparent 35%),
-        radial-gradient(circle at bottom right, rgba(0,180,255,.12), transparent 35%),
-        #08080c;
-      color: #fff;
-      font-family: Arial, sans-serif;
-    }
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f5f6fa;
+  color:#111;
+}
 
-    .page {
-      max-width: 1050px;
-      margin: auto;
-      padding: 30px 18px 70px;
-    }
+.nav{
+  height:70px;
+  background:#111;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 25px;
+}
 
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 35px;
-    }
+.brand{
+  color:#fff;
+  text-decoration:none;
+  font-weight:900;
+  font-size:21px;
+}
 
-    .brand {
-      color: white;
-      text-decoration: none;
-      font-size: 24px;
-      font-weight: 900;
-      letter-spacing: -1px;
-    }
+.brand-mark{
+  display:inline-flex;
+  width:38px;
+  height:38px;
+  align-items:center;
+  justify-content:center;
+  background:#ff3b30;
+  border-radius:10px;
+  margin-right:8px;
+}
 
-    .back {
-      color: #aaa;
-      text-decoration: none;
-      font-size: 14px;
-    }
+.brand small{
+  display:block;
+  font-size:9px;
+  letter-spacing:2px;
+  margin-left:47px;
+  margin-top:-8px;
+}
 
-    .hero {
-      margin-bottom: 30px;
-    }
+.home{
+  color:#fff;
+  text-decoration:none;
+  font-weight:700;
+}
 
-    .badge {
-      display: inline-block;
-      padding: 7px 12px;
-      border: 1px solid rgba(255,255,255,.15);
-      border-radius: 50px;
-      color: #aaa;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
+.container{
+  width:100%;
+  max-width:900px;
+  margin:45px auto;
+  padding:0 18px;
+}
 
-    .hero h1 {
-      font-size: clamp(34px, 7vw, 65px);
-      line-height: .95;
-      margin: 15px 0;
-      letter-spacing: -3px;
-    }
+.box{
+  background:#fff;
+  border-radius:24px;
+  padding:30px;
+  box-shadow:0 15px 50px rgba(0,0,0,.08);
+}
 
-    .hero p {
-      color: #999;
-      max-width: 650px;
-      line-height: 1.6;
-    }
+.eyebrow{
+  color:#ff3b30;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:2px;
+}
 
-    .card {
-      background: rgba(20,20,27,.88);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 24px;
-      padding: 25px;
-      margin-bottom: 20px;
-      box-shadow: 0 20px 70px rgba(0,0,0,.25);
-    }
+h1{
+  margin:8px 0;
+  font-size:32px;
+}
 
-    .section-title {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 22px;
-    }
+.subtitle{
+  color:#777;
+  margin-bottom:30px;
+}
 
-    .number {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: #fff;
-      color: #000;
-      font-weight: 900;
-    }
+.login-box{
+  text-align:center;
+  padding:45px 20px;
+}
 
-    .section-title h2 {
-      margin: 0;
-      font-size: 20px;
-    }
+.user{
+  background:#f3f4f6;
+  padding:14px;
+  border-radius:12px;
+  margin-bottom:25px;
+  font-size:14px;
+}
 
-    .sports {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-    }
+.section{
+  margin-top:30px;
+  padding-top:25px;
+  border-top:1px solid #eee;
+}
 
-    .sport {
-      border: 1px solid #292932;
-      background: #111118;
-      color: white;
-      border-radius: 18px;
-      padding: 22px;
-      cursor: pointer;
-      text-align: left;
-      transition: .2s;
-    }
+.section h2{
+  margin-top:0;
+}
 
-    .sport:hover {
-      border-color: #777;
-      transform: translateY(-2px);
-    }
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
 
-    .sport.active {
-      border-color: white;
-      background: #1c1c25;
-    }
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
 
-    .sport-icon {
-      font-size: 35px;
-      margin-bottom: 12px;
-    }
+.full{
+  grid-column:1/-1;
+}
 
-    .sport strong {
-      display: block;
-      font-size: 18px;
-    }
+label{
+  font-weight:800;
+  font-size:14px;
+}
 
-    .sport small {
-      display: block;
-      color: #888;
-      margin-top: 5px;
-    }
+input,
+select{
+  width:100%;
+  padding:13px 14px;
+  border:1px solid #ddd;
+  border-radius:11px;
+  font-size:15px;
+  outline:none;
+}
 
-    .tournaments {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-    }
+input:focus,
+select:focus{
+  border-color:#111;
+}
 
-    .tournament {
-      padding: 20px;
-      border-radius: 18px;
-      border: 1px solid #292932;
-      background: #111118;
-      cursor: pointer;
-    }
+.file-box{
+  border:2px dashed #ddd;
+  border-radius:14px;
+  padding:18px;
+  background:#fafafa;
+}
 
-    .tournament.active {
-      border-color: white;
-    }
+.preview{
+  display:none;
+  width:100%;
+  max-width:320px;
+  max-height:220px;
+  object-fit:contain;
+  margin-top:12px;
+  border-radius:12px;
+  border:1px solid #ddd;
+}
 
-    .tournament h3 {
-      margin: 0 0 10px;
-    }
+.warning{
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#9a3412;
+  padding:14px;
+  border-radius:12px;
+  font-size:13px;
+  line-height:1.5;
+}
 
-    .details {
-      display: grid;
-      grid-template-columns: repeat(2,1fr);
-      gap: 8px;
-      color: #999;
-      font-size: 13px;
-    }
+.submit{
+  width:100%;
+  margin-top:28px;
+  padding:16px;
+  border:0;
+  border-radius:13px;
+  background:#111;
+  color:#fff;
+  font-size:16px;
+  font-weight:900;
+  cursor:pointer;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
+.submit:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
 
-    .field {
-      margin-bottom: 3px;
-    }
+.status{
+  margin-top:18px;
+  padding:14px;
+  border-radius:12px;
+  display:none;
+  font-weight:700;
+}
 
-    .field.full {
-      grid-column: 1 / -1;
-    }
+.success{
+  background:#dcfce7;
+  color:#166534;
+}
 
-    label {
-      display: block;
-      color: #aaa;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
+.error{
+  background:#fee2e2;
+  color:#991b1b;
+}
 
-    input,
-    select {
-      width: 100%;
-      border: 1px solid #292932;
-      background: #101017;
-      color: white;
-      border-radius: 12px;
-      padding: 14px;
-      outline: none;
-      font-size: 15px;
-    }
+.hidden{
+  display:none!important;
+}
 
-    input:focus,
-    select:focus {
-      border-color: #aaa;
-    }
+.required{
+  color:#ff3b30;
+}
 
-    .player {
-      display: grid;
-      grid-template-columns: 1fr 110px 160px auto;
-      gap: 10px;
-      align-items: end;
-      margin-bottom: 12px;
-    }
+@media(max-width:700px){
+  .grid{
+    grid-template-columns:1fr;
+  }
 
-    .remove {
-      height: 46px;
-      border: 1px solid #3a2020;
-      background: #241212;
-      color: #ff8585;
-      border-radius: 10px;
-      cursor: pointer;
-    }
+  .full{
+    grid-column:auto;
+  }
 
-    .add-player {
-      border: 1px dashed #444;
-      background: transparent;
-      color: white;
-      padding: 12px 18px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 700;
-    }
+  .box{
+    padding:22px 17px;
+  }
 
-    .summary {
-      background: #0d0d13;
-      border-radius: 15px;
-      padding: 18px;
-      line-height: 1.8;
-      color: #aaa;
-    }
-
-    .summary strong {
-      color: white;
-    }
-
-    .submit {
-      width: 100%;
-      border: 0;
-      border-radius: 15px;
-      padding: 17px;
-      background: white;
-      color: black;
-      font-size: 16px;
-      font-weight: 900;
-      cursor: pointer;
-      margin-top: 15px;
-    }
-
-    .submit:disabled {
-      opacity: .5;
-    }
-
-    .message {
-      display: none;
-      padding: 18px;
-      border-radius: 14px;
-      margin-top: 15px;
-      line-height: 1.5;
-    }
-
-    .error {
-      background: #301414;
-      color: #ffb1b1;
-    }
-
-    .success {
-      background: #12301d;
-      color: #a9ffbf;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    @media(max-width:700px) {
-      .sports,
-      .tournaments,
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .player {
-        grid-template-columns: 1fr;
-      }
-
-      .remove {
-        width: 100%;
-      }
-
-      .card {
-        padding: 18px;
-        border-radius: 18px;
-      }
-
-      .hero h1 {
-        letter-spacing: -2px;
-      }
-    }
-  </style>
+  h1{
+    font-size:26px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-<div class="page">
+<header class="nav">
 
-  <div class="topbar">
-    <a class="brand" href="index.html">KPL.</a>
-    <a class="back" href="index.html">← Back to Home</a>
-  </div>
+  <a href="index.html" class="brand">
+    <span class="brand-mark">K</span>
+    <span>
+      KPL
+      <small>OFFICIAL</small>
+    </span>
+  </a>
 
-  <div class="hero">
-    <span class="badge">KPL OFFICIAL • REGISTRATION</span>
-    <h1>PLAY.<br>COMPETE.<br>WIN.</h1>
-    <p>
-      Register your team for the next KPL tournament.
-      Fill in the details carefully before submitting.
-    </p>
-  </div>
+  <a href="index.html" class="home">
+    Home
+  </a>
 
-  <div id="loginBox" class="card hidden">
+</header>
+
+
+<main class="container">
+
+<div class="box">
+
+  <span class="eyebrow">KPL OFFICIAL</span>
+
+  <h1>TOURNAMENT REGISTRATION</h1>
+
+  <p class="subtitle">
+    Register your team and submit the required player details.
+  </p>
+
+
+  <!-- LOGIN REQUIRED -->
+
+  <div id="loginRequired" class="login-box hidden">
+
     <h2>Login Required</h2>
-    <p>You need to sign in with Google before registering.</p>
-    <a href="index.html">Continue to Login →</a>
+
+    <p>
+      Please continue with Google before registering.
+    </p>
+
+    <a
+      href="index.html"
+      class="submit"
+      style="display:block;text-decoration:none;">
+      Continue with Google
+    </a>
+
   </div>
 
-  <form id="registrationForm" class="hidden">
 
-    <div class="card">
+  <!-- REGISTRATION -->
 
-      <div class="section-title">
-        <div class="number">01</div>
-        <h2>Choose Sport</h2>
-      </div>
+  <div id="registrationArea" class="hidden">
 
-      <div class="sports">
+    <div class="user">
+      <strong>Logged in account:</strong>
+      <span id="userEmail"></span>
+    </div>
 
-        <button type="button" class="sport active" data-sport="football">
-          <div class="sport-icon">⚽</div>
-          <strong>Football</strong>
-          <small>Football tournaments</small>
-        </button>
 
-        <button type="button" class="sport" data-sport="cricket">
-          <div class="sport-icon">🏏</div>
-          <strong>Cricket</strong>
-          <small>Cricket tournaments</small>
-        </button>
+    <div class="warning">
 
-      </div>
+      <strong>Important:</strong><br>
 
-      <input type="hidden" id="sport" value="football">
+      Aadhaar number and Aadhaar images are collected only
+      for tournament verification. They must not be displayed
+      publicly. Upload clear front and back images.
 
     </div>
 
 
-    <div class="card">
-
-      <div class="section-title">
-        <div class="number">02</div>
-        <h2>Select Tournament</h2>
-      </div>
-
-      <div class="tournaments">
-
-        <div class="tournament active" data-tournament="Open Age Football Championship">
-          <h3>Open Age Football Championship</h3>
-
-          <div class="details">
-            <span>📍 Sakuntala Kalitala Ground</span>
-            <span>📅 28 August</span>
-            <span>💰 ₹3000 Entry</span>
-            <span>🎟️ 16 Slots</span>
-          </div>
-        </div>
-
-        <div class="tournament" data-tournament="U-17 Football Championship">
-          <h3>U-17 Football Championship</h3>
-
-          <div class="details">
-            <span>📍 Udyachal Sangha</span>
-            <span>📅 25 August</span>
-            <span>💰 ₹200 Entry</span>
-            <span>🎟️ 16 Slots</span>
-          </div>
-        </div>
-
-      </div>
-
-      <input
-        type="hidden"
-        id="tournament"
-        value="Open Age Football Championship"
-      >
-
-    </div>
+    <form id="registrationForm">
 
 
-    <div class="card">
+      <!-- TEAM DETAILS -->
 
-      <div class="section-title">
-        <div class="number">03</div>
+      <div class="section">
+
         <h2>Team Details</h2>
+
+        <div class="grid">
+
+          <div class="field full">
+
+            <label>
+              Select Tournament
+              <span class="required">*</span>
+            </label>
+
+            <select id="tournament" required>
+
+              <option value="">
+                Select tournament
+              </option>
+
+              <option value="Open Age Football Championship">
+                Open Age Football Championship
+              </option>
+
+              <option value="U-17 Football Championship">
+                U-17 Football Championship
+              </option>
+
+              <option value="Cricket Tournament">
+                Cricket Tournament
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Team Name
+              <span class="required">*</span>
+            </label>
+
+            <input
+              id="teamName"
+              required
+              placeholder="Enter team name">
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Captain Name
+              <span class="required">*</span>
+            </label>
+
+            <input
+              id="captainName"
+              required
+              placeholder="Enter captain name">
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Contact Number
+              <span class="required">*</span>
+            </label>
+
+            <input
+              id="phone"
+              type="tel"
+              maxlength="10"
+              inputmode="numeric"
+              pattern="[0-9]{10}"
+              required
+              placeholder="10 digit number">
+
+          </div>
+
+        </div>
+
       </div>
 
-      <div class="grid">
 
-        <div class="field">
-          <label>Team Name</label>
-          <input id="teamName" required placeholder="Enter team name">
-        </div>
+      <!-- PLAYER DETAILS -->
 
-        <div class="field">
-          <label>Captain Name</label>
-          <input id="captainName" required placeholder="Captain full name">
-        </div>
+      <div class="section">
 
-        <div class="field">
-          <label>Contact Number</label>
-          <input
-            id="phone"
-            required
-            maxlength="10"
-            pattern="[0-9]{10}"
-            placeholder="10 digit number"
-          >
-        </div>
+        <h2>Player Details</h2>
 
-        <div class="field">
-          <label>Referral Code <small>(Optional)</small></label>
-          <input id="referral" placeholder="Enter referral code">
+        <div class="grid">
+
+          <div class="field">
+
+            <label>
+              Player Name
+              <span class="required">*</span>
+            </label>
+
+            <input
+              id="playerName"
+              required
+              placeholder="Full player name">
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Age
+              <span class="required">*</span>
+            </label>
+
+            <input
+              id="playerAge"
+              type="number"
+              min="1"
+              max="100"
+              required
+              placeholder="Player age">
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Player Role
+              <span class="required">*</span>
+            </label>
+
+            <select id="playerRole" required>
+
+              <option value="">
+                Select role
+              </option>
+
+              <option value="Player">
+                Player
+              </option>
+
+              <option value="Captain">
+                Captain
+              </option>
+
+              <option value="Vice Captain">
+                Vice Captain
+              </option>
+
+              <option value="Goalkeeper">
+                Goalkeeper
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Aadhaar Number
+              <span class="required">*</span>
+            </label>
+
+            <input
+              id="aadhaarNumber"
+              type="text"
+              maxlength="12"
+              inputmode="numeric"
+              pattern="[0-9]{12}"
+              required
+              placeholder="12 digit Aadhaar number">
+
+          </div>
+
         </div>
 
       </div>
 
-    </div>
+
+      <!-- AADHAAR -->
+
+      <div class="section">
+
+        <h2>Aadhaar Verification</h2>
+
+        <p class="subtitle">
+          Both front and back images are mandatory.
+        </p>
 
 
-    <div class="card">
+        <div class="grid">
 
-      <div class="section-title">
-        <div class="number">04</div>
-        <h2>Players</h2>
+
+          <div class="field">
+
+            <label>
+              Aadhaar Front Image
+              <span class="required">*</span>
+            </label>
+
+            <div class="file-box">
+
+              <input
+                id="aadhaarFront"
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                required>
+
+              <img
+                id="frontPreview"
+                class="preview">
+
+            </div>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Aadhaar Back Image
+              <span class="required">*</span>
+            </label>
+
+            <div class="file-box">
+
+              <input
+                id="aadhaarBack"
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                required>
+
+              <img
+                id="backPreview"
+                class="preview">
+
+            </div>
+
+          </div>
+
+
+        </div>
+
       </div>
 
-      <p style="color:#888;font-size:13px;">
-        Add your team players below. Player limits will be controlled by KPL.
-      </p>
-
-      <div id="players"></div>
 
       <button
-        type="button"
-        class="add-player"
-        id="addPlayer"
-      >
-        + Add Player
-      </button>
-
-    </div>
-
-
-    <div class="card">
-
-      <div class="section-title">
-        <div class="number">05</div>
-        <h2>Payment Details</h2>
-      </div>
-
-      <div class="grid">
-
-        <div class="field">
-          <label>UTR / Transaction ID</label>
-          <input id="utr" placeholder="Enter payment UTR">
-        </div>
-
-        <div class="field">
-          <label>Payment Amount</label>
-          <input id="amount" type="number" placeholder="Enter amount">
-        </div>
-
-      </div>
-
-      <p style="color:#777;font-size:12px;margin-top:15px;">
-        Payment verification will be done by KPL administration.
-      </p>
-
-    </div>
-
-
-    <div class="card">
-
-      <div class="section-title">
-        <div class="number">06</div>
-        <h2>Review & Submit</h2>
-      </div>
-
-      <div class="summary">
-
-        <div>
-          Sport:
-          <strong id="summarySport">Football</strong>
-        </div>
-
-        <div>
-          Tournament:
-          <strong id="summaryTournament">
-            Open Age Football Championship
-          </strong>
-        </div>
-
-        <div>
-          Team:
-          <strong id="summaryTeam">—</strong>
-        </div>
-
-        <div>
-          Captain:
-          <strong id="summaryCaptain">—</strong>
-        </div>
-
-        <div>
-          Players:
-          <strong id="summaryPlayers">0</strong>
-        </div>
-
-      </div>
-
-      <button
-        type="submit"
-        class="submit"
         id="submitBtn"
-      >
-        Submit Registration →
+        class="submit"
+        type="submit">
+
+        Submit Registration
+
       </button>
 
-      <div id="errorMessage" class="message error"></div>
-      <div id="successMessage" class="message success"></div>
 
-    </div>
+      <div
+        id="status"
+        class="status">
+      </div>
 
-  </form>
+
+    </form>
+
+  </div>
 
 </div>
+
+</main>
 
 
 <script type="module">
 
-  import {
-    auth,
-    db,
-    onAuthStateChanged
-  } from "./firebase.js";
-
-  import {
-    collection,
-    addDoc,
-    serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import {
+  auth,
+  db,
+  storage,
+  onAuthStateChanged
+} from "./firebase.js";
 
 
-  const loginBox =
-    document.getElementById("loginBox");
-
-  const form =
-    document.getElementById("registrationForm");
-
-  const sportInput =
-    document.getElementById("sport");
-
-  const tournamentInput =
-    document.getElementById("tournament");
-
-  const playersContainer =
-    document.getElementById("players");
-
-  const submitBtn =
-    document.getElementById("submitBtn");
-
-  let currentUser = null;
+import {
+  collection,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-  onAuthStateChanged(auth, user => {
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
 
-    currentUser = user;
 
-    if (user) {
+const loginRequired =
+  document.getElementById("loginRequired");
 
-      loginBox.classList.add("hidden");
-      form.classList.remove("hidden");
+const registrationArea =
+  document.getElementById("registrationArea");
 
-    } else {
+const userEmail =
+  document.getElementById("userEmail");
 
-      loginBox.classList.remove("hidden");
-      form.classList.add("hidden");
+const form =
+  document.getElementById("registrationForm");
+
+const submitBtn =
+  document.getElementById("submitBtn");
+
+const statusBox =
+  document.getElementById("status");
+
+
+let currentUser = null;
+
+
+/* AUTH */
+
+onAuthStateChanged(auth, user => {
+
+  currentUser = user;
+
+  if(user){
+
+    loginRequired.classList.add("hidden");
+
+    registrationArea.classList.remove("hidden");
+
+    userEmail.textContent =
+      user.email || "";
+
+  }else{
+
+    loginRequired.classList.remove("hidden");
+
+    registrationArea.classList.add("hidden");
+
+  }
+
+});
+
+
+/* IMAGE PREVIEW */
+
+function previewImage(inputId, previewId){
+
+  const input =
+    document.getElementById(inputId);
+
+  const preview =
+    document.getElementById(previewId);
+
+
+  input.addEventListener("change", () => {
+
+    const file = input.files[0];
+
+    if(!file){
+
+      preview.style.display = "none";
+
+      return;
 
     }
 
+
+    if(!file.type.startsWith("image/")){
+
+      input.value = "";
+
+      showStatus(
+        "Please select a valid image.",
+        true
+      );
+
+      return;
+
+    }
+
+
+    if(file.size > 5 * 1024 * 1024){
+
+      input.value = "";
+
+      showStatus(
+        "Image must be smaller than 5 MB.",
+        true
+      );
+
+      return;
+
+    }
+
+
+    preview.src =
+      URL.createObjectURL(file);
+
+    preview.style.display =
+      "block";
+
   });
 
-
-  document.querySelectorAll(".sport").forEach(button => {
-
-    button.addEventListener("click", () => {
-
-      document
-        .querySelectorAll(".sport")
-        .forEach(b => b.classList.remove("active"));
-
-      button.classList.add("active");
-
-      sportInput.value =
-        button.dataset.sport;
-
-      document.getElementById("summarySport")
-        .textContent =
-        button.dataset.sport === "football"
-          ? "Football"
-          : "Cricket";
-
-    });
-
-  });
+}
 
 
-  document
-    .querySelectorAll(".tournament")
-    .forEach(card => {
+previewImage(
+  "aadhaarFront",
+  "frontPreview"
+);
 
-      card.addEventListener("click", () => {
-
-        document
-          .querySelectorAll(".tournament")
-          .forEach(c =>
-            c.classList.remove("active")
-          );
-
-        card.classList.add("active");
-
-        tournamentInput.value =
-          card.dataset.tournament;
-
-        document.getElementById(
-          "summaryTournament"
-        ).textContent =
-          card.dataset.tournament;
-
-      });
-
-    });
+previewImage(
+  "aadhaarBack",
+  "backPreview"
+);
 
 
-  function addPlayer() {
+/* STATUS */
 
-    const player =
-      document.createElement("div");
+function showStatus(message, error=false){
 
-    player.className = "player";
+  statusBox.textContent =
+    message;
 
-    player.innerHTML = `
+  statusBox.className =
+    "status " +
+    (error ? "error" : "success");
 
-      <div>
-        <label>Player Name</label>
-        <input
-          class="player-name"
-          required
-          placeholder="Player name"
-        >
-      </div>
+  statusBox.style.display =
+    "block";
 
-      <div>
-        <label>Age</label>
-        <input
-          class="player-age"
-          type="number"
-          min="1"
-          max="100"
-          required
-          placeholder="Age"
-        >
-      </div>
-
-      <div>
-        <label>Role</label>
-        <select class="player-role">
-          <option value="Player">Player</option>
-          <option value="Captain">Captain</option>
-          <option value="Goalkeeper">Goalkeeper</option>
-          <option value="Batsman">Batsman</option>
-          <option value="Bowler">Bowler</option>
-          <option value="All Rounder">All Rounder</option>
-        </select>
-      </div>
-
-      <button
-        type="button"
-        class="remove"
-      >
-        Remove
-      </button>
-
-    `;
+}
 
 
-    player
-      .querySelector(".remove")
-      .addEventListener("click", () => {
+/* SECURE IMAGE UPLOAD */
 
-        player.remove();
+async function uploadAadhaarImage(
+  file,
+  type
+){
 
-        updatePlayerCount();
-
-      });
-
-
-    playersContainer.appendChild(player);
-
-    updatePlayerCount();
-
+  if(!file){
+    throw new Error(
+      "Aadhaar " + type +
+      " image is required."
+    );
   }
 
 
-  function updatePlayerCount() {
+  if(!file.type.startsWith("image/")){
 
-    const count =
-      document.querySelectorAll(".player").length;
-
-    document.getElementById(
-      "summaryPlayers"
-    ).textContent = count;
-
-  }
-
-
-  document
-    .getElementById("addPlayer")
-    .addEventListener(
-      "click",
-      addPlayer
+    throw new Error(
+      "Aadhaar image must be an image file."
     );
 
+  }
 
-  addPlayer();
 
+  if(file.size > 5 * 1024 * 1024){
 
-  document
-    .getElementById("teamName")
-    .addEventListener("input", e => {
+    throw new Error(
+      "Aadhaar images must be below 5 MB."
+    );
 
-      document.getElementById(
-        "summaryTeam"
-      ).textContent =
-        e.target.value || "—";
+  }
 
-    });
 
+  const safeUserId =
+    currentUser.uid;
 
-  document
-    .getElementById("captainName")
-    .addEventListener("input", e => {
 
-      document.getElementById(
-        "summaryCaptain"
-      ).textContent =
-        e.target.value || "—";
+  const fileName =
+    `${Date.now()}_${type}_${file.name
+      .replace(/[^a-zA-Z0-9._-]/g,"_")}`;
 
-    });
 
+  const storagePath =
+    `private/aadhaar/${safeUserId}/${fileName}`;
 
-  form.addEventListener(
-    "submit",
-    async event => {
 
-      event.preventDefault();
+  const storageRef =
+    ref(storage, storagePath);
 
 
-      if (!currentUser) {
-
-        showError(
-          "Please login with Google first."
-        );
-
-        return;
-
-      }
-
-
-      const phone =
-        document
-          .getElementById("phone")
-          .value.trim();
-
-
-      if (!/^[0-9]{10}$/.test(phone)) {
-
-        showError(
-          "Please enter a valid 10 digit contact number."
-        );
-
-        return;
-
-      }
-
-
-      const playerElements =
-        document.querySelectorAll(".player");
-
-
-      const players =
-        Array.from(playerElements)
-          .map(player => ({
-
-            name:
-              player
-                .querySelector(".player-name")
-                .value.trim(),
-
-            age:
-              Number(
-                player
-                  .querySelector(".player-age")
-                  .value
-              ),
-
-            role:
-              player
-                .querySelector(".player-role")
-                .value
-
-          }));
-
-
-      if (players.length === 0) {
-
-        showError(
-          "Add at least one player."
-        );
-
-        return;
-
-      }
-
-
-      const data = {
-
-        sport:
-          sportInput.value,
-
-        tournament:
-          tournamentInput.value,
-
-        teamName:
-          document
-            .getElementById("teamName")
-            .value.trim(),
-
-        captainName:
-          document
-            .getElementById("captainName")
-            .value.trim(),
-
-        phone,
-
-        referralCode:
-          document
-            .getElementById("referral")
-            .value.trim(),
-
-        utr:
-          document
-            .getElementById("utr")
-            .value.trim(),
-
-        paymentAmount:
-          Number(
-            document
-              .getElementById("amount")
-              .value || 0
-          ),
-
-        players,
-
-        userId:
-          currentUser.uid,
-
-        email:
-          currentUser.email || "",
-
-        status:
-          "pending",
-
-        createdAt:
-          serverTimestamp()
-
-      };
-
-
-      submitBtn.disabled = true;
-
-      submitBtn.textContent =
-        "Submitting...";
-
-
-      try {
-
-        const docRef =
-          await addDoc(
-            collection(
-              db,
-              "registrations"
-            ),
-            data
-          );
-
-
-        document.getElementById(
-          "successMessage"
-        ).textContent =
-          "Registration successful! Your Registration ID is " +
-          docRef.id;
-
-        document.getElementById(
-          "successMessage"
-        ).style.display = "block";
-
-
-        document.getElementById(
-          "errorMessage"
-        ).style.display = "none";
-
-
-        window.scrollTo({
-          top: document.body.scrollHeight,
-          behavior: "smooth"
-        });
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        showError(
-          "Registration failed: " +
-          error.message
-        );
-
-      }
-
-
-      submitBtn.disabled = false;
-
-      submitBtn.textContent =
-        "Submit Registration →";
-
+  await uploadBytes(
+    storageRef,
+    file,
+    {
+      contentType:file.type
     }
   );
 
 
-  function showError(message) {
+  return await getDownloadURL(
+    storageRef
+  );
 
-    const error =
-      document.getElementById(
-        "errorMessage"
+}
+
+
+/* FORM SUBMIT */
+
+form.addEventListener(
+  "submit",
+  async event => {
+
+    event.preventDefault();
+
+
+    if(!currentUser){
+
+      showStatus(
+        "Please login with Google first.",
+        true
       );
 
-    error.textContent = message;
+      return;
 
-    error.style.display = "block";
+    }
 
-    document
-      .getElementById("successMessage")
-      .style.display = "none";
+
+    const aadhaar =
+      document
+        .getElementById("aadhaarNumber")
+        .value
+        .replace(/\D/g,"");
+
+
+    if(aadhaar.length !== 12){
+
+      showStatus(
+        "Enter a valid 12 digit Aadhaar number.",
+        true
+      );
+
+      return;
+
+    }
+
+
+    const frontFile =
+      document
+        .getElementById("aadhaarFront")
+        .files[0];
+
+
+    const backFile =
+      document
+        .getElementById("aadhaarBack")
+        .files[0];
+
+
+    if(!frontFile || !backFile){
+
+      showStatus(
+        "Aadhaar front and back images are mandatory.",
+        true
+      );
+
+      return;
+
+    }
+
+
+    submitBtn.disabled = true;
+
+    submitBtn.textContent =
+      "Uploading & Submitting...";
+
+
+    try{
+
+
+      /* UPLOAD FRONT */
+
+      const frontUrl =
+        await uploadAadhaarImage(
+          frontFile,
+          "front"
+        );
+
+
+      /* UPLOAD BACK */
+
+      const backUrl =
+        await uploadAadhaarImage(
+          backFile,
+          "back"
+        );
+
+
+      /* SAVE REGISTRATION */
+
+      await addDoc(
+        collection(
+          db,
+          "registrations"
+        ),
+        {
+
+          userId:
+            currentUser.uid,
+
+          email:
+            currentUser.email || "",
+
+          tournament:
+            document
+              .getElementById("tournament")
+              .value,
+
+          teamName:
+            document
+              .getElementById("teamName")
+              .value
+              .trim(),
+
+          captainName:
+            document
+              .getElementById("captainName")
+              .value
+              .trim(),
+
+          phone:
+            document
+              .getElementById("phone")
+              .value
+              .trim(),
+
+          playerName:
+            document
+              .getElementById("playerName")
+              .value
+              .trim(),
+
+          playerAge:
+            Number(
+              document
+                .getElementById("playerAge")
+                .value
+            ),
+
+          playerRole:
+            document
+              .getElementById("playerRole")
+              .value,
+
+          aadhaarNumber:
+            aadhaar,
+
+          aadhaarFrontUrl:
+            frontUrl,
+
+          aadhaarBackUrl:
+            backUrl,
+
+          createdAt:
+            serverTimestamp()
+
+        }
+
+      );
+
+
+      showStatus(
+        "✅ Registration submitted successfully!"
+      );
+
+
+      form.reset();
+
+
+      document.getElementById(
+        "frontPreview"
+      ).style.display = "none";
+
+
+      document.getElementById(
+        "backPreview"
+      ).style.display = "none";
+
+
+      submitBtn.disabled =
+        false;
+
+      submitBtn.textContent =
+        "Submit Registration";
+
+
+    }catch(error){
+
+      console.error(error);
+
+      showStatus(
+        "Registration failed: " +
+        error.message,
+        true
+      );
+
+
+      submitBtn.disabled =
+        false;
+
+      submitBtn.textContent =
+        "Submit Registration";
+
+    }
 
   }
+
+);
 
 </script>
 
