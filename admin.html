@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>KPL Official | Admin Panel</title>
-
   <link rel="stylesheet" href="style.css">
 
   <style>
@@ -24,7 +22,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 20px;
       margin-bottom: 25px;
     }
 
@@ -32,16 +29,12 @@
       margin: 8px 0;
     }
 
-    .admin-header p {
-      color: #777;
-      margin: 0;
-    }
-
-    .logout-btn {
+    .logout-btn,
+    .refresh-btn {
       border: 0;
       background: #111;
-      color: #fff;
-      padding: 12px 20px;
+      color: white;
+      padding: 11px 18px;
       border-radius: 10px;
       cursor: pointer;
       font-weight: 700;
@@ -55,7 +48,7 @@
     }
 
     .stat-card {
-      background: #fff;
+      background: white;
       padding: 22px;
       border-radius: 16px;
       box-shadow: 0 8px 30px rgba(0,0,0,.07);
@@ -64,7 +57,6 @@
     .stat-card span {
       display: block;
       color: #777;
-      font-size: 14px;
       margin-bottom: 8px;
     }
 
@@ -73,131 +65,68 @@
     }
 
     .table-box {
-      background: #fff;
+      background: white;
       border-radius: 16px;
       padding: 20px;
-      box-shadow: 0 8px 30px rgba(0,0,0,.07);
       overflow-x: auto;
-    }
-
-    .table-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 15px;
-    }
-
-    .table-top h2 {
-      margin: 0;
-    }
-
-    #refreshBtn {
-      border: 0;
-      background: #111;
-      color: white;
-      padding: 10px 16px;
-      border-radius: 9px;
-      cursor: pointer;
-      font-weight: 700;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 950px;
+      min-width: 850px;
     }
 
-    th,
-    td {
+    th, td {
       padding: 13px 10px;
       text-align: left;
       border-bottom: 1px solid #eee;
-      vertical-align: middle;
     }
 
     th {
-      font-size: 13px;
       color: #666;
-      background: #fafafa;
-    }
-
-    td {
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .status {
-      display: inline-block;
       padding: 5px 10px;
       border-radius: 20px;
+      background: #fff3cd;
       font-size: 12px;
       font-weight: 700;
-      background: #fff3cd;
-      color: #7a5b00;
-    }
-
-    .empty {
-      text-align: center;
-      padding: 45px 20px;
-      color: #777;
-    }
-
-    .error-box {
-      background: #ffe8e8;
-      color: #a00000;
-      padding: 15px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      display: none;
-    }
-
-    #loading,
-    #accessDenied {
-      max-width: 600px;
-      margin: 150px auto;
-      padding: 30px;
-      text-align: center;
-    }
-
-    #accessDenied {
-      background: white;
-      border-radius: 18px;
-      box-shadow: 0 10px 40px rgba(0,0,0,.08);
     }
 
     .hidden {
       display: none !important;
     }
 
-    .admin-email {
-      display: inline-block;
-      margin-top: 5px;
-      font-size: 13px;
-      color: #777;
+    .message {
+      max-width: 600px;
+      margin: 150px auto;
+      padding: 30px;
+      text-align: center;
+      background: white;
+      border-radius: 18px;
+    }
+
+    .error {
+      background: #ffe8e8;
+      color: #a00000;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      display: none;
     }
 
     @media (max-width: 700px) {
-
-      .admin-page {
-        margin-top: 60px;
-        padding: 15px;
-      }
-
       .admin-header {
         flex-direction: column;
         align-items: flex-start;
+        gap: 15px;
       }
 
       .stats {
         grid-template-columns: 1fr;
-      }
-
-      .logout-btn {
-        width: 100%;
-      }
-
-      .table-box {
-        padding: 12px;
       }
     }
   </style>
@@ -205,181 +134,80 @@
 
 <body>
 
-  <!-- Loading -->
-  <div id="loading">
+  <div id="loading" class="message">
     <h2>Checking admin access...</h2>
-    <p>Please wait.</p>
   </div>
 
-
-  <!-- Access denied -->
-  <div id="accessDenied" class="hidden">
-
+  <div id="accessDenied" class="message hidden">
     <h2>Administrator Access Required</h2>
-
-    <p>
-      This page is only available to the KPL administrator.
-    </p>
-
-    <a href="index.html">
-      Back to KPL Website
-    </a>
-
+    <p>This page is only available to the KPL administrator.</p>
+    <a href="index.html">Back to KPL Website</a>
   </div>
 
-
-  <!-- Admin panel -->
   <main id="adminContent" class="admin-page hidden">
 
     <div class="admin-header">
-
       <div>
-
-        <span class="eyebrow">
-          KPL OFFICIAL
-        </span>
-
-        <h1>
-          Admin Panel
-        </h1>
-
-        <p>
-          Tournament Registration Management
-        </p>
-
-        <span
-          class="admin-email"
-          id="adminEmail"
-        ></span>
-
+        <span class="eyebrow">KPL OFFICIAL</span>
+        <h1>Admin Panel</h1>
+        <p>Tournament Registration Management</p>
       </div>
 
-      <button
-        id="logoutBtn"
-        class="logout-btn"
-      >
+      <button id="logoutBtn" class="logout-btn">
         Logout
       </button>
-
     </div>
 
+    <div id="errorBox" class="error"></div>
 
-    <!-- Error -->
-    <div
-      id="errorBox"
-      class="error-box"
-    ></div>
-
-
-    <!-- Statistics -->
     <div class="stats">
 
       <div class="stat-card">
-
-        <span>
-          Total Registrations
-        </span>
-
-        <strong id="totalRegistrations">
-          0
-        </strong>
-
+        <span>Total Registrations</span>
+        <strong id="total">0</strong>
       </div>
 
-
       <div class="stat-card">
-
-        <span>
-          Pending
-        </span>
-
-        <strong id="pendingRegistrations">
-          0
-        </strong>
-
+        <span>Pending</span>
+        <strong id="pending">0</strong>
       </div>
 
-
       <div class="stat-card">
-
-        <span>
-          Approved
-        </span>
-
-        <strong id="approvedRegistrations">
-          0
-        </strong>
-
+        <span>Approved</span>
+        <strong id="approved">0</strong>
       </div>
 
     </div>
 
-
-    <!-- Registrations -->
     <div class="table-box">
 
-      <div class="table-top">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <h2>Registrations</h2>
 
-        <h2>
-          Registrations
-        </h2>
-
-        <button id="refreshBtn">
+        <button id="refreshBtn" class="refresh-btn">
           Refresh
         </button>
-
       </div>
 
-
-      <div
-        id="empty"
-        class="empty hidden"
-      >
+      <p id="empty" class="hidden">
         No registrations found.
-      </div>
-
+      </p>
 
       <table id="registrationTable">
 
         <thead>
-
           <tr>
-
-            <th>
-              Tournament
-            </th>
-
-            <th>
-              Team
-            </th>
-
-            <th>
-              Captain
-            </th>
-
-            <th>
-              Phone
-            </th>
-
-            <th>
-              Email
-            </th>
-
-            <th>
-              Status
-            </th>
-
-            <th>
-              Date
-            </th>
-
+            <th>Tournament</th>
+            <th>Team</th>
+            <th>Captain</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Date</th>
           </tr>
-
         </thead>
 
-
-        <tbody id="registrationBody">
-        </tbody>
+        <tbody id="registrationBody"></tbody>
 
       </table>
 
@@ -387,86 +215,23 @@
 
   </main>
 
-
   <script type="module">
 
     import {
       auth,
+      db,
       onAuthStateChanged,
       signOut
     } from "./firebase.js";
 
-
     import {
-      getFirestore,
       collection,
-      getDocs,
-      query,
-      orderBy
+      getDocs
     } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-    import {
-      initializeApp
-    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+    const ADMIN_EMAIL = "rgmoviein@gmail.com";
 
-
-    /*
-      Firebase configuration
-    */
-
-    const firebaseConfig = {
-
-      apiKey:
-        "AIzaSyCIYvlfmQgu2uRV2Rlx4VqZo5R_XsxnhZo",
-
-      authDomain:
-        "kpl-official-2026-fb827.firebaseapp.com",
-
-      projectId:
-        "kpl-official-2026-fb827",
-
-      storageBucket:
-        "kpl-official-2026-fb827.firebasestorage.app",
-
-      messagingSenderId:
-        "332413798187",
-
-      appId:
-        "1:332413798187:web:5ad8da8b888dcf0fbd276e",
-
-      measurementId:
-        "G-2ZL7YEVQZ4"
-
-    };
-
-
-    /*
-      Separate Firebase app for Firestore
-    */
-
-    const adminApp =
-      initializeApp(
-        firebaseConfig,
-        "kplAdminApp"
-      );
-
-
-    const db =
-      getFirestore(adminApp);
-
-
-    /*
-      YOUR ADMIN EMAIL
-    */
-
-    const ADMIN_EMAIL =
-      "rgmoviein@gmail.com";
-
-
-    /*
-      Elements
-    */
 
     const loading =
       document.getElementById("loading");
@@ -477,328 +242,145 @@
     const adminContent =
       document.getElementById("adminContent");
 
-    const registrationBody =
+    const errorBox =
+      document.getElementById("errorBox");
+
+    const body =
       document.getElementById("registrationBody");
 
-    const registrationTable =
+    const table =
       document.getElementById("registrationTable");
 
     const empty =
       document.getElementById("empty");
 
-    const errorBox =
-      document.getElementById("errorBox");
-
-    const adminEmail =
-      document.getElementById("adminEmail");
-
-    const totalRegistrations =
-      document.getElementById("totalRegistrations");
-
-    const pendingRegistrations =
-      document.getElementById("pendingRegistrations");
-
-    const approvedRegistrations =
-      document.getElementById("approvedRegistrations");
-
-
-    /*
-      Show error
-    */
-
-    function showError(message) {
-
-      errorBox.textContent = message;
-
-      errorBox.style.display = "block";
-
-    }
-
-
-    /*
-      Hide error
-    */
-
-    function hideError() {
-
-      errorBox.textContent = "";
-
-      errorBox.style.display = "none";
-
-    }
-
-
-    /*
-      Escape HTML
-    */
 
     function escapeHtml(value) {
 
       return String(value ?? "")
-
         .replaceAll("&", "&amp;")
-
         .replaceAll("<", "&lt;")
-
         .replaceAll(">", "&gt;")
-
         .replaceAll('"', "&quot;")
-
         .replaceAll("'", "&#039;");
 
     }
 
 
-    /*
-      Check Firebase login
-    */
+    function showError(message) {
 
-    onAuthStateChanged(
-      auth,
-      async user => {
+      errorBox.textContent = message;
+      errorBox.style.display = "block";
 
-        if (!user) {
+    }
 
-          loading.classList.add("hidden");
-
-          accessDenied.classList.remove("hidden");
-
-          return;
-        }
-
-
-        /*
-          Check exact admin email
-        */
-
-        if (
-          user.email !== ADMIN_EMAIL
-        ) {
-
-          loading.classList.add("hidden");
-
-          accessDenied.classList.remove("hidden");
-
-          return;
-        }
-
-
-        /*
-          Admin authenticated
-        */
-
-        loading.classList.add("hidden");
-
-        accessDenied.classList.add("hidden");
-
-        adminContent.classList.remove("hidden");
-
-        adminEmail.textContent =
-          "Signed in as " + user.email;
-
-
-        await loadRegistrations();
-
-      }
-    );
-
-
-    /*
-      Load registrations
-    */
 
     async function loadRegistrations() {
 
-      hideError();
+      errorBox.style.display = "none";
 
-      registrationBody.innerHTML = "";
+      body.innerHTML = "";
 
       try {
 
-        const registrationsQuery =
-          query(
-
-            collection(
-              db,
-              "registrations"
-            ),
-
-            orderBy(
-              "createdAt",
-              "desc"
-            )
-
-          );
-
-
         const snapshot =
           await getDocs(
-            registrationsQuery
+            collection(db, "registrations")
           );
 
 
-        let pending = 0;
+        let pendingCount = 0;
+        let approvedCount = 0;
 
-        let approved = 0;
 
+        if (snapshot.empty) {
 
-        if (
-          snapshot.empty
-        ) {
-
-          empty.classList.remove(
-            "hidden"
-          );
-
-          registrationTable.style.display =
-            "none";
+          table.style.display = "none";
+          empty.classList.remove("hidden");
 
         } else {
 
-          empty.classList.add(
-            "hidden"
-          );
-
-          registrationTable.style.display =
-            "table";
+          table.style.display = "table";
+          empty.classList.add("hidden");
 
         }
 
 
-        snapshot.forEach(
-          documentSnapshot => {
+        snapshot.forEach(doc => {
 
-            const data =
-              documentSnapshot.data();
+          const data = doc.data();
 
-
-            const status =
-              data.status ||
-              "pending";
+          const status =
+            data.status || "pending";
 
 
-            if (
-              status === "pending"
-            ) {
+          if (status === "pending") {
+            pendingCount++;
+          }
 
-              pending++;
-
-            }
-
-
-            if (
-              status === "approved"
-            ) {
-
-              approved++;
-
-            }
+          if (status === "approved") {
+            approvedCount++;
+          }
 
 
-            let date =
-              "—";
+          let date = "—";
 
+          if (
+            data.createdAt &&
+            typeof data.createdAt.toDate === "function"
+          ) {
 
-            if (
-              data.createdAt &&
-              data.createdAt.toDate
-            ) {
-
-              date =
-                data.createdAt
-                  .toDate()
-                  .toLocaleString(
-                    "en-IN"
-                  );
-
-            }
-
-
-            const row =
-              document.createElement(
-                "tr"
-              );
-
-
-            row.innerHTML = `
-
-              <td>
-                ${escapeHtml(
-                  data.tournament || "—"
-                )}
-              </td>
-
-              <td>
-                ${escapeHtml(
-                  data.teamName || "—"
-                )}
-              </td>
-
-              <td>
-                ${escapeHtml(
-                  data.captainName || "—"
-                )}
-              </td>
-
-              <td>
-                ${escapeHtml(
-                  data.phone || "—"
-                )}
-              </td>
-
-              <td>
-                ${escapeHtml(
-                  data.email || "—"
-                )}
-              </td>
-
-              <td>
-                <span class="status">
-                  ${escapeHtml(
-                    status
-                  )}
-                </span>
-              </td>
-
-              <td>
-                ${escapeHtml(
-                  date
-                )}
-              </td>
-
-            `;
-
-
-            registrationBody.appendChild(
-              row
-            );
+            date =
+              data.createdAt
+                .toDate()
+                .toLocaleString("en-IN");
 
           }
-        );
 
 
-        totalRegistrations.textContent =
+          const row =
+            document.createElement("tr");
+
+
+          row.innerHTML = `
+            <td>${escapeHtml(data.tournament || "—")}</td>
+            <td>${escapeHtml(data.teamName || "—")}</td>
+            <td>${escapeHtml(data.captainName || "—")}</td>
+            <td>${escapeHtml(data.phone || "—")}</td>
+            <td>${escapeHtml(data.email || "—")}</td>
+            <td>
+              <span class="status">
+                ${escapeHtml(status)}
+              </span>
+            </td>
+            <td>${escapeHtml(date)}</td>
+          `;
+
+
+          body.appendChild(row);
+
+        });
+
+
+        document.getElementById("total").textContent =
           snapshot.size;
 
+        document.getElementById("pending").textContent =
+          pendingCount;
 
-        pendingRegistrations.textContent =
-          pending;
-
-
-        approvedRegistrations.textContent =
-          approved;
+        document.getElementById("approved").textContent =
+          approvedCount;
 
 
       } catch (error) {
 
-        console.error(
-          "Firestore error:",
-          error
-        );
-
+        console.error(error);
 
         showError(
-          "Registrations load nahi ho pa rahe. Firebase Firestore Rules check karo."
+          "Firestore error: " +
+          error.code +
+          " — " +
+          error.message
         );
 
       }
@@ -806,43 +388,54 @@
     }
 
 
-    /*
-      Refresh
-    */
+    onAuthStateChanged(auth, async user => {
+
+      if (!user) {
+
+        loading.classList.add("hidden");
+        accessDenied.classList.remove("hidden");
+        return;
+
+      }
+
+
+      if (user.email !== ADMIN_EMAIL) {
+
+        loading.classList.add("hidden");
+        accessDenied.classList.remove("hidden");
+        return;
+
+      }
+
+
+      loading.classList.add("hidden");
+      accessDenied.classList.add("hidden");
+      adminContent.classList.remove("hidden");
+
+
+      await loadRegistrations();
+
+    });
+
 
     document
       .getElementById("refreshBtn")
-      ?.addEventListener(
+      .addEventListener(
         "click",
         loadRegistrations
       );
 
 
-    /*
-      Logout
-    */
-
     document
       .getElementById("logoutBtn")
-      ?.addEventListener(
+      .addEventListener(
         "click",
         async () => {
 
-          try {
+          await signOut(auth);
 
-            await signOut(auth);
-
-            window.location.href =
-              "index.html";
-
-          } catch (error) {
-
-            console.error(
-              "Logout error:",
-              error
-            );
-
-          }
+          window.location.href =
+            "index.html";
 
         }
       );
