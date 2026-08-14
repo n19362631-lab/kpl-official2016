@@ -3,427 +3,922 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KPL Official | Registration</title>
+  <title>KPL Official | Tournament Registration</title>
   <link rel="stylesheet" href="style.css">
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
+      margin: 0;
       min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(120,80,255,.16), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(0,180,255,.12), transparent 35%),
+        #08080c;
+      color: #fff;
+      font-family: Arial, sans-serif;
     }
 
-    .registration-page {
-      max-width: 850px;
-      margin: 120px auto 60px;
-      padding: 0 20px;
+    .page {
+      max-width: 1050px;
+      margin: auto;
+      padding: 30px 18px 70px;
     }
 
-    .registration-box {
-      background: #fff;
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 20px 60px rgba(0,0,0,.12);
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 35px;
     }
 
-    .registration-box h1 {
-      margin: 10px 0;
+    .brand {
+      color: white;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -1px;
     }
 
-    .registration-box > p {
-      color: #666;
-      margin-bottom: 30px;
-    }
-
-    .user-card {
-      background: #f4f4f4;
-      border-radius: 12px;
-      padding: 15px;
-      margin-bottom: 25px;
+    .back {
+      color: #aaa;
+      text-decoration: none;
       font-size: 14px;
     }
 
-    .form-group {
-      margin-bottom: 18px;
+    .hero {
+      margin-bottom: 30px;
     }
 
-    .form-group label {
-      display: block;
+    .badge {
+      display: inline-block;
+      padding: 7px 12px;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 50px;
+      color: #aaa;
+      font-size: 12px;
       font-weight: 700;
-      margin-bottom: 7px;
+      letter-spacing: 1px;
     }
 
-    .form-group input,
-    .form-group select {
+    .hero h1 {
+      font-size: clamp(34px, 7vw, 65px);
+      line-height: .95;
+      margin: 15px 0;
+      letter-spacing: -3px;
+    }
+
+    .hero p {
+      color: #999;
+      max-width: 650px;
+      line-height: 1.6;
+    }
+
+    .card {
+      background: rgba(20,20,27,.88);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 24px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 20px 70px rgba(0,0,0,.25);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .number {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #fff;
+      color: #000;
+      font-weight: 900;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .sports {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .sport {
+      border: 1px solid #292932;
+      background: #111118;
+      color: white;
+      border-radius: 18px;
+      padding: 22px;
+      cursor: pointer;
+      text-align: left;
+      transition: .2s;
+    }
+
+    .sport:hover {
+      border-color: #777;
+      transform: translateY(-2px);
+    }
+
+    .sport.active {
+      border-color: white;
+      background: #1c1c25;
+    }
+
+    .sport-icon {
+      font-size: 35px;
+      margin-bottom: 12px;
+    }
+
+    .sport strong {
+      display: block;
+      font-size: 18px;
+    }
+
+    .sport small {
+      display: block;
+      color: #888;
+      margin-top: 5px;
+    }
+
+    .tournaments {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .tournament {
+      padding: 20px;
+      border-radius: 18px;
+      border: 1px solid #292932;
+      background: #111118;
+      cursor: pointer;
+    }
+
+    .tournament.active {
+      border-color: white;
+    }
+
+    .tournament h3 {
+      margin: 0 0 10px;
+    }
+
+    .details {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 8px;
+      color: #999;
+      font-size: 13px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .field {
+      margin-bottom: 3px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      color: #aaa;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    input,
+    select {
       width: 100%;
-      box-sizing: border-box;
-      padding: 13px 14px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      font-size: 15px;
+      border: 1px solid #292932;
+      background: #101017;
+      color: white;
+      border-radius: 12px;
+      padding: 14px;
       outline: none;
+      font-size: 15px;
     }
 
-    .form-group input:focus,
-    .form-group select:focus {
-      border-color: #111;
+    input:focus,
+    select:focus {
+      border-color: #aaa;
     }
 
-    .submit-btn {
+    .player {
+      display: grid;
+      grid-template-columns: 1fr 110px 160px auto;
+      gap: 10px;
+      align-items: end;
+      margin-bottom: 12px;
+    }
+
+    .remove {
+      height: 46px;
+      border: 1px solid #3a2020;
+      background: #241212;
+      color: #ff8585;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .add-player {
+      border: 1px dashed #444;
+      background: transparent;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .summary {
+      background: #0d0d13;
+      border-radius: 15px;
+      padding: 18px;
+      line-height: 1.8;
+      color: #aaa;
+    }
+
+    .summary strong {
+      color: white;
+    }
+
+    .submit {
       width: 100%;
       border: 0;
-      border-radius: 12px;
-      padding: 15px;
-      background: #111;
-      color: white;
+      border-radius: 15px;
+      padding: 17px;
+      background: white;
+      color: black;
       font-size: 16px;
-      font-weight: 800;
+      font-weight: 900;
       cursor: pointer;
-      margin-top: 10px;
+      margin-top: 15px;
     }
 
-    .submit-btn:disabled {
-      opacity: .6;
-      cursor: not-allowed;
+    .submit:disabled {
+      opacity: .5;
     }
 
-    .back-link {
-      display: inline-block;
-      margin-bottom: 20px;
-      color: #111;
-      text-decoration: none;
-      font-weight: 700;
+    .message {
+      display: none;
+      padding: 18px;
+      border-radius: 14px;
+      margin-top: 15px;
+      line-height: 1.5;
     }
 
-    .login-required {
-      text-align: center;
-      padding: 50px 20px;
+    .error {
+      background: #301414;
+      color: #ffb1b1;
+    }
+
+    .success {
+      background: #12301d;
+      color: #a9ffbf;
     }
 
     .hidden {
-      display: none;
+      display: none !important;
     }
 
-    .success-message {
-      text-align: center;
-      padding: 35px 15px;
-    }
+    @media(max-width:700px) {
+      .sports,
+      .tournaments,
+      .grid {
+        grid-template-columns: 1fr;
+      }
 
-    .success-message h2 {
-      margin-bottom: 10px;
-    }
+      .player {
+        grid-template-columns: 1fr;
+      }
 
-    .error-message {
-      background: #ffecec;
-      color: #b00020;
-      padding: 12px;
-      border-radius: 10px;
-      margin-top: 15px;
-      display: none;
+      .remove {
+        width: 100%;
+      }
+
+      .card {
+        padding: 18px;
+        border-radius: 18px;
+      }
+
+      .hero h1 {
+        letter-spacing: -2px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <header class="nav">
-    <a class="brand" href="index.html">
-      <span class="brand-mark">K</span>
-      <span>
-        <b>KPL</b>
-        <small>OFFICIAL</small>
-      </span>
-    </a>
+<div class="page">
 
-    <a class="login-btn" href="index.html">
-      Home
-    </a>
-  </header>
+  <div class="topbar">
+    <a class="brand" href="index.html">KPL.</a>
+    <a class="back" href="index.html">← Back to Home</a>
+  </div>
 
-  <main class="registration-page">
+  <div class="hero">
+    <span class="badge">KPL OFFICIAL • REGISTRATION</span>
+    <h1>PLAY.<br>COMPETE.<br>WIN.</h1>
+    <p>
+      Register your team for the next KPL tournament.
+      Fill in the details carefully before submitting.
+    </p>
+  </div>
 
-    <a class="back-link" href="index.html">← Back to KPL</a>
+  <div id="loginBox" class="card hidden">
+    <h2>Login Required</h2>
+    <p>You need to sign in with Google before registering.</p>
+    <a href="index.html">Continue to Login →</a>
+  </div>
 
-    <div class="registration-box">
+  <form id="registrationForm" class="hidden">
 
-      <span class="eyebrow">KPL OFFICIAL</span>
+    <div class="card">
 
-      <h1>TOURNAMENT REGISTRATION</h1>
-
-      <p>
-        Complete your team details below to register for a KPL tournament.
-      </p>
-
-      <div id="loginRequired" class="login-required hidden">
-        <h2>Login Required</h2>
-        <p>Please login with Google before registering.</p>
-
-        <a class="btn primary" href="index.html">
-          Login / Register
-        </a>
+      <div class="section-title">
+        <div class="number">01</div>
+        <h2>Choose Sport</h2>
       </div>
 
-      <div id="registrationFormContainer" class="hidden">
+      <div class="sports">
 
-        <div class="user-card">
-          <strong>Logged in account:</strong>
-          <span id="userEmail"></span>
+        <button type="button" class="sport active" data-sport="football">
+          <div class="sport-icon">⚽</div>
+          <strong>Football</strong>
+          <small>Football tournaments</small>
+        </button>
+
+        <button type="button" class="sport" data-sport="cricket">
+          <div class="sport-icon">🏏</div>
+          <strong>Cricket</strong>
+          <small>Cricket tournaments</small>
+        </button>
+
+      </div>
+
+      <input type="hidden" id="sport" value="football">
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="section-title">
+        <div class="number">02</div>
+        <h2>Select Tournament</h2>
+      </div>
+
+      <div class="tournaments">
+
+        <div class="tournament active" data-tournament="Open Age Football Championship">
+          <h3>Open Age Football Championship</h3>
+
+          <div class="details">
+            <span>📍 Sakuntala Kalitala Ground</span>
+            <span>📅 28 August</span>
+            <span>💰 ₹3000 Entry</span>
+            <span>🎟️ 16 Slots</span>
+          </div>
         </div>
 
-        <form id="registrationForm">
+        <div class="tournament" data-tournament="U-17 Football Championship">
+          <h3>U-17 Football Championship</h3>
 
-          <div class="form-group">
-            <label for="tournament">
-              Select Tournament
-            </label>
-
-            <select id="tournament" required>
-              <option value="">
-                Select tournament
-              </option>
-
-              <option value="Open Age Football Championship">
-                Open Age Football Championship
-              </option>
-
-              <option value="U-17 Football Championship">
-                U-17 Football Championship
-              </option>
-
-              <option value="Cricket Tournament">
-                Cricket Tournament
-              </option>
-            </select>
+          <div class="details">
+            <span>📍 Udyachal Sangha</span>
+            <span>📅 25 August</span>
+            <span>💰 ₹200 Entry</span>
+            <span>🎟️ 16 Slots</span>
           </div>
-
-          <div class="form-group">
-            <label for="teamName">
-              Team Name
-            </label>
-
-            <input
-              type="text"
-              id="teamName"
-              placeholder="Enter team name"
-              required
-            >
-          </div>
-
-          <div class="form-group">
-            <label for="captainName">
-              Captain Name
-            </label>
-
-            <input
-              type="text"
-              id="captainName"
-              placeholder="Enter captain name"
-              required
-            >
-          </div>
-
-          <div class="form-group">
-            <label for="phone">
-              Contact Number
-            </label>
-
-            <input
-              type="tel"
-              id="phone"
-              placeholder="Enter 10 digit contact number"
-              maxlength="10"
-              pattern="[0-9]{10}"
-              required
-            >
-          </div>
-
-          <button
-            type="submit"
-            class="submit-btn"
-            id="submitBtn"
-          >
-            Submit Registration
-          </button>
-
-          <div
-            id="errorMessage"
-            class="error-message"
-          ></div>
-
-        </form>
+        </div>
 
       </div>
 
-      <div
-        id="successMessage"
-        class="success-message hidden"
+      <input
+        type="hidden"
+        id="tournament"
+        value="Open Age Football Championship"
       >
-        <h2>Registration Submitted ✅</h2>
 
-        <p>
-          Your tournament registration has been successfully submitted.
-        </p>
+    </div>
 
-        <p>
-          KPL Official will review your registration.
-        </p>
 
-        <a
-          href="index.html"
-          class="btn primary"
-        >
-          Back to Home
-        </a>
+    <div class="card">
+
+      <div class="section-title">
+        <div class="number">03</div>
+        <h2>Team Details</h2>
+      </div>
+
+      <div class="grid">
+
+        <div class="field">
+          <label>Team Name</label>
+          <input id="teamName" required placeholder="Enter team name">
+        </div>
+
+        <div class="field">
+          <label>Captain Name</label>
+          <input id="captainName" required placeholder="Captain full name">
+        </div>
+
+        <div class="field">
+          <label>Contact Number</label>
+          <input
+            id="phone"
+            required
+            maxlength="10"
+            pattern="[0-9]{10}"
+            placeholder="10 digit number"
+          >
+        </div>
+
+        <div class="field">
+          <label>Referral Code <small>(Optional)</small></label>
+          <input id="referral" placeholder="Enter referral code">
+        </div>
+
       </div>
 
     </div>
 
-  </main>
 
-  <script type="module">
+    <div class="card">
 
-    import {
-      auth,
-      onAuthStateChanged
-    } from "./firebase.js";
+      <div class="section-title">
+        <div class="number">04</div>
+        <h2>Players</h2>
+      </div>
 
-    import {
-      getFirestore,
-      collection,
-      addDoc,
-      serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+      <p style="color:#888;font-size:13px;">
+        Add your team players below. Player limits will be controlled by KPL.
+      </p>
 
-    import {
-      initializeApp
-    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+      <div id="players"></div>
 
+      <button
+        type="button"
+        class="add-player"
+        id="addPlayer"
+      >
+        + Add Player
+      </button>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyCIYvlfmQgu2uRV2Rlx4VqZo5R_XsxnhZo",
-      authDomain: "kpl-official-2026-fb827.firebaseapp.com",
-      projectId: "kpl-official-2026-fb827",
-      storageBucket: "kpl-official-2026-fb827.firebasestorage.app",
-      messagingSenderId: "332413798187",
-      appId: "1:332413798187:web:5ad8da8b888dcf0fbd276e",
-      measurementId: "G-2ZL7YEVQZ4"
-    };
+    </div>
 
 
-    const firestoreApp = initializeApp(
-      firebaseConfig,
-      "registrationApp"
-    );
+    <div class="card">
 
-    const db = getFirestore(firestoreApp);
+      <div class="section-title">
+        <div class="number">05</div>
+        <h2>Payment Details</h2>
+      </div>
 
+      <div class="grid">
 
-    const loginRequired =
-      document.getElementById("loginRequired");
+        <div class="field">
+          <label>UTR / Transaction ID</label>
+          <input id="utr" placeholder="Enter payment UTR">
+        </div>
 
-    const formContainer =
-      document.getElementById("registrationFormContainer");
+        <div class="field">
+          <label>Payment Amount</label>
+          <input id="amount" type="number" placeholder="Enter amount">
+        </div>
 
-    const successMessage =
-      document.getElementById("successMessage");
+      </div>
 
-    const userEmail =
-      document.getElementById("userEmail");
+      <p style="color:#777;font-size:12px;margin-top:15px;">
+        Payment verification will be done by KPL administration.
+      </p>
 
-    const form =
-      document.getElementById("registrationForm");
-
-    const submitBtn =
-      document.getElementById("submitBtn");
-
-    const errorMessage =
-      document.getElementById("errorMessage");
+    </div>
 
 
-    let currentUser = null;
+    <div class="card">
+
+      <div class="section-title">
+        <div class="number">06</div>
+        <h2>Review & Submit</h2>
+      </div>
+
+      <div class="summary">
+
+        <div>
+          Sport:
+          <strong id="summarySport">Football</strong>
+        </div>
+
+        <div>
+          Tournament:
+          <strong id="summaryTournament">
+            Open Age Football Championship
+          </strong>
+        </div>
+
+        <div>
+          Team:
+          <strong id="summaryTeam">—</strong>
+        </div>
+
+        <div>
+          Captain:
+          <strong id="summaryCaptain">—</strong>
+        </div>
+
+        <div>
+          Players:
+          <strong id="summaryPlayers">0</strong>
+        </div>
+
+      </div>
+
+      <button
+        type="submit"
+        class="submit"
+        id="submitBtn"
+      >
+        Submit Registration →
+      </button>
+
+      <div id="errorMessage" class="message error"></div>
+      <div id="successMessage" class="message success"></div>
+
+    </div>
+
+  </form>
+
+</div>
 
 
-    onAuthStateChanged(auth, user => {
+<script type="module">
 
-      currentUser = user;
+  import {
+    auth,
+    db,
+    onAuthStateChanged
+  } from "./firebase.js";
 
-      if (user) {
+  import {
+    collection,
+    addDoc,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-        loginRequired.classList.add("hidden");
 
-        formContainer.classList.remove("hidden");
+  const loginBox =
+    document.getElementById("loginBox");
 
-        successMessage.classList.add("hidden");
+  const form =
+    document.getElementById("registrationForm");
 
-        userEmail.textContent =
-          user.email || "";
+  const sportInput =
+    document.getElementById("sport");
 
-      } else {
+  const tournamentInput =
+    document.getElementById("tournament");
 
-        loginRequired.classList.remove("hidden");
+  const playersContainer =
+    document.getElementById("players");
 
-        formContainer.classList.add("hidden");
+  const submitBtn =
+    document.getElementById("submitBtn");
 
-        successMessage.classList.add("hidden");
+  let currentUser = null;
 
-      }
+
+  onAuthStateChanged(auth, user => {
+
+    currentUser = user;
+
+    if (user) {
+
+      loginBox.classList.add("hidden");
+      form.classList.remove("hidden");
+
+    } else {
+
+      loginBox.classList.remove("hidden");
+      form.classList.add("hidden");
+
+    }
+
+  });
+
+
+  document.querySelectorAll(".sport").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      document
+        .querySelectorAll(".sport")
+        .forEach(b => b.classList.remove("active"));
+
+      button.classList.add("active");
+
+      sportInput.value =
+        button.dataset.sport;
+
+      document.getElementById("summarySport")
+        .textContent =
+        button.dataset.sport === "football"
+          ? "Football"
+          : "Cricket";
+
+    });
+
+  });
+
+
+  document
+    .querySelectorAll(".tournament")
+    .forEach(card => {
+
+      card.addEventListener("click", () => {
+
+        document
+          .querySelectorAll(".tournament")
+          .forEach(c =>
+            c.classList.remove("active")
+          );
+
+        card.classList.add("active");
+
+        tournamentInput.value =
+          card.dataset.tournament;
+
+        document.getElementById(
+          "summaryTournament"
+        ).textContent =
+          card.dataset.tournament;
+
+      });
 
     });
 
 
-    form?.addEventListener("submit", async event => {
+  function addPlayer() {
+
+    const player =
+      document.createElement("div");
+
+    player.className = "player";
+
+    player.innerHTML = `
+
+      <div>
+        <label>Player Name</label>
+        <input
+          class="player-name"
+          required
+          placeholder="Player name"
+        >
+      </div>
+
+      <div>
+        <label>Age</label>
+        <input
+          class="player-age"
+          type="number"
+          min="1"
+          max="100"
+          required
+          placeholder="Age"
+        >
+      </div>
+
+      <div>
+        <label>Role</label>
+        <select class="player-role">
+          <option value="Player">Player</option>
+          <option value="Captain">Captain</option>
+          <option value="Goalkeeper">Goalkeeper</option>
+          <option value="Batsman">Batsman</option>
+          <option value="Bowler">Bowler</option>
+          <option value="All Rounder">All Rounder</option>
+        </select>
+      </div>
+
+      <button
+        type="button"
+        class="remove"
+      >
+        Remove
+      </button>
+
+    `;
+
+
+    player
+      .querySelector(".remove")
+      .addEventListener("click", () => {
+
+        player.remove();
+
+        updatePlayerCount();
+
+      });
+
+
+    playersContainer.appendChild(player);
+
+    updatePlayerCount();
+
+  }
+
+
+  function updatePlayerCount() {
+
+    const count =
+      document.querySelectorAll(".player").length;
+
+    document.getElementById(
+      "summaryPlayers"
+    ).textContent = count;
+
+  }
+
+
+  document
+    .getElementById("addPlayer")
+    .addEventListener(
+      "click",
+      addPlayer
+    );
+
+
+  addPlayer();
+
+
+  document
+    .getElementById("teamName")
+    .addEventListener("input", e => {
+
+      document.getElementById(
+        "summaryTeam"
+      ).textContent =
+        e.target.value || "—";
+
+    });
+
+
+  document
+    .getElementById("captainName")
+    .addEventListener("input", e => {
+
+      document.getElementById(
+        "summaryCaptain"
+      ).textContent =
+        e.target.value || "—";
+
+    });
+
+
+  form.addEventListener(
+    "submit",
+    async event => {
 
       event.preventDefault();
 
 
-      errorMessage.style.display = "none";
-      errorMessage.textContent = "";
-
-
       if (!currentUser) {
 
-        alert(
-          "Please login with Google before registering."
+        showError(
+          "Please login with Google first."
         );
 
         return;
+
       }
 
-
-      const tournament =
-        document.getElementById("tournament").value.trim();
-
-      const teamName =
-        document.getElementById("teamName").value.trim();
-
-      const captainName =
-        document.getElementById("captainName").value.trim();
 
       const phone =
-        document.getElementById("phone").value.trim();
-
-
-      if (!tournament ||
-          !teamName ||
-          !captainName ||
-          !phone) {
-
-        errorMessage.textContent =
-          "Please fill all required fields.";
-
-        errorMessage.style.display = "block";
-
-        return;
-      }
+        document
+          .getElementById("phone")
+          .value.trim();
 
 
       if (!/^[0-9]{10}$/.test(phone)) {
 
-        errorMessage.textContent =
-          "Please enter a valid 10 digit contact number.";
-
-        errorMessage.style.display = "block";
+        showError(
+          "Please enter a valid 10 digit contact number."
+        );
 
         return;
+
       }
+
+
+      const playerElements =
+        document.querySelectorAll(".player");
+
+
+      const players =
+        Array.from(playerElements)
+          .map(player => ({
+
+            name:
+              player
+                .querySelector(".player-name")
+                .value.trim(),
+
+            age:
+              Number(
+                player
+                  .querySelector(".player-age")
+                  .value
+              ),
+
+            role:
+              player
+                .querySelector(".player-role")
+                .value
+
+          }));
+
+
+      if (players.length === 0) {
+
+        showError(
+          "Add at least one player."
+        );
+
+        return;
+
+      }
+
+
+      const data = {
+
+        sport:
+          sportInput.value,
+
+        tournament:
+          tournamentInput.value,
+
+        teamName:
+          document
+            .getElementById("teamName")
+            .value.trim(),
+
+        captainName:
+          document
+            .getElementById("captainName")
+            .value.trim(),
+
+        phone,
+
+        referralCode:
+          document
+            .getElementById("referral")
+            .value.trim(),
+
+        utr:
+          document
+            .getElementById("utr")
+            .value.trim(),
+
+        paymentAmount:
+          Number(
+            document
+              .getElementById("amount")
+              .value || 0
+          ),
+
+        players,
+
+        userId:
+          currentUser.uid,
+
+        email:
+          currentUser.email || "",
+
+        status:
+          "pending",
+
+        createdAt:
+          serverTimestamp()
+
+      };
 
 
       submitBtn.disabled = true;
@@ -434,51 +929,46 @@
 
       try {
 
-        await addDoc(
-          collection(db, "registrations"),
-          {
-
-            tournament: tournament,
-
-            teamName: teamName,
-
-            captainName: captainName,
-
-            phone: phone,
-
-            userId: currentUser.uid,
-
-            email: currentUser.email || "",
-
-            playerName:
-              currentUser.displayName || "",
-
-            status: "pending",
-
-            createdAt: serverTimestamp()
-
-          }
-        );
+        const docRef =
+          await addDoc(
+            collection(
+              db,
+              "registrations"
+            ),
+            data
+          );
 
 
-        form.reset();
+        document.getElementById(
+          "successMessage"
+        ).textContent =
+          "Registration successful! Your Registration ID is " +
+          docRef.id;
 
-        formContainer.classList.add("hidden");
+        document.getElementById(
+          "successMessage"
+        ).style.display = "block";
 
-        successMessage.classList.remove("hidden");
+
+        document.getElementById(
+          "errorMessage"
+        ).style.display = "none";
+
+
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth"
+        });
 
 
       } catch (error) {
 
-        console.error(
-          "Registration error:",
-          error
+        console.error(error);
+
+        showError(
+          "Registration failed: " +
+          error.message
         );
-
-        errorMessage.textContent =
-          "Registration save nahi ho paya. Please try again.";
-
-        errorMessage.style.display = "block";
 
       }
 
@@ -486,11 +976,30 @@
       submitBtn.disabled = false;
 
       submitBtn.textContent =
-        "Submit Registration";
+        "Submit Registration →";
 
-    });
+    }
+  );
 
-  </script>
+
+  function showError(message) {
+
+    const error =
+      document.getElementById(
+        "errorMessage"
+      );
+
+    error.textContent = message;
+
+    error.style.display = "block";
+
+    document
+      .getElementById("successMessage")
+      .style.display = "none";
+
+  }
+
+</script>
 
 </body>
 </html>
