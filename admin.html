@@ -1,446 +1,1336 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KPL Official | Admin Panel</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>KPL Official | Admin</title>
 
-  <style>
-    body {
-      background: #f5f5f5;
-      min-height: 100vh;
-    }
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#08090d;
+  color:#fff
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
 
-    .admin-page {
-      max-width: 1200px;
-      margin: 90px auto 50px;
-      padding: 20px;
-    }
+.sidebar{
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  width:240px;
+  background:#101117;
+  border-right:1px solid #242630;
+  padding:25px 15px;
+  z-index:10
+}
+.logo{
+  font-size:28px;
+  font-weight:900;
+  padding:0 12px 30px
+}
+.nav button{
+  width:100%;
+  text-align:left;
+  border:0;
+  background:transparent;
+  color:#999;
+  padding:13px;
+  border-radius:10px;
+  margin-bottom:5px
+}
+.nav button.active,
+.nav button:hover{
+  background:#fff;
+  color:#000
+}
+.logout{
+  position:absolute;
+  bottom:25px;
+  left:15px;
+  width:calc(100% - 30px);
+  padding:12px;
+  border:1px solid #333;
+  border-radius:10px;
+  background:#17181f;
+  color:#fff
+}
 
-    .admin-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 25px;
-    }
+.main{
+  margin-left:240px;
+  padding:30px;
+  max-width:1500px
+}
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:30px
+}
+.top h1{margin:0;font-size:30px}
+.admin-email{color:#888;font-size:13px}
 
-    .admin-header h1 {
-      margin: 8px 0;
-    }
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-bottom:25px
+}
+.stat{
+  background:#11131a;
+  border:1px solid #252832;
+  border-radius:16px;
+  padding:20px
+}
+.stat small{color:#888}
+.stat strong{
+  display:block;
+  font-size:32px;
+  margin-top:8px
+}
 
-    .logout-btn,
-    .refresh-btn {
-      border: 0;
-      background: #111;
-      color: white;
-      padding: 11px 18px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 700;
-    }
+.section{
+  background:#11131a;
+  border:1px solid #252832;
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:20px
+}
+.section h2{margin-top:0}
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      margin-bottom: 25px;
-    }
+.toolbar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:18px
+}
+input,select{
+  background:#0b0c11;
+  color:#fff;
+  border:1px solid #30333d;
+  border-radius:10px;
+  padding:12px
+}
+.search{min-width:260px}
 
-    .stat-card {
-      background: white;
-      padding: 22px;
-      border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(0,0,0,.07);
-    }
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:11px 15px;
+  font-weight:700
+}
+.primary{background:#fff;color:#000}
+.dark{background:#20222b;color:#fff}
+.green{background:#123d24;color:#8dffb0}
+.red{background:#42191d;color:#ff9b9b}
 
-    .stat-card span {
-      display: block;
-      color: #777;
-      margin-bottom: 8px;
-    }
+.table-wrap{overflow-x:auto}
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:1050px
+}
+th,td{
+  padding:13px 10px;
+  border-bottom:1px solid #242630;
+  text-align:left;
+  vertical-align:top
+}
+th{font-size:12px;color:#777}
+td{font-size:13px}
 
-    .stat-card strong {
-      font-size: 30px;
-    }
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  background:#292c36;
+  font-size:11px
+}
+.pending{background:#3a3218;color:#ffd96a}
+.approved{background:#123d24;color:#8dffb0}
+.rejected{background:#42191d;color:#ff9b9b}
 
-    .table-box {
-      background: white;
-      border-radius: 16px;
-      padding: 20px;
-      overflow-x: auto;
-    }
+.actions{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 850px;
-    }
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px
+}
+.field label{
+  display:block;
+  color:#999;
+  font-size:12px;
+  margin-bottom:7px
+}
+.field input,
+.field select{
+  width:100%
+}
+.full{grid-column:1/-1}
 
-    th, td {
-      padding: 13px 10px;
-      text-align: left;
-      border-bottom: 1px solid #eee;
-    }
+.player-list{
+  background:#0b0c11;
+  border-radius:10px;
+  padding:12px;
+  margin-top:8px
+}
+.player-item{
+  padding:8px 0;
+  border-bottom:1px solid #222
+}
+.player-item:last-child{border:0}
 
-    th {
-      color: #666;
-      font-size: 13px;
-    }
+.hidden{display:none!important}
 
-    .status {
-      padding: 5px 10px;
-      border-radius: 20px;
-      background: #fff3cd;
-      font-size: 12px;
-      font-weight: 700;
-    }
+.empty{
+  padding:35px;
+  text-align:center;
+  color:#777
+}
 
-    .hidden {
-      display: none !important;
-    }
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:50
+}
+.modal-box{
+  width:min(700px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:#11131a;
+  border:1px solid #30333d;
+  border-radius:18px;
+  padding:25px
+}
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center
+}
+.close{
+  background:transparent;
+  border:0;
+  color:#fff;
+  font-size:25px
+}
 
-    .message {
-      max-width: 600px;
-      margin: 150px auto;
-      padding: 30px;
-      text-align: center;
-      background: white;
-      border-radius: 18px;
-    }
+.notice{
+  padding:13px;
+  border-radius:10px;
+  margin-bottom:15px;
+  display:none
+}
+.error{background:#42191d;color:#ffb0b0}
+.success{background:#123d24;color:#a5ffbb}
 
-    .error {
-      background: #ffe8e8;
-      color: #a00000;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      display: none;
-    }
-
-    @media (max-width: 700px) {
-      .admin-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+@media(max-width:900px){
+  .sidebar{
+    position:static;
+    width:100%;
+    height:auto
+  }
+  .nav{
+    display:flex;
+    gap:5px;
+    overflow:auto
+  }
+  .nav button{white-space:nowrap}
+  .logout{position:static;margin-top:10px}
+  .main{margin-left:0;padding:18px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:550px){
+  .stats{grid-template-columns:1fr 1fr}
+  .form-grid{grid-template-columns:1fr}
+  .full{grid-column:auto}
+}
+</style>
 </head>
 
 <body>
 
-  <div id="loading" class="message">
-    <h2>Checking admin access...</h2>
+<aside class="sidebar">
+  <div class="logo">KPL.</div>
+
+  <div class="nav">
+    <button class="active" data-page="dashboard">Dashboard</button>
+    <button data-page="registrations">Registrations</button>
+    <button data-page="tournaments">Tournaments</button>
   </div>
 
-  <div id="accessDenied" class="message hidden">
-    <h2>Administrator Access Required</h2>
-    <p>This page is only available to the KPL administrator.</p>
-    <a href="index.html">Back to KPL Website</a>
+  <button id="logoutBtn" class="logout">Logout</button>
+</aside>
+
+<main class="main">
+
+<div id="loginError" class="section hidden">
+  <h2>Administrator Access Required</h2>
+  <p>This page is only available to the KPL administrator.</p>
+</div>
+
+<div id="app" class="hidden">
+
+<div class="top">
+  <div>
+    <h1 id="pageTitle">Dashboard</h1>
+    <div id="adminEmail" class="admin-email"></div>
   </div>
 
-  <main id="adminContent" class="admin-page hidden">
+  <button id="refreshBtn" class="btn dark">↻ Refresh</button>
+</div>
 
-    <div class="admin-header">
-      <div>
-        <span class="eyebrow">KPL OFFICIAL</span>
-        <h1>Admin Panel</h1>
-        <p>Tournament Registration Management</p>
-      </div>
+<div id="notice" class="notice"></div>
 
-      <button id="logoutBtn" class="logout-btn">
-        Logout
-      </button>
+<!-- DASHBOARD -->
+
+<section id="dashboardPage">
+
+  <div class="stats">
+    <div class="stat">
+      <small>Total Registrations</small>
+      <strong id="totalCount">0</strong>
     </div>
 
-    <div id="errorBox" class="error"></div>
-
-    <div class="stats">
-
-      <div class="stat-card">
-        <span>Total Registrations</span>
-        <strong id="total">0</strong>
-      </div>
-
-      <div class="stat-card">
-        <span>Pending</span>
-        <strong id="pending">0</strong>
-      </div>
-
-      <div class="stat-card">
-        <span>Approved</span>
-        <strong id="approved">0</strong>
-      </div>
-
+    <div class="stat">
+      <small>Pending</small>
+      <strong id="pendingCount">0</strong>
     </div>
 
-    <div class="table-box">
+    <div class="stat">
+      <small>Approved</small>
+      <strong id="approvedCount">0</strong>
+    </div>
 
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-        <h2>Registrations</h2>
+    <div class="stat">
+      <small>Rejected</small>
+      <strong id="rejectedCount">0</strong>
+    </div>
+  </div>
 
-        <button id="refreshBtn" class="refresh-btn">
-          Refresh
-        </button>
-      </div>
+  <div class="section">
+    <h2>Recent Registrations</h2>
+    <div id="recentRegistrations"></div>
+  </div>
 
-      <p id="empty" class="hidden">
-        No registrations found.
-      </p>
+</section>
 
-      <table id="registrationTable">
 
+<!-- REGISTRATIONS -->
+
+<section id="registrationsPage" class="hidden">
+
+  <div class="section">
+
+    <h2>All Registrations</h2>
+
+    <div class="toolbar">
+      <input
+        id="searchInput"
+        class="search"
+        placeholder="Search team, captain, phone..."
+      >
+
+      <select id="sportFilter">
+        <option value="">All Sports</option>
+        <option value="football">Football</option>
+        <option value="cricket">Cricket</option>
+      </select>
+
+      <select id="statusFilter">
+        <option value="">All Status</option>
+        <option value="pending">Pending</option>
+        <option value="approved">Approved</option>
+        <option value="rejected">Rejected</option>
+      </select>
+    </div>
+
+    <div class="table-wrap">
+      <table>
         <thead>
           <tr>
-            <th>Tournament</th>
             <th>Team</th>
+            <th>Sport</th>
+            <th>Tournament</th>
             <th>Captain</th>
             <th>Phone</th>
-            <th>Email</th>
+            <th>Players</th>
+            <th>Payment</th>
             <th>Status</th>
-            <th>Date</th>
+            <th>Actions</th>
           </tr>
         </thead>
 
         <tbody id="registrationBody"></tbody>
-
       </table>
-
     </div>
 
-  </main>
+  </div>
 
-  <script type="module">
+</section>
 
-    import {
-      auth,
-      db,
-      onAuthStateChanged,
-      signOut
-    } from "./firebase.js";
 
-    import {
-      collection,
-      getDocs
-    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+<!-- TOURNAMENTS -->
 
+<section id="tournamentsPage" class="hidden">
 
-    const ADMIN_EMAIL = "rgmoviein@gmail.com";
+  <div class="section">
 
+    <div class="toolbar">
+      <h2 style="margin-right:auto">Tournament Manager</h2>
+      <button id="addTournamentBtn" class="btn primary">
+        + Add Tournament
+      </button>
+    </div>
 
-    const loading =
-      document.getElementById("loading");
+    <div id="tournamentList"></div>
 
-    const accessDenied =
-      document.getElementById("accessDenied");
+  </div>
 
-    const adminContent =
-      document.getElementById("adminContent");
+</section>
 
-    const errorBox =
-      document.getElementById("errorBox");
+</div>
+</main>
 
-    const body =
-      document.getElementById("registrationBody");
 
-    const table =
-      document.getElementById("registrationTable");
+<!-- REGISTRATION MODAL -->
 
-    const empty =
-      document.getElementById("empty");
+<div id="registrationModal" class="modal hidden">
+<div class="modal-box">
 
+<div class="modal-head">
+  <h2>Registration Details</h2>
+  <button class="close" onclick="closeRegistration()">×</button>
+</div>
 
-    function escapeHtml(value) {
+<div id="registrationDetails"></div>
 
-      return String(value ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+</div>
+</div>
 
-    }
 
+<!-- TOURNAMENT MODAL -->
 
-    function showError(message) {
+<div id="tournamentModal" class="modal hidden">
+<div class="modal-box">
 
-      errorBox.textContent = message;
-      errorBox.style.display = "block";
+<div class="modal-head">
+  <h2 id="tournamentModalTitle">Add Tournament</h2>
+  <button class="close" onclick="closeTournament()">×</button>
+</div>
 
-    }
+<form id="tournamentForm">
 
+<input type="hidden" id="tournamentId">
 
-    async function loadRegistrations() {
+<div class="form-grid">
 
-      errorBox.style.display = "none";
+<div class="field">
+<label>Tournament Name</label>
+<input id="tName" required>
+</div>
 
-      body.innerHTML = "";
+<div class="field">
+<label>Sport</label>
+<select id="tSport">
+<option value="football">Football</option>
+<option value="cricket">Cricket</option>
+</select>
+</div>
 
-      try {
+<div class="field">
+<label>Entry Fee</label>
+<input id="tFee" type="number" min="0" required>
+</div>
 
-        const snapshot =
-          await getDocs(
-            collection(db, "registrations")
-          );
+<div class="field">
+<label>Total Slots</label>
+<input id="tSlots" type="number" min="1" required>
+</div>
 
+<div class="field">
+<label>Minimum Players</label>
+<input id="tMinPlayers" type="number" min="1" required>
+</div>
 
-        let pendingCount = 0;
-        let approvedCount = 0;
+<div class="field">
+<label>Maximum Players</label>
+<input id="tMaxPlayers" type="number" min="1" required>
+</div>
 
+<div class="field">
+<label>Match Date</label>
+<input id="tDate" type="date">
+</div>
 
-        if (snapshot.empty) {
+<div class="field">
+<label>Registration Deadline</label>
+<input id="tDeadline" type="date">
+</div>
 
-          table.style.display = "none";
-          empty.classList.remove("hidden");
+<div class="field full">
+<label>Venue</label>
+<input id="tVenue">
+</div>
 
-        } else {
+<div class="field full">
+<label>Rules</label>
+<textarea id="tRules"
+style="width:100%;min-height:120px;background:#0b0c11;color:white;border:1px solid #30333d;border-radius:10px;padding:12px"></textarea>
+</div>
 
-          table.style.display = "table";
-          empty.classList.add("hidden");
+</div>
 
-        }
+<br>
 
+<button class="btn primary" type="submit">
+Save Tournament
+</button>
 
-        snapshot.forEach(doc => {
+</form>
+</div>
+</div>
 
-          const data = doc.data();
 
-          const status =
-            data.status || "pending";
+<script type="module">
 
+import {
+  auth,
+  db,
+  onAuthStateChanged,
+  signOut
+} from "./firebase.js";
 
-          if (status === "pending") {
-            pendingCount++;
-          }
+import {
+  collection,
+  getDocs,
+  updateDoc,
+  deleteDoc,
+  doc,
+  addDoc,
+  setDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-          if (status === "approved") {
-            approvedCount++;
-          }
 
+const ADMIN_EMAIL = "rgmoviein@gmail.com";
 
-          let date = "—";
+let registrations = [];
+let tournaments = [];
 
-          if (
-            data.createdAt &&
-            typeof data.createdAt.toDate === "function"
-          ) {
 
-            date =
-              data.createdAt
-                .toDate()
-                .toLocaleString("en-IN");
+/* AUTH */
 
-          }
+onAuthStateChanged(auth, async user => {
 
+  if (!user || user.email !== ADMIN_EMAIL) {
 
-          const row =
-            document.createElement("tr");
+    document.getElementById("app")
+      .classList.add("hidden");
 
+    document.getElementById("loginError")
+      .classList.remove("hidden");
 
-          row.innerHTML = `
-            <td>${escapeHtml(data.tournament || "—")}</td>
-            <td>${escapeHtml(data.teamName || "—")}</td>
-            <td>${escapeHtml(data.captainName || "—")}</td>
-            <td>${escapeHtml(data.phone || "—")}</td>
-            <td>${escapeHtml(data.email || "—")}</td>
-            <td>
-              <span class="status">
-                ${escapeHtml(status)}
-              </span>
-            </td>
-            <td>${escapeHtml(date)}</td>
-          `;
+    return;
+  }
 
+  document.getElementById("loginError")
+    .classList.add("hidden");
 
-          body.appendChild(row);
+  document.getElementById("app")
+    .classList.remove("hidden");
 
-        });
+  document.getElementById("adminEmail")
+    .textContent = user.email;
 
+  await loadAll();
 
-        document.getElementById("total").textContent =
-          snapshot.size;
+});
 
-        document.getElementById("pending").textContent =
-          pendingCount;
 
-        document.getElementById("approved").textContent =
-          approvedCount;
+/* LOAD */
 
+async function loadAll(){
 
-      } catch (error) {
+  try{
 
-        console.error(error);
+    const regSnap =
+      await getDocs(
+        collection(db,"registrations")
+      );
 
-        showError(
-          "Firestore error: " +
-          error.code +
-          " — " +
-          error.message
-        );
+    registrations =
+      regSnap.docs.map(d => ({
+        id:d.id,
+        ...d.data()
+      }));
 
-      }
+  }catch(e){
 
-    }
+    showNotice(
+      "Registration loading failed: "+e.message,
+      true
+    );
 
+  }
 
-    onAuthStateChanged(auth, async user => {
 
-      if (!user) {
+  try{
 
-        loading.classList.add("hidden");
-        accessDenied.classList.remove("hidden");
-        return;
+    const tourSnap =
+      await getDocs(
+        collection(db,"tournaments")
+      );
 
-      }
+    tournaments =
+      tourSnap.docs.map(d => ({
+        id:d.id,
+        ...d.data()
+      }));
 
+  }catch(e){
 
-      if (user.email !== ADMIN_EMAIL) {
+    tournaments = [];
 
-        loading.classList.add("hidden");
-        accessDenied.classList.remove("hidden");
-        return;
+    showNotice(
+      "Tournament manager is not available yet. Firestore rules need to allow the tournaments collection.",
+      true
+    );
 
-      }
+  }
 
 
-      loading.classList.add("hidden");
-      accessDenied.classList.add("hidden");
-      adminContent.classList.remove("hidden");
+  renderDashboard();
+  renderRegistrations();
+  renderTournaments();
 
+}
 
-      await loadRegistrations();
+
+/* DASHBOARD */
+
+function renderDashboard(){
+
+  const total = registrations.length;
+
+  const pending =
+    registrations.filter(
+      x => (x.status || "pending") === "pending"
+    ).length;
+
+  const approved =
+    registrations.filter(
+      x => x.status === "approved"
+    ).length;
+
+  const rejected =
+    registrations.filter(
+      x => x.status === "rejected"
+    ).length;
+
+  document.getElementById("totalCount")
+    .textContent = total;
+
+  document.getElementById("pendingCount")
+    .textContent = pending;
+
+  document.getElementById("approvedCount")
+    .textContent = approved;
+
+  document.getElementById("rejectedCount")
+    .textContent = rejected;
+
+
+  const recent =
+    registrations.slice(-8).reverse();
+
+  const box =
+    document.getElementById("recentRegistrations");
+
+  if(!recent.length){
+
+    box.innerHTML =
+      '<div class="empty">No registrations yet.</div>';
+
+    return;
+  }
+
+  box.innerHTML =
+    recent.map(x => `
+      <div style="padding:14px 0;border-bottom:1px solid #252832">
+        <strong>${esc(x.teamName || "Unnamed Team")}</strong>
+        <div style="color:#888;font-size:12px;margin-top:5px">
+          ${esc(x.tournament || "")}
+          • ${esc(x.captainName || "")}
+          • ${esc(x.phone || "")}
+        </div>
+      </div>
+    `).join("");
+
+}
+
+
+/* REGISTRATIONS */
+
+function renderRegistrations(){
+
+  const search =
+    document.getElementById("searchInput")
+      .value.toLowerCase();
+
+  const sport =
+    document.getElementById("sportFilter").value;
+
+  const status =
+    document.getElementById("statusFilter").value;
+
+
+  const list =
+    registrations.filter(x => {
+
+      const text =
+        [
+          x.teamName,
+          x.captainName,
+          x.phone,
+          x.email,
+          x.tournament
+        ]
+        .join(" ")
+        .toLowerCase();
+
+      return (
+        (!search || text.includes(search)) &&
+        (!sport || x.sport === sport) &&
+        (!status || (x.status || "pending") === status)
+      );
 
     });
 
 
-    document
-      .getElementById("refreshBtn")
-      .addEventListener(
-        "click",
-        loadRegistrations
+  const body =
+    document.getElementById("registrationBody");
+
+
+  if(!list.length){
+
+    body.innerHTML =
+      `<tr>
+        <td colspan="9" class="empty">
+          No registrations found.
+        </td>
+      </tr>`;
+
+    return;
+
+  }
+
+
+  body.innerHTML =
+    list.map(x => {
+
+      const players =
+        Array.isArray(x.players)
+          ? x.players.length
+          : 0;
+
+      const st =
+        x.status || "pending";
+
+      return `
+      <tr>
+
+        <td>
+          <strong>${esc(x.teamName || "—")}</strong>
+        </td>
+
+        <td>${esc(x.sport || "—")}</td>
+
+        <td>${esc(x.tournament || "—")}</td>
+
+        <td>${esc(x.captainName || "—")}</td>
+
+        <td>${esc(x.phone || "—")}</td>
+
+        <td>${players}</td>
+
+        <td>
+          ₹${esc(x.paymentAmount || 0)}
+          <br>
+          <small style="color:#777">
+            ${esc(x.utr || "No UTR")}
+          </small>
+        </td>
+
+        <td>
+          <span class="badge ${st}">
+            ${esc(st)}
+          </span>
+        </td>
+
+        <td>
+          <div class="actions">
+
+            <button
+              class="btn dark"
+              onclick="viewRegistration('${x.id}')">
+              View
+            </button>
+
+            <button
+              class="btn green"
+              onclick="changeStatus('${x.id}','approved')">
+              ✓
+            </button>
+
+            <button
+              class="btn red"
+              onclick="changeStatus('${x.id}','rejected')">
+              ✕
+            </button>
+
+            <button
+              class="btn red"
+              onclick="removeRegistration('${x.id}')">
+              Delete
+            </button>
+
+          </div>
+        </td>
+
+      </tr>
+      `;
+
+    }).join("");
+
+}
+
+
+/* VIEW */
+
+window.viewRegistration =
+function(id){
+
+  const x =
+    registrations.find(
+      r => r.id === id
+    );
+
+  if(!x) return;
+
+
+  const players =
+    Array.isArray(x.players)
+      ? x.players
+      : [];
+
+
+  document.getElementById(
+    "registrationDetails"
+  ).innerHTML = `
+
+    <div class="summary">
+
+      <p><strong>Team:</strong> ${esc(x.teamName)}</p>
+      <p><strong>Sport:</strong> ${esc(x.sport)}</p>
+      <p><strong>Tournament:</strong> ${esc(x.tournament)}</p>
+      <p><strong>Captain:</strong> ${esc(x.captainName)}</p>
+      <p><strong>Phone:</strong> ${esc(x.phone)}</p>
+      <p><strong>Email:</strong> ${esc(x.email)}</p>
+      <p><strong>Referral:</strong> ${esc(x.referralCode || "None")}</p>
+      <p><strong>UTR:</strong> ${esc(x.utr || "None")}</p>
+      <p><strong>Amount:</strong> ₹${esc(x.paymentAmount || 0)}</p>
+      <p><strong>Status:</strong> ${esc(x.status || "pending")}</p>
+
+    </div>
+
+    <h3>Players (${players.length})</h3>
+
+    <div class="player-list">
+
+      ${
+        players.length
+        ? players.map((p,i) => `
+          <div class="player-item">
+            <strong>${i+1}. ${esc(p.name)}</strong>
+            <br>
+            <small style="color:#888">
+              Age: ${esc(p.age)}
+              • Role: ${esc(p.role)}
+            </small>
+          </div>
+        `).join("")
+        : "No players"
+      }
+
+    </div>
+
+  `;
+
+
+  document.getElementById(
+    "registrationModal"
+  ).classList.remove("hidden");
+
+};
+
+
+window.closeRegistration =
+function(){
+
+  document.getElementById(
+    "registrationModal"
+  ).classList.add("hidden");
+
+};
+
+
+/* STATUS */
+
+window.changeStatus =
+async function(id,status){
+
+  try{
+
+    await updateDoc(
+      doc(db,"registrations",id),
+      {status}
+    );
+
+    showNotice(
+      "Registration updated successfully."
+    );
+
+    await loadAll();
+
+  }catch(e){
+
+    showNotice(
+      "Could not update: "+e.message,
+      true
+    );
+
+  }
+
+};
+
+
+/* DELETE */
+
+window.removeRegistration =
+async function(id){
+
+  if(!confirm(
+    "Delete this registration permanently?"
+  )) return;
+
+  try{
+
+    await deleteDoc(
+      doc(db,"registrations",id)
+    );
+
+    showNotice(
+      "Registration deleted."
+    );
+
+    await loadAll();
+
+  }catch(e){
+
+    showNotice(
+      "Delete failed: "+e.message,
+      true
+    );
+
+  }
+
+};
+
+
+/* TOURNAMENTS */
+
+function renderTournaments(){
+
+  const box =
+    document.getElementById(
+      "tournamentList"
+    );
+
+
+  if(!tournaments.length){
+
+    box.innerHTML =
+      `<div class="empty">
+        No tournaments added yet.
+        <br><br>
+        Click "+ Add Tournament".
+      </div>`;
+
+    return;
+
+  }
+
+
+  box.innerHTML =
+    tournaments.map(x => `
+
+      <div style="
+        padding:18px;
+        border:1px solid #292c35;
+        border-radius:14px;
+        margin-bottom:12px
+      ">
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          gap:15px;
+          flex-wrap:wrap
+        ">
+
+          <div>
+
+            <h3 style="margin:0 0 8px">
+              ${esc(x.name)}
+            </h3>
+
+            <div style="color:#888;font-size:13px">
+              ${esc(x.sport)}
+              • ₹${esc(x.entryFee || 0)}
+              • ${esc(x.slots || 0)} slots
+              • ${esc(x.venue || "Venue not set")}
+            </div>
+
+            <div style="color:#777;font-size:12px;margin-top:7px">
+              Min ${esc(x.minPlayers || 0)}
+              / Max ${esc(x.maxPlayers || 0)} players
+            </div>
+
+          </div>
+
+          <div class="actions">
+
+            <button
+              class="btn dark"
+              onclick="editTournament('${x.id}')">
+              Edit
+            </button>
+
+            <button
+              class="btn red"
+              onclick="deleteTournament('${x.id}')">
+              Delete
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+document.getElementById(
+  "addTournamentBtn"
+).onclick = () => {
+
+  document.getElementById(
+    "tournamentForm"
+  ).reset();
+
+  document.getElementById(
+    "tournamentId"
+  ).value = "";
+
+  document.getElementById(
+    "tournamentModalTitle"
+  ).textContent = "Add Tournament";
+
+  document.getElementById(
+    "tournamentModal"
+  ).classList.remove("hidden");
+
+};
+
+
+window.editTournament =
+function(id){
+
+  const x =
+    tournaments.find(
+      t => t.id === id
+    );
+
+  if(!x) return;
+
+
+  document.getElementById("tournamentId").value = x.id;
+  document.getElementById("tName").value = x.name || "";
+  document.getElementById("tSport").value = x.sport || "football";
+  document.getElementById("tFee").value = x.entryFee || 0;
+  document.getElementById("tSlots").value = x.slots || 0;
+  document.getElementById("tMinPlayers").value = x.minPlayers || 1;
+  document.getElementById("tMaxPlayers").value = x.maxPlayers || 1;
+  document.getElementById("tDate").value = x.date || "";
+  document.getElementById("tDeadline").value = x.deadline || "";
+  document.getElementById("tVenue").value = x.venue || "";
+  document.getElementById("tRules").value = x.rules || "";
+
+  document.getElementById(
+    "tournamentModalTitle"
+  ).textContent = "Edit Tournament";
+
+  document.getElementById(
+    "tournamentModal"
+  ).classList.remove("hidden");
+
+};
+
+
+window.closeTournament =
+function(){
+
+  document.getElementById(
+    "tournamentModal"
+  ).classList.add("hidden");
+
+};
+
+
+document.getElementById(
+  "tournamentForm"
+).addEventListener(
+  "submit",
+  async e => {
+
+    e.preventDefault();
+
+    const id =
+      document.getElementById(
+        "tournamentId"
+      ).value;
+
+
+    const data = {
+
+      name:
+        document.getElementById("tName").value.trim(),
+
+      sport:
+        document.getElementById("tSport").value,
+
+      entryFee:
+        Number(
+          document.getElementById("tFee").value || 0
+        ),
+
+      slots:
+        Number(
+          document.getElementById("tSlots").value || 0
+        ),
+
+      minPlayers:
+        Number(
+          document.getElementById("tMinPlayers").value || 1
+        ),
+
+      maxPlayers:
+        Number(
+          document.getElementById("tMaxPlayers").value || 1
+        ),
+
+      date:
+        document.getElementById("tDate").value,
+
+      deadline:
+        document.getElementById("tDeadline").value,
+
+      venue:
+        document.getElementById("tVenue").value.trim(),
+
+      rules:
+        document.getElementById("tRules").value.trim(),
+
+      updatedAt:
+        serverTimestamp()
+
+    };
+
+
+    try{
+
+      if(id){
+
+        await setDoc(
+          doc(db,"tournaments",id),
+          data,
+          {merge:true}
+        );
+
+      }else{
+
+        await addDoc(
+          collection(db,"tournaments"),
+          {
+            ...data,
+            createdAt:serverTimestamp()
+          }
+        );
+
+      }
+
+
+      closeTournament();
+
+      showNotice(
+        "Tournament saved successfully."
       );
 
+      await loadAll();
 
-    document
-      .getElementById("logoutBtn")
-      .addEventListener(
-        "click",
-        async () => {
+    }catch(error){
 
-          await signOut(auth);
-
-          window.location.href =
-            "index.html";
-
-        }
+      showNotice(
+        "Tournament save failed: "+error.message,
+        true
       );
 
-  </script>
+    }
+
+  }
+);
+
+
+/* NAVIGATION */
+
+document.querySelectorAll(
+  ".nav button"
+).forEach(button => {
+
+  button.onclick = () => {
+
+    document.querySelectorAll(
+      ".nav button"
+    ).forEach(b =>
+      b.classList.remove("active")
+    );
+
+    button.classList.add("active");
+
+    const page =
+      button.dataset.page;
+
+    document.querySelectorAll(
+      "main section"
+    ).forEach(s =>
+      s.classList.add("hidden")
+    );
+
+    document.getElementById(
+      page + "Page"
+    ).classList.remove("hidden");
+
+    document.getElementById(
+      "pageTitle"
+    ).textContent =
+      page.charAt(0).toUpperCase() +
+      page.slice(1);
+
+  };
+
+});
+
+
+document.getElementById(
+  "searchInput"
+).addEventListener(
+  "input",
+  renderRegistrations
+);
+
+document.getElementById(
+  "sportFilter"
+).addEventListener(
+  "change",
+  renderRegistrations
+);
+
+document.getElementById(
+  "statusFilter"
+).addEventListener(
+  "change",
+  renderRegistrations
+);
+
+document.getElementById(
+  "refreshBtn"
+).onclick =
+loadAll;
+
+
+document.getElementById(
+  "logoutBtn"
+).onclick =
+async () => {
+
+  await signOut(auth);
+
+  location.href =
+    "index.html";
+
+};
+
+
+/* HELPERS */
+
+function showNotice(text,error=false){
+
+  const n =
+    document.getElementById("notice");
+
+  n.textContent = text;
+
+  n.className =
+    "notice " +
+    (error ? "error" : "success");
+
+  n.style.display = "block";
+
+  setTimeout(() => {
+    n.style.display = "none";
+  },4000);
+
+}
+
+
+function esc(value){
+
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+</script>
 
 </body>
 </html>
