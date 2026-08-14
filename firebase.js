@@ -14,6 +14,10 @@ import {
   getFirestore
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
+import {
+  getStorage
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyCIYvlfmQgu2uRV2Rlx4VqZo5R_XsxnhZo",
@@ -32,6 +36,8 @@ const auth = getAuth(app);
 
 const db = getFirestore(app);
 
+const storage = getStorage(app);
+
 
 const provider = new GoogleAuthProvider();
 
@@ -44,6 +50,7 @@ export {
   app,
   auth,
   db,
+  storage,
   provider,
   signInWithPopup,
   signInWithRedirect,
