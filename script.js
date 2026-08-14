@@ -8,13 +8,14 @@ import {
 
 import {
   doc,
-  onSnapshot
+  onSnapshot,
+  collection
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-// ===============================
-// ELEMENTS
-// ===============================
+// ================================
+// LOGIN
+// ================================
 
 const loginBtn = document.getElementById("loginBtn");
 const mobileLoginBtn = document.getElementById("mobileLoginBtn");
@@ -28,22 +29,14 @@ const menuBtn = document.getElementById("menuBtn");
 const mobileMenu = document.getElementById("mobileMenu");
 
 
-// ===============================
-// LOGIN MODAL
-// ===============================
-
 function openLogin() {
-  if (!loginModal) return;
-
-  loginModal.classList.add("active");
-  loginModal.setAttribute("aria-hidden", "false");
+  loginModal?.classList.add("active");
+  loginModal?.setAttribute("aria-hidden", "false");
 }
 
 function closeLogin() {
-  if (!loginModal) return;
-
-  loginModal.classList.remove("active");
-  loginModal.setAttribute("aria-hidden", "true");
+  loginModal?.classList.remove("active");
+  loginModal?.setAttribute("aria-hidden", "true");
 }
 
 
@@ -54,16 +47,16 @@ heroLogin?.addEventListener("click", openLogin);
 closeModal?.addEventListener("click", closeLogin);
 
 
-loginModal?.addEventListener("click", (event) => {
-  if (event.target === loginModal) {
+loginModal?.addEventListener("click", (e) => {
+  if (e.target === loginModal) {
     closeLogin();
   }
 });
 
 
-// ===============================
+// ================================
 // GOOGLE LOGIN
-// ===============================
+// ================================
 
 googleBtn?.addEventListener("click", async () => {
 
@@ -73,16 +66,12 @@ googleBtn?.addEventListener("click", async () => {
     googleBtn.innerHTML = "Signing in...";
 
     const result =
-      await signInWithPopup(
-        auth,
-        provider
-      );
+      await signInWithPopup(auth, provider);
 
     if (result.user) {
 
       closeLogin();
 
-      // Registration page
       window.location.href =
         "registration.html";
 
@@ -99,90 +88,132 @@ googleBtn?.addEventListener("click", async () => {
     googleBtn.disabled = false;
 
     googleBtn.innerHTML =
-      '<span>G</span> Continue with Google';
+      "<span>G</span> Continue with Google";
 
   }
 
 });
 
 
-// ===============================
-// AUTH STATE
-// ===============================
+// ================================
+// AUTH
+// ================================
 
 onAuthStateChanged(auth, (user) => {
 
-  if (!user) {
+  if (user) {
+
+    if (loginBtn) {
+      loginBtn.textContent =
+        "Register Now";
+    }
+
+    if (mobileLoginBtn) {
+      mobileLoginBtn.textContent =
+        "Register Now";
+    }
+
+  } else {
 
     if (loginBtn) {
       loginBtn.textContent =
         "Login / Register";
     }
 
-    return;
-  }
+    if (mobileLoginBtn) {
+      mobileLoginBtn.textContent =
+        "Login / Register";
+    }
 
-
-  if (loginBtn) {
-    loginBtn.textContent =
-      "Register Now";
-  }
-
-
-  if (mobileLoginBtn) {
-    mobileLoginBtn.textContent =
-      "Register Now";
   }
 
 });
 
 
-// ===============================
+// ================================
 // MOBILE MENU
-// ===============================
+// ================================
 
 menuBtn?.addEventListener("click", () => {
-
   mobileMenu?.classList.toggle("active");
-
 });
-
 
 mobileMenu
   ?.querySelectorAll("a")
   .forEach((link) => {
 
     link.addEventListener("click", () => {
-
-      mobileMenu.classList.remove(
-        "active"
-      );
-
+      mobileMenu.classList.remove("active");
     });
 
   });
 
 
-// ===============================
-// FIRESTORE LIVE SETTINGS
-// ===============================
+// ================================
+// HELPERS
+// ================================
+
+function safe(value) {
+
+  if (
+    value === undefined ||
+    value === null
+  ) {
+    return "";
+  }
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+function formatDate(value) {
+
+  if (!value) return "";
+
+  const date =
+    new Date(value);
+
+  if (isNaN(date.getTime())) {
+    return value;
+  }
+
+  return date.toLocaleDateString(
+    "en-IN",
+    {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    }
+  );
+
+}
+
+
+// ================================
+// LIVE WEBSITE SETTINGS
+// ADMIN LOCATION:
+// settings/site
+// ================================
 
 const settingsRef =
-  doc(
-    db,
-    "siteSettings",
-    "main"
-  );
+  doc(db, "settings", "site");
 
 
 onSnapshot(
   settingsRef,
+
   (snapshot) => {
 
     if (!snapshot.exists()) {
 
       console.log(
-        "siteSettings/main not found yet."
+        "KPL settings/site not found."
       );
 
       return;
@@ -194,191 +225,97 @@ onSnapshot(
 
 
     console.log(
-      "KPL settings updated:",
+      "🔥 LIVE KPL SETTINGS:",
       data
     );
 
 
-    // -------------------------------
-    // WEBSITE LOGO
-    // -------------------------------
-
-    if (data.websiteLogo) {
-
-      document
-        .querySelectorAll(
-          ".brand-mark"
-        )
-        .forEach((element) => {
-
-          element.innerHTML =
-            `<img src="${data.websiteLogo}" alt="KPL">`;
-
-        });
-
-    }
-
-
-    // -------------------------------
+    // ----------------------------
     // WEBSITE NAME
-    // -------------------------------
+    // ----------------------------
 
-    if (data.websiteName) {
+    if (data.siteName) {
+
+      document.title =
+        data.siteName +
+        " | Football & Cricket";
+
+    }
+
+
+    // ----------------------------
+    // WEBSITE LOGO
+    // ----------------------------
+
+    if (data.logoUrl) {
 
       document
-        .querySelectorAll(
-          ".brand b"
-        )
+        .querySelectorAll(".brand-mark")
         .forEach((element) => {
 
-          element.textContent =
-            data.websiteName;
+          element.innerHTML = "";
+
+          const img =
+            document.createElement("img");
+
+          img.src =
+            data.logoUrl;
+
+          img.alt =
+            "KPL Official";
+
+          img.style.width =
+            "100%";
+
+          img.style.height =
+            "100%";
+
+          img.style.objectFit =
+            "contain";
+
+          element.appendChild(img);
 
         });
 
     }
 
 
-    // -------------------------------
-    // FOOTBALL TOURNAMENT
-    // -------------------------------
+    // ----------------------------
+    // WEBSITE BANNER
+    // ----------------------------
 
-    if (data.football) {
-
-      const football =
-        data.football;
-
-
-      const card =
-        document.querySelector(
-          ".football-card"
-        );
-
-      if (card) {
-
-        const title =
-          card.querySelector("b");
-
-        const small =
-          card.querySelector("small");
-
-        if (title && football.name) {
-          title.textContent =
-            football.name;
-        }
-
-        if (small && football.status) {
-          small.textContent =
-            football.status;
-        }
-
-      }
-
-
-      const tournamentCards =
-        document.querySelectorAll(
-          ".tournament-card"
-        );
-
-
-      if (
-        tournamentCards[0] &&
-        football.name
-      ) {
-
-        const title =
-          tournamentCards[0]
-            .querySelector("h3");
-
-        if (title) {
-          title.textContent =
-            football.name;
-        }
-
-      }
-
-    }
-
-
-    // -------------------------------
-    // CRICKET TOURNAMENT
-    // -------------------------------
-
-    if (data.cricket) {
-
-      const cricket =
-        data.cricket;
-
-
-      const cards =
-        document.querySelectorAll(
-          ".tournament-card"
-        );
-
-
-      if (
-        cards[1] &&
-        cricket.name
-      ) {
-
-        const title =
-          cards[1].querySelector("h3");
-
-        if (title) {
-          title.textContent =
-            cricket.name;
-        }
-
-      }
-
-    }
-
-
-    // -------------------------------
-    // CONTACT
-    // -------------------------------
-
-    if (data.contact) {
+    if (data.bannerUrl) {
 
       document
-        .querySelectorAll(
-          "[data-contact]"
-        )
+        .querySelectorAll(".hero-visual")
         .forEach((element) => {
 
-          element.textContent =
-            data.contact;
+          element.style.backgroundImage =
+            `url("${data.bannerUrl}")`;
+
+          element.style.backgroundSize =
+            "cover";
+
+          element.style.backgroundPosition =
+            "center";
 
         });
 
     }
 
 
-    // -------------------------------
-    // UPI ID
-    // -------------------------------
+    // ----------------------------
+    // UPI
+    // ----------------------------
 
-    if (data.upiId) {
-
-      document
-        .querySelectorAll(
-          "[data-upi]"
-        )
-        .forEach((element) => {
-
-          element.textContent =
-            data.upiId;
-
-        });
-
-    }
+    window.KPL_SETTINGS = data;
 
   },
 
   (error) => {
 
     console.error(
-      "Firestore settings error:",
+      "❌ Settings error:",
       error
     );
 
@@ -386,32 +323,255 @@ onSnapshot(
 );
 
 
-// ===============================
-// REGISTER BUTTONS
-// ===============================
+// ================================
+// LIVE TOURNAMENTS
+// ADMIN LOCATION:
+// tournaments
+// ================================
 
-document
-  .querySelectorAll(
-    "[data-register]"
-  )
-  .forEach((button) => {
-
-    button.addEventListener(
-      "click",
-      () => {
-
-        if (!auth.currentUser) {
-
-          openLogin();
-
-          return;
-        }
+const tournamentsRef =
+  collection(db, "tournaments");
 
 
-        window.location.href =
-          "registration.html";
+onSnapshot(
+  tournamentsRef,
 
-      }
+  (snapshot) => {
+
+    const grid =
+      document.querySelector(
+        ".tournament-grid"
+      );
+
+    if (!grid) return;
+
+
+    grid.innerHTML = "";
+
+
+    if (snapshot.empty) {
+
+      grid.innerHTML = `
+        <div class="empty-card">
+          <div class="empty-icon">🏆</div>
+          <h3>No tournaments yet</h3>
+          <p>New KPL tournaments will appear here.</p>
+        </div>
+      `;
+
+      return;
+    }
+
+
+    snapshot.forEach((item) => {
+
+      const data =
+        item.data();
+
+
+      const sport =
+        data.sport || "Football";
+
+
+      const isCricket =
+        sport.toLowerCase()
+          .includes("cricket");
+
+
+      const icon =
+        isCricket
+          ? "🏏"
+          : "⚽";
+
+
+      const image =
+        data.bannerUrl ||
+        data.logoUrl;
+
+
+      const imageHTML =
+        image
+          ? `
+            <img
+              src="${safe(image)}"
+              alt="${safe(data.name || "Tournament")}"
+              style="
+                width:100%;
+                height:100%;
+                object-fit:cover;
+                display:block;
+              "
+            >
+          `
+          : `
+            <div style="
+              width:100%;
+              height:100%;
+              display:flex;
+              align-items:center;
+              justify-content:center;
+              font-size:60px;
+            ">
+              ${icon}
+            </div>
+          `;
+
+
+      const card =
+        document.createElement("article");
+
+
+      card.className =
+        "tournament-card";
+
+
+      card.innerHTML = `
+
+        <div class="tour-image">
+
+          ${imageHTML}
+
+          <span>
+            ${safe(sport)}
+          </span>
+
+        </div>
+
+
+        <div class="tour-body">
+
+          <div class="tour-meta">
+
+            <span>
+              ${icon} ${safe(sport)}
+            </span>
+
+            <span>
+              ${safe(
+                data.slots
+                  ? data.slots + " Slots"
+                  : "Upcoming"
+              )}
+            </span>
+
+          </div>
+
+
+          <h3>
+            ${safe(
+              data.name ||
+              "KPL Tournament"
+            )}
+          </h3>
+
+
+          <p>
+            Entry Fee:
+            ₹${safe(data.entryFee || "0")}
+          </p>
+
+
+          <p>
+            Prize Pool:
+            ₹${safe(data.prizePool || "0")}
+          </p>
+
+
+          <p>
+            📍 ${safe(data.venue || "")}
+          </p>
+
+
+          <p>
+            📅 ${
+              safe(
+                formatDate(data.date)
+              )
+            }
+          </p>
+
+
+          <div class="tour-bottom">
+
+            <strong>
+              ${
+                data.deadline
+                  ? "Last Date: " +
+                    safe(
+                      formatDate(
+                        data.deadline
+                      )
+                    )
+                  : "Registration Open"
+              }
+            </strong>
+
+
+            <button
+              class="small-btn"
+              data-register
+              data-id="${safe(item.id)}"
+            >
+              Register →
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+
+      grid.appendChild(card);
+
+    });
+
+
+    // ============================
+    // REGISTER BUTTONS
+    // ============================
+
+    grid
+      .querySelectorAll(
+        "[data-register]"
+      )
+      .forEach((button) => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            if (!auth.currentUser) {
+
+              openLogin();
+
+              return;
+            }
+
+
+            const tournamentId =
+              button.dataset.id;
+
+
+            window.location.href =
+              "registration.html?tournament=" +
+              encodeURIComponent(
+                tournamentId
+              );
+
+          }
+        );
+
+      });
+
+  },
+
+  (error) => {
+
+    console.error(
+      "❌ Tournament error:",
+      error
     );
 
-  });
+  }
+);
