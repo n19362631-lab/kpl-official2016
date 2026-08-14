@@ -30,15 +30,15 @@ const firebaseConfig = {
 };
 
 
+// Firebase App
 const app = initializeApp(firebaseConfig);
 
+
+// Firebase Authentication
 const auth = getAuth(app);
 
-const db = getFirestore(app);
 
-const storage = getStorage(app);
-
-
+// Google Login
 const provider = new GoogleAuthProvider();
 
 provider.setCustomParameters({
@@ -46,6 +46,15 @@ provider.setCustomParameters({
 });
 
 
+// Firestore Database
+const db = getFirestore(app);
+
+
+// Firebase Storage
+const storage = getStorage(app);
+
+
+// Export everything
 export {
   app,
   auth,
