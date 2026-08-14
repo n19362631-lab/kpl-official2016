@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KPL Official | Registration</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      min-height: 100vh;
+    }
+
+    .registration-page {
+      max-width: 850px;
+      margin: 120px auto 60px;
+      padding: 0 20px;
+    }
+
+    .registration-box {
+      background: #fff;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.12);
+    }
+
+    .registration-box h1 {
+      margin: 10px 0;
+    }
+
+    .registration-box > p {
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .user-card {
+      background: #f4f4f4;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 25px;
+      font-size: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px 14px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #111;
+    }
+
+    .submit-btn {
+      width: 100%;
+      border: 0;
+      border-radius: 12px;
+      padding: 15px;
+      background: #111;
+      color: white;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #111;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .login-required {
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="nav">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">K</span>
+      <span><b>KPL</b><small>OFFICIAL</small></span>
+    </a>
+
+    <a class="login-btn" href="index.html">
+      Home
+    </a>
+  </header>
+
+  <main class="registration-page">
+
+    <a class="back-link" href="index.html">← Back to KPL</a>
+
+    <div class="registration-box">
+
+      <span class="eyebrow">KPL OFFICIAL</span>
+
+      <h1>TOURNAMENT REGISTRATION</h1>
+
+      <p>
+        Complete your team details below to register for a KPL tournament.
+      </p>
+
+      <div id="loginRequired" class="login-required hidden">
+        <h2>Login Required</h2>
+        <p>Please login with Google before registering.</p>
+        <a class="btn primary" href="index.html">
+          Login / Register
+        </a>
+      </div>
+
+      <div id="registrationFormContainer" class="hidden">
+
+        <div class="user-card">
+          <strong>Logged in account:</strong>
+          <span id="userEmail"></span>
+        </div>
+
+        <form id="registrationForm">
+
+          <div class="form-group">
+            <label for="tournament">Select Tournament</label>
+
+            <select id="tournament" required>
+              <option value="">Select tournament</option>
+              <option value="Open Age Football Championship">
+                Open Age Football Championship
+              </option>
+              <option value="U-17 Football Championship">
+                U-17 Football Championship
+              </option>
+              <option value="Cricket Tournament">
+                Cricket Tournament
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="teamName">Team Name</label>
+            <input
+              type="text"
+              id="teamName"
+              placeholder="Enter team name"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="captainName">Captain Name</label>
+            <input
+              type="text"
+              id="captainName"
+              placeholder="Enter captain name"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Contact Number</label>
+            <input
+              type="tel"
+              id="phone"
+              placeholder="Enter contact number"
+              maxlength="10"
+              required
+            >
+          </div>
+
+          <button type="submit" class="submit-btn">
+            Submit Registration
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <script type="module">
+
+    import {
+      auth,
+      onAuthStateChanged
+    } from "./firebase.js";
+
+    const loginRequired =
+      document.getElementById("loginRequired");
+
+    const formContainer =
+      document.getElementById("registrationFormContainer");
+
+    const userEmail =
+      document.getElementById("userEmail");
+
+    const form =
+      document.getElementById("registrationForm");
+
+    onAuthStateChanged(auth, user => {
+
+      if (user) {
+
+        loginRequired.classList.add("hidden");
+        formContainer.classList.remove("hidden");
+
+        userEmail.textContent =
+          user.email || "";
+
+      } else {
+
+        loginRequired.classList.remove("hidden");
+        formContainer.classList.add("hidden");
+
+      }
+
+    });
+
+    form?.addEventListener("submit", event => {
+
+      event.preventDefault();
+
+      alert(
+        "Registration form is ready. Firebase database connection will be added next."
+      );
+
+    });
+
+  </script>
+
+</body>
+</html>
