@@ -87,7 +87,19 @@ loginButtons.forEach(btn => {
 document.getElementById("closeModal")?.addEventListener("click", closeModal);
 
 document.querySelectorAll("[data-register]").forEach(btn => {
-  btn.addEventListener("click", openModal);
+  btn.addEventListener("click", () => {
+
+    const user = auth.currentUser;
+
+    if (user) {
+      // User already logged in
+      window.location.href = "register.html";
+    } else {
+      // User not logged in
+      openModal();
+    }
+
+  });
 });
 
 document.getElementById("menuBtn")?.addEventListener("click", () => {
