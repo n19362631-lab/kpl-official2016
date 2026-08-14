@@ -1,274 +1,417 @@
-    import {
+import {
   auth,
+  db,
   provider,
   signInWithPopup,
-  onAuthStateChanged,
-  signOut
+  onAuthStateChanged
 } from "./firebase.js";
 
 import {
-  signInWithRedirect,
-  getRedirectResult
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+  doc,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-const modal = document.getElementById("loginModal");
-const menu = document.getElementById("mobileMenu");
 
-const loginButtons = [
-  document.getElementById("loginBtn"),
-  document.getElementById("mobileLoginBtn"),
-  document.getElementById("heroLogin")
-].filter(Boolean);
+// ===============================
+// ELEMENTS
+// ===============================
 
+const loginBtn = document.getElementById("loginBtn");
+const mobileLoginBtn = document.getElementById("mobileLoginBtn");
+const heroLogin = document.getElementById("heroLogin");
+
+const loginModal = document.getElementById("loginModal");
+const closeModal = document.getElementById("closeModal");
 const googleBtn = document.getElementById("googleBtn");
-const modalText = document.querySelector(".modal-box p");
-const modalSmall = document.querySelector(".modal-box small");
 
-function openModal() {
-  if (!modal) return;
-  modal.classList.add("show");
-  modal.setAttribute("aria-hidden", "false");
+const menuBtn = document.getElementById("menuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+
+// ===============================
+// LOGIN MODAL
+// ===============================
+
+function openLogin() {
+  if (!loginModal) return;
+
+  loginModal.classList.add("active");
+  loginModal.setAttribute("aria-hidden", "false");
 }
 
-function closeModal() {
-  if (!modal) return;
-  modal.classList.remove("show");
-  modal.setAttribute("aria-hidden", "true");
+function closeLogin() {
+  if (!loginModal) return;
+
+  loginModal.classList.remove("active");
+  loginModal.setAttribute("aria-hidden", "true");
 }
 
-function updateLoginUI(user) {
-  loginButtons.forEach(btn => {
-    if (user) {
-      btn.textContent = user.displayName
-        ? user.displayName.split(" ")[0]
-        : "Account";
 
-      btn.title = "Signed in as " + user.email;
-    } else {
-      btn.textContent = "Login / Register";
-      btn.title = "";
-    }
-  });
-}
+loginBtn?.addEventListener("click", openLogin);
+mobileLoginBtn?.addEventListener("click", openLogin);
+heroLogin?.addEventListener("click", openLogin);
 
-function setGoogleButton(text, disabled = false) {
-  if (!googleBtn) return;
+closeModal?.addEventListener("click", closeLogin);
 
-  googleBtn.disabled = disabled;
-  googleBtn.innerHTML = `<span>G</span> ${text}`;
-}
 
-function loginSuccess(user) {
-  if (!user) return;
-
-  closeModal();
-  updateLoginUI(user);
-
-  if (modalText) {
-    modalText.textContent =
-      `Signed in as ${user.email}. You can now register for KPL tournaments.`;
+loginModal?.addEventListener("click", (event) => {
+  if (event.target === loginModal) {
+    closeLogin();
   }
-
-  if (modalSmall) {
-    modalSmall.textContent =
-      "Google account connected successfully.";
-  }
-
-  setGoogleButton("Continue with Google", false);
-}
-
-loginButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    menu?.classList.remove("show");
-    openModal();
-  });
-});
-
-document.getElementById("closeModal")?.addEventListener("click", closeModal);
-
-document.querySelectorAll("[data-register]").forEach(btn => {
-  btn.addEventListener("click", () => {
-
-    const user = auth.currentUser;
-
-    if (user) {
-      // User already logged in
-      window.location.href = "register.html";
-    } else {
-      // User not logged in
-      openModal();
-    }
-
-  });
-});
-
-document.getElementById("menuBtn")?.addEventListener("click", () => {
-  menu?.classList.toggle("show");
-});
-
-modal?.addEventListener("click", e => {
-  if (e.target === modal) closeModal();
 });
 
 
-/* GOOGLE LOGIN */
+// ===============================
+// GOOGLE LOGIN
+// ===============================
+
 googleBtn?.addEventListener("click", async () => {
 
-  setGoogleButton("Signing in...", true);
-
   try {
-    /*
-      First try normal popup login.
-    */
-    const result = await signInWithPopup(auth, provider);
 
-    if (result?.user) {
-      loginSuccess(result.user);
+    googleBtn.disabled = true;
+    googleBtn.innerHTML = "Signing in...";
+
+    const result =
+      await signInWithPopup(
+        auth,
+        provider
+      );
+
+    if (result.user) {
+
+      closeLogin();
+
+      // Registration page
+      window.location.href =
+        "registration.html";
+
     }
 
   } catch (error) {
 
-    console.error("Google popup login error:", error);
+    console.error(error);
 
-    /*
-      If popup doesn't work on mobile/browser,
-      automatically use Google redirect login.
-    */
+    alert(
+      "Google login failed. Please try again."
+    );
 
-    if (
-      error.code === "auth/popup-blocked" ||
-      error.code === "auth/popup-cancelled-by-user" ||
-      error.code === "auth/cancelled-popup-request" ||
-      error.code === "auth/operation-not-supported-in-this-environment"
-    ) {
+    googleBtn.disabled = false;
 
-      try {
-        await signInWithRedirect(auth, provider);
-        return;
+    googleBtn.innerHTML =
+      '<span>G</span> Continue with Google';
 
-      } catch (redirectError) {
-
-        console.error(
-          "Google redirect login error:",
-          redirectError
-        );
-
-        setGoogleButton("Continue with Google", false);
-
-        alert(
-          "Google login start nahi ho paya. Please try again."
-        );
-
-        return;
-      }
-    }
-
-    let message =
-      "Google sign-in failed. Please try again.";
-
-    if (error.code === "auth/unauthorized-domain") {
-      message =
-        "kplofficial.online Firebase Authorized Domains mein add nahi hai.";
-    }
-
-    if (error.code === "auth/operation-not-allowed") {
-      message =
-        "Firebase mein Google Login enabled nahi hai.";
-    }
-
-    if (error.code === "auth/network-request-failed") {
-      message =
-        "Internet connection problem. Please try again.";
-    }
-
-    alert(message);
-
-    setGoogleButton("Continue with Google", false);
   }
+
 });
 
 
-/*
-  Handles Google redirect result
-  when user returns to kplofficial.online
-*/
+// ===============================
+// AUTH STATE
+// ===============================
 
-getRedirectResult(auth)
-  .then(result => {
+onAuthStateChanged(auth, (user) => {
 
-    if (result?.user) {
-      loginSuccess(result.user);
+  if (!user) {
+
+    if (loginBtn) {
+      loginBtn.textContent =
+        "Login / Register";
     }
 
-  })
-  .catch(error => {
+    return;
+  }
+
+
+  if (loginBtn) {
+    loginBtn.textContent =
+      "Register Now";
+  }
+
+
+  if (mobileLoginBtn) {
+    mobileLoginBtn.textContent =
+      "Register Now";
+  }
+
+});
+
+
+// ===============================
+// MOBILE MENU
+// ===============================
+
+menuBtn?.addEventListener("click", () => {
+
+  mobileMenu?.classList.toggle("active");
+
+});
+
+
+mobileMenu
+  ?.querySelectorAll("a")
+  .forEach((link) => {
+
+    link.addEventListener("click", () => {
+
+      mobileMenu.classList.remove(
+        "active"
+      );
+
+    });
+
+  });
+
+
+// ===============================
+// FIRESTORE LIVE SETTINGS
+// ===============================
+
+const settingsRef =
+  doc(
+    db,
+    "siteSettings",
+    "main"
+  );
+
+
+onSnapshot(
+  settingsRef,
+  (snapshot) => {
+
+    if (!snapshot.exists()) {
+
+      console.log(
+        "siteSettings/main not found yet."
+      );
+
+      return;
+    }
+
+
+    const data =
+      snapshot.data();
+
+
+    console.log(
+      "KPL settings updated:",
+      data
+    );
+
+
+    // -------------------------------
+    // WEBSITE LOGO
+    // -------------------------------
+
+    if (data.websiteLogo) {
+
+      document
+        .querySelectorAll(
+          ".brand-mark"
+        )
+        .forEach((element) => {
+
+          element.innerHTML =
+            `<img src="${data.websiteLogo}" alt="KPL">`;
+
+        });
+
+    }
+
+
+    // -------------------------------
+    // WEBSITE NAME
+    // -------------------------------
+
+    if (data.websiteName) {
+
+      document
+        .querySelectorAll(
+          ".brand b"
+        )
+        .forEach((element) => {
+
+          element.textContent =
+            data.websiteName;
+
+        });
+
+    }
+
+
+    // -------------------------------
+    // FOOTBALL TOURNAMENT
+    // -------------------------------
+
+    if (data.football) {
+
+      const football =
+        data.football;
+
+
+      const card =
+        document.querySelector(
+          ".football-card"
+        );
+
+      if (card) {
+
+        const title =
+          card.querySelector("b");
+
+        const small =
+          card.querySelector("small");
+
+        if (title && football.name) {
+          title.textContent =
+            football.name;
+        }
+
+        if (small && football.status) {
+          small.textContent =
+            football.status;
+        }
+
+      }
+
+
+      const tournamentCards =
+        document.querySelectorAll(
+          ".tournament-card"
+        );
+
+
+      if (
+        tournamentCards[0] &&
+        football.name
+      ) {
+
+        const title =
+          tournamentCards[0]
+            .querySelector("h3");
+
+        if (title) {
+          title.textContent =
+            football.name;
+        }
+
+      }
+
+    }
+
+
+    // -------------------------------
+    // CRICKET TOURNAMENT
+    // -------------------------------
+
+    if (data.cricket) {
+
+      const cricket =
+        data.cricket;
+
+
+      const cards =
+        document.querySelectorAll(
+          ".tournament-card"
+        );
+
+
+      if (
+        cards[1] &&
+        cricket.name
+      ) {
+
+        const title =
+          cards[1].querySelector("h3");
+
+        if (title) {
+          title.textContent =
+            cricket.name;
+        }
+
+      }
+
+    }
+
+
+    // -------------------------------
+    // CONTACT
+    // -------------------------------
+
+    if (data.contact) {
+
+      document
+        .querySelectorAll(
+          "[data-contact]"
+        )
+        .forEach((element) => {
+
+          element.textContent =
+            data.contact;
+
+        });
+
+    }
+
+
+    // -------------------------------
+    // UPI ID
+    // -------------------------------
+
+    if (data.upiId) {
+
+      document
+        .querySelectorAll(
+          "[data-upi]"
+        )
+        .forEach((element) => {
+
+          element.textContent =
+            data.upiId;
+
+        });
+
+    }
+
+  },
+
+  (error) => {
 
     console.error(
-      "Google redirect result error:",
+      "Firestore settings error:",
       error
     );
 
-    if (error.code === "auth/unauthorized-domain") {
-      alert(
-        "kplofficial.online Firebase Authorized Domains mein add nahi hai."
-      );
-    }
-
-    setGoogleButton("Continue with Google", false);
-  });
-
-
-/*
-  Firebase authentication state
-*/
-
-onAuthStateChanged(auth, user => {
-
-  updateLoginUI(user);
-
-  if (user) {
-
-    if (modalText) {
-      modalText.textContent =
-        `Signed in as ${user.email}. You can now register for KPL tournaments.`;
-    }
-
-    if (modalSmall) {
-      modalSmall.textContent =
-        "Google account connected successfully.";
-    }
   }
-});
+);
 
 
-/*
-  Logout
-*/
+// ===============================
+// REGISTER BUTTONS
+// ===============================
 
-window.kplLogout = async () => {
+document
+  .querySelectorAll(
+    "[data-register]"
+  )
+  .forEach((button) => {
 
-  try {
+    button.addEventListener(
+      "click",
+      () => {
 
-    await signOut(auth);
+        if (!auth.currentUser) {
 
-    updateLoginUI(null);
+          openLogin();
 
-  } catch (error) {
-
-    console.error("Logout error:", error);
-
-  }
-};
+          return;
+        }
 
 
-/*
-  Close mobile menu after navigation
-*/
+        window.location.href =
+          "registration.html";
 
-document.querySelectorAll('a[href^="#"]').forEach(a => {
+      }
+    );
 
-  a.addEventListener("click", () => {
-    menu?.classList.remove("show");
   });
-
-});
