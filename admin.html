@@ -1,352 +1,585 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>KPL Official — Admin Panel</title>
+<title>KPL Official | Admin</title>
 
 <style>
 *{box-sizing:border-box}
+:root{
+  --bg:#07090d;
+  --panel:#0e131b;
+  --panel2:#131a24;
+  --line:rgba(255,255,255,.09);
+  --text:#f7f8fb;
+  --muted:#8994a5;
+  --lime:#c8ff38;
+  --cyan:#72f7d1;
+  --red:#ff536d;
+  --green:#35df8a;
+  --yellow:#ffc857;
+}
 
 body{
-margin:0;
-font-family:Inter,Arial,sans-serif;
-background:#080914;
-color:#f7f7fb;
+  margin:0;
+  font-family:Inter,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
 }
 
-button,input,textarea,select{
-font:inherit;
+button,input,select,textarea{
+  font:inherit;
 }
 
-.top{
-padding:18px 20px;
-background:#0d0e1d;
-border-bottom:1px solid #25263a;
-display:flex;
-justify-content:space-between;
-align-items:center;
-position:sticky;
-top:0;
-z-index:20;
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* LOGIN */
+
+.login-screen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:
+    radial-gradient(circle at 20% 10%,rgba(200,255,56,.08),transparent 30%),
+    radial-gradient(circle at 90% 80%,rgba(114,247,209,.06),transparent 30%),
+    var(--bg);
+}
+
+.login-box{
+  width:min(430px,100%);
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:35px;
+  text-align:center;
+  box-shadow:0 30px 100px rgba(0,0,0,.4);
 }
 
 .logo{
-display:flex;
-align-items:center;
-gap:12px;
+  width:55px;
+  height:55px;
+  display:grid;
+  place-items:center;
+  margin:auto;
+  border-radius:15px;
+  background:linear-gradient(135deg,var(--lime),var(--cyan));
+  color:#080b08;
+  font-size:32px;
+  font-weight:900;
 }
 
-.logo-icon{
-width:48px;
-height:48px;
-border-radius:15px;
-background:linear-gradient(135deg,#b7ff21,#35e6ff);
-color:#080914;
-display:grid;
-place-items:center;
-font-size:27px;
-font-weight:900;
+.login-box h1{
+  margin:17px 0 5px;
 }
 
-.logo b{
-display:block;
-font-size:22px;
+.login-box p{
+  color:var(--muted);
+  font-size:13px;
 }
 
-.logo small{
-letter-spacing:4px;
-color:#8f92a8;
+.google-btn{
+  width:100%;
+  margin-top:20px;
+  padding:14px;
+  border:0;
+  border-radius:12px;
+  background:white;
+  color:#111;
+  font-weight:800;
 }
 
-.container{
-max-width:1100px;
-margin:auto;
-padding:25px 16px 60px;
+/* HEADER */
+
+.header{
+  height:68px;
+  background:rgba(7,9,13,.92);
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 22px;
+  position:sticky;
+  top:0;
+  z-index:100;
+  backdrop-filter:blur(20px);
 }
 
-.login{
-max-width:430px;
-margin:80px auto;
-background:#111222;
-border:1px solid #292b40;
-border-radius:24px;
-padding:30px;
-text-align:center;
+.brand{
+  font-size:20px;
+  font-weight:900;
 }
 
-.login h1{
-margin:0 0 8px;
+.brand span{
+  color:var(--lime);
 }
 
-.login p{
-color:#999db4;
-}
-
-.google{
-width:100%;
-padding:15px;
-border:0;
-border-radius:13px;
-background:#fff;
-color:#111;
-font-weight:800;
-cursor:pointer;
-}
-
-.dashboard{
-display:none;
-}
-
-.heading{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:15px;
-margin-bottom:20px;
-}
-
-.heading h1{
-margin:0;
-font-size:30px;
-}
-
-.heading p{
-color:#8f92a8;
-margin:5px 0;
+.admin-user{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:11px;
 }
 
 .logout{
-border:1px solid #34364e;
-background:#17182a;
-color:#fff;
-padding:10px 15px;
-border-radius:10px;
-cursor:pointer;
+  background:#171d27;
+  border:1px solid var(--line);
+  color:#fff;
+  padding:9px 13px;
+  border-radius:9px;
 }
 
-.tabs{
-display:flex;
-gap:8px;
-overflow:auto;
-margin-bottom:18px;
+/* LAYOUT */
+
+.layout{
+  display:flex;
+  min-height:calc(100vh - 68px);
 }
 
-.tab{
-padding:11px 17px;
-border-radius:10px;
-border:1px solid #2d2f45;
-background:#111222;
-color:#aaaec3;
-cursor:pointer;
-white-space:nowrap;
+.sidebar{
+  width:245px;
+  flex-shrink:0;
+  background:#0a0e14;
+  border-right:1px solid var(--line);
+  padding:18px 12px;
+  position:sticky;
+  top:68px;
+  height:calc(100vh - 68px);
+  overflow-y:auto;
 }
 
-.tab.active{
-background:#b7ff21;
-color:#080914;
-border-color:#b7ff21;
-font-weight:800;
+.sidebar-title{
+  color:#5e6979;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:2px;
+  padding:12px;
 }
+
+.nav-btn{
+  width:100%;
+  border:0;
+  background:transparent;
+  color:#8792a2;
+  padding:12px;
+  border-radius:10px;
+  text-align:left;
+  margin-bottom:4px;
+  font-size:12px;
+  font-weight:800;
+}
+
+.nav-btn:hover{
+  background:#111722;
+  color:#fff;
+}
+
+.nav-btn.active{
+  background:var(--lime);
+  color:#080b08;
+}
+
+.main{
+  flex:1;
+  min-width:0;
+  padding:25px;
+  max-width:1500px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* CARDS */
 
 .card{
-background:#111222;
-border:1px solid #292b40;
-border-radius:20px;
-padding:20px;
-margin-bottom:18px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:18px;
 }
 
-.card h2{
-margin-top:0;
+.page-title{
+  margin:0 0 20px;
+  font-size:28px;
+}
+
+.small{
+  color:var(--muted);
+  font-size:11px;
 }
 
 .grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:14px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
 }
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-bottom:20px;
+}
+
+.stat{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:18px;
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.stat-number{
+  margin-top:8px;
+  font-size:30px;
+  font-weight:900;
+}
+
+.lime{
+  color:var(--lime);
+}
+
+.green{
+  color:var(--green);
+}
+
+.yellow{
+  color:var(--yellow);
+}
+
+.red{
+  color:var(--red);
+}
+
+/* FORM */
 
 .field{
-display:flex;
-flex-direction:column;
-gap:7px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
 }
 
 .field.full{
-grid-column:1/-1;
+  grid-column:1/-1;
 }
 
-.field label{
-font-size:13px;
-color:#a9acc0;
-font-weight:700;
+label{
+  color:#aab3c0;
+  font-size:10px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.8px;
 }
 
-.field input,
-.field textarea,
-.field select{
-width:100%;
-padding:13px;
-border-radius:11px;
-border:1px solid #303249;
-background:#090a15;
-color:#fff;
-outline:none;
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  background:#090d13;
+  border:1px solid var(--line);
+  border-radius:10px;
+  color:white;
+  outline:none;
 }
 
-.field textarea{
-min-height:110px;
-resize:vertical;
+textarea{
+  min-height:110px;
+  resize:vertical;
 }
 
-.field input:focus,
-.field textarea:focus,
-.field select:focus{
-border-color:#b7ff21;
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:var(--lime);
 }
 
-.upload{
-border:1px dashed #444760;
-border-radius:14px;
-padding:15px;
-background:#0b0c17;
+/* BUTTONS */
+
+.btn{
+  border:0;
+  padding:10px 14px;
+  border-radius:9px;
+  font-size:10px;
+  font-weight:900;
 }
 
-.upload input{
-border:0;
-padding:0;
+.primary{
+  background:var(--lime);
+  color:#080b08;
 }
+
+.secondary{
+  background:#1a212c;
+  color:#fff;
+  border:1px solid var(--line);
+}
+
+.success{
+  background:var(--green);
+  color:#06120c;
+}
+
+.danger{
+  background:var(--red);
+  color:#fff;
+}
+
+.warning{
+  background:var(--yellow);
+  color:#161000;
+}
+
+.btn-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:14px;
+}
+
+/* TABLE */
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:850px;
+}
+
+th{
+  color:#697486;
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+th,td{
+  padding:12px 9px;
+  border-bottom:1px solid var(--line);
+  text-align:left;
+  vertical-align:top;
+  font-size:11px;
+}
+
+td{
+  color:#dce1e8;
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:20px;
+  background:#1b222d;
+  color:#b9c2ce;
+  font-size:9px;
+  font-weight:900;
+}
+
+.badge.pending{
+  color:var(--yellow);
+  background:rgba(255,200,87,.09);
+}
+
+.badge.approved{
+  color:var(--green);
+  background:rgba(53,223,138,.09);
+}
+
+.badge.rejected{
+  color:var(--red);
+  background:rgba(255,83,109,.09);
+}
+
+/* IMAGE */
 
 .preview{
-display:none;
-width:100%;
-max-height:220px;
-object-fit:cover;
-border-radius:12px;
-margin-top:10px;
+  width:100%;
+  max-width:220px;
+  max-height:180px;
+  object-fit:contain;
+  display:none;
+  margin-top:8px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:#080b10;
 }
 
-.actions{
-display:flex;
-gap:10px;
-margin-top:18px;
+/* LIST */
+
+.item{
+  padding:15px;
+  background:#0a0f16;
+  border:1px solid var(--line);
+  border-radius:13px;
+  margin-bottom:10px;
 }
 
-.save{
-flex:1;
-border:0;
-background:#b7ff21;
-color:#080914;
-font-weight:900;
-padding:15px;
-border-radius:12px;
-cursor:pointer;
+.item-head{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:flex-start;
 }
 
-.save:disabled{
-opacity:.6;
-cursor:not-allowed;
+.item-title{
+  font-weight:900;
 }
 
-.cancel{
-padding:15px 20px;
-border-radius:12px;
-border:1px solid #34364e;
-background:#17182a;
-color:#fff;
-cursor:pointer;
+.item-meta{
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.7;
+  margin-top:6px;
 }
 
-.tournament{
-display:grid;
-grid-template-columns:120px 1fr auto;
-gap:15px;
-align-items:center;
+/* SEARCH */
+
+.search{
+  max-width:350px;
+  margin-bottom:14px;
 }
 
-.tournament img{
-width:120px;
-height:85px;
-object-fit:cover;
-border-radius:12px;
-background:#080914;
+/* NOTICE */
+
+.notice{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  max-width:360px;
+  padding:13px 16px;
+  border-radius:11px;
+  background:#161d27;
+  color:white;
+  border:1px solid var(--line);
+  display:none;
+  z-index:500;
+  font-size:11px;
 }
 
-.tournament h3{
-margin:0 0 5px;
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  backdrop-filter:blur(10px);
+  z-index:300;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
 }
 
-.tournament p{
-margin:0;
-color:#9296aa;
-font-size:13px;
-line-height:1.6;
+.modal.open{
+  display:flex;
 }
 
-.tour-actions{
-display:flex;
-gap:7px;
+.modal-box{
+  width:min(700px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:#10151d;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:22px;
 }
 
-.edit,
-.delete{
-border:0;
-padding:9px 12px;
-border-radius:9px;
-cursor:pointer;
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
 }
 
-.edit{
-background:#20223a;
-color:#fff;
+.close{
+  background:#1b222d;
+  color:#fff;
+  border:0;
+  width:34px;
+  height:34px;
+  border-radius:50%;
 }
 
-.delete{
-background:#ff4267;
-color:#fff;
+/* MOBILE */
+
+@media(max-width:900px){
+
+  .sidebar{
+    width:100%;
+    height:auto;
+    position:sticky;
+    top:68px;
+    display:flex;
+    overflow-x:auto;
+    padding:8px;
+    z-index:50;
+  }
+
+  .sidebar-title{
+    display:none;
+  }
+
+  .nav-btn{
+    min-width:max-content;
+    width:auto;
+    margin:0;
+  }
+
+  .layout{
+    display:block;
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .main{
+    padding:15px;
+  }
 }
 
-.status{
-position:fixed;
-left:50%;
-bottom:20px;
-transform:translateX(-50%);
-background:#191a2c;
-border:1px solid #33364e;
-padding:13px 18px;
-border-radius:12px;
-display:none;
-z-index:99;
-}
+@media(max-width:600px){
 
-@media(max-width:650px){
+  .grid{
+    grid-template-columns:1fr;
+  }
 
-.grid{
-grid-template-columns:1fr;
-}
+  .field.full{
+    grid-column:auto;
+  }
 
-.field.full{
-grid-column:auto;
-}
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
 
-.tournament{
-grid-template-columns:80px 1fr;
-}
+  .admin-user span{
+    display:none;
+  }
 
-.tournament img{
-width:80px;
-height:70px;
-}
-
-.tour-actions{
-grid-column:1/-1;
-}
-
-.heading{
-align-items:flex-start;
-}
+  .header{
+    padding:0 12px;
+  }
 
 }
 </style>
@@ -354,1509 +587,3943 @@ align-items:flex-start;
 
 <body>
 
-<header class="top">
+<!-- LOGIN -->
 
-<div class="logo">
+<div id="loginScreen" class="login-screen">
 
-<div class="logo-icon">K</div>
+  <div class="login-box">
 
-<div>
-<b>KPL</b>
-<small>OFFICIAL</small>
+    <div class="logo">K</div>
+
+    <h1>KPL OFFICIAL</h1>
+
+    <p>Secure Administrator Panel</p>
+
+    <button
+      id="googleLogin"
+      class="google-btn">
+      Continue with Google
+    </button>
+
+    <p id="loginError"></p>
+
+  </div>
+
 </div>
 
-</div>
 
-<button class="logout" id="logoutBtn" style="display:none">
-Logout
-</button>
+<!-- ADMIN -->
+
+<div id="adminScreen" class="hidden">
+
+<header class="header">
+
+  <div class="brand">
+    KPL <span>OFFICIAL</span> ADMIN
+  </div>
+
+  <div class="admin-user">
+
+    <span id="adminEmail"></span>
+
+    <button
+      id="logoutBtn"
+      class="logout">
+      Logout
+    </button>
+
+  </div>
 
 </header>
 
 
-<div id="loginScreen" class="login">
+<div class="layout">
 
-<h1>KPL Admin</h1>
+<aside class="sidebar">
 
-<p>
-Sign in with your authorized Google account to manage tournaments.
-</p>
+  <div class="sidebar-title">
+    MANAGEMENT
+  </div>
 
-<button class="google" id="googleLogin">
-Continue with Google
-</button>
+  <button class="nav-btn active" data-page="dashboard">
+    Dashboard
+  </button>
 
-</div>
+  <button class="nav-btn" data-page="tournaments">
+    Tournaments
+  </button>
+
+  <button class="nav-btn" data-page="registrations">
+    Team Registrations
+  </button>
+
+  <button class="nav-btn" data-page="teamApproval">
+    Team Approval
+  </button>
+
+  <button class="nav-btn" data-page="payments">
+    Payment Approval
+  </button>
+
+  <button class="nav-btn" data-page="aadhaar">
+    Aadhaar Approval
+  </button>
+
+  <button class="nav-btn" data-page="players">
+    Players
+  </button>
+
+  <div class="sidebar-title">
+    COMMUNICATION
+  </div>
+
+  <button class="nav-btn" data-page="support">
+    Contact / Support
+  </button>
+
+  <button class="nav-btn" data-page="announcements">
+    Announcements
+  </button>
+
+  <button class="nav-btn" data-page="referrals">
+    Referral System
+  </button>
+
+  <div class="sidebar-title">
+    SETTINGS
+  </div>
+
+  <button class="nav-btn" data-page="paymentSettings">
+    Payment Settings
+  </button>
+
+  <button class="nav-btn" data-page="settings">
+    Website Settings
+  </button>
+
+</aside>
 
 
-<main id="dashboard" class="dashboard container">
-
-<div class="heading">
-
-<div>
-
-<h1>Admin Dashboard</h1>
-
-<p id="adminEmail"></p>
-
-</div>
-
-</div>
+<main class="main">
 
 
-<div class="tabs">
+<!-- DASHBOARD -->
 
-<button class="tab active" data-tab="tournaments">
-Tournaments
-</button>
+<section id="dashboard" class="page active">
 
-<button class="tab" data-tab="add">
-Add Tournament
-</button>
+  <h1 class="page-title">
+    Dashboard
+  </h1>
 
-</div>
+  <div class="stats">
+
+    <div class="stat">
+      <div class="stat-label">TOURNAMENTS</div>
+      <div class="stat-number lime" id="statTournaments">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">REGISTRATIONS</div>
+      <div class="stat-number" id="statRegistrations">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">PENDING PAYMENTS</div>
+      <div class="stat-number yellow" id="statPayments">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">PENDING VERIFICATION</div>
+      <div class="stat-number red" id="statVerification">0</div>
+    </div>
+
+  </div>
 
 
-<section id="tournamentsTab">
+  <div class="card">
 
-<div class="card">
+    <h2>Quick Overview</h2>
 
-<h2>Live Tournaments</h2>
+    <p class="small">
+      KPL Official admin control center. All changes
+      are stored in Firebase and can be used by the
+      public website.
+    </p>
 
-<div id="tournamentList">
-Loading tournaments...
-</div>
-
-</div>
+  </div>
 
 </section>
 
 
-<section id="addTab" style="display:none">
+<!-- TOURNAMENTS -->
+
+<section id="tournaments" class="page">
+
+  <h1 class="page-title">
+    Tournament Manager
+  </h1>
+
+  <div class="card">
+
+    <div class="grid">
+
+      <div class="field">
+        <label>Tournament Name</label>
+        <input id="tName">
+      </div>
+
+      <div class="field">
+        <label>Sport</label>
+        <select id="tSport">
+          <option>Football</option>
+          <option>Cricket</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Entry Fee</label>
+        <input id="tEntryFee" type="number">
+      </div>
+
+      <div class="field">
+        <label>Prize Pool</label>
+        <input id="tPrizePool">
+      </div>
+
+      <div class="field">
+        <label>Match Date</label>
+        <input id="tDate" type="date">
+      </div>
+
+      <div class="field">
+        <label>Registration Deadline</label>
+        <input id="tDeadline" type="date">
+      </div>
+
+      <div class="field">
+        <label>Venue</label>
+        <input id="tVenue">
+      </div>
+
+      <div class="field">
+        <label>Slots</label>
+        <input id="tSlots" type="number">
+      </div>
+
+      <div class="field">
+        <label>Minimum Players</label>
+        <input id="tMinPlayers" type="number">
+      </div>
+
+      <div class="field">
+        <label>Maximum Players</label>
+        <input id="tMaxPlayers" type="number">
+      </div>
+
+      <div class="field">
+        <label>Status</label>
+        <select id="tStatus">
+          <option value="OPEN">OPEN</option>
+          <option value="FULL">FULL</option>
+          <option value="CLOSED">CLOSED</option>
+          <option value="DRAFT">DRAFT</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Age Limit</label>
+        <input id="tAgeLimit">
+      </div>
+
+      <div class="field full">
+        <label>Tournament Logo</label>
+        <input id="tLogoFile" type="file" accept="image/*">
+        <button id="uploadTournamentLogo" class="btn secondary">
+          Upload Logo
+        </button>
+        <img id="tLogoPreview" class="preview">
+        <input id="tLogoUrl" type="hidden">
+      </div>
+
+      <div class="field full">
+        <label>Tournament Banner</label>
+        <input id="tBannerFile" type="file" accept="image/*">
+        <button id="uploadTournamentBanner" class="btn secondary">
+          Upload Banner
+        </button>
+        <img id="tBannerPreview" class="preview">
+        <input id="tBannerUrl" type="hidden">
+      </div>
+
+      <div class="field full">
+        <label>Rules</label>
+        <textarea id="tRules"></textarea>
+      </div>
 
-<div class="card">
+    </div>
 
-<h2 id="formTitle">
-Add Tournament
-</h2>
+    <div class="btn-row">
 
+      <button
+        id="saveTournament"
+        class="btn primary">
+        Save Tournament
+      </button>
 
-<form id="tournamentForm">
+      <button
+        id="cancelTournament"
+        class="btn danger hidden">
+        Cancel Edit
+      </button>
 
-<input type="hidden" id="editId">
+    </div>
 
+  </div>
 
-<div class="grid">
 
+  <div class="card">
 
-<div class="field">
+    <h2>Existing Tournaments</h2>
 
-<label>Sport</label>
+    <div id="tournamentList">
+      Loading...
+    </div>
 
-<select id="sport" required>
-
-<option value="football">
-Football
-</option>
-
-<option value="cricket">
-Cricket
-</option>
-
-</select>
-
-</div>
-
-
-<div class="field">
-
-<label>Status</label>
-
-<select id="status">
-
-<option value="upcoming">
-Upcoming
-</option>
-
-<option value="live">
-Live
-</option>
-
-<option value="completed">
-Completed
-</option>
-
-</select>
-
-</div>
-
-
-<div class="field full">
-
-<label>
-Tournament Name
-</label>
-
-<input
-id="name"
-placeholder="KPL Open Age Football Championship"
-required
->
-
-</div>
-
-
-<div class="field">
-
-<label>
-Category / Age
-</label>
-
-<input
-id="category"
-placeholder="Open Age / U-17 / U-25"
->
-
-</div>
-
-
-<div class="field">
-
-<label>
-Venue
-</label>
-
-<input
-id="venue"
-placeholder="The Game Yard Turf"
-required
->
-
-</div>
-
-
-<div class="field">
-
-<label>
-Match Date
-</label>
-
-<input
-id="date"
-type="date"
->
-
-</div>
-
-
-<div class="field">
-
-<label>
-Registration Deadline
-</label>
-
-<input
-id="registrationDeadline"
-type="date"
->
-
-</div>
-
-
-<div class="field">
-
-<label>
-Entry Fee (₹)
-</label>
-
-<input
-id="entryFee"
-type="number"
-min="0"
->
-
-</div>
-
-
-<div class="field">
-
-<label>
-Advance (₹)
-</label>
-
-<input
-id="advance"
-type="number"
-min="0"
->
-
-</div>
-
-
-<div class="field">
-
-<label>
-Prize Pool (₹)
-</label>
-
-<input
-id="prizePool"
-type="number"
-min="0"
->
-
-</div>
-
-
-<div class="field">
-
-<label>
-Total Slots
-</label>
-
-<input
-id="slots"
-type="number"
-min="1"
->
-
-</div>
-
-
-<div class="field">
-
-<label>
-Players Per Team
-</label>
-
-<input
-id="players"
-type="number"
-min="1"
->
-
-</div>
-
-
-<div class="field">
-
-<label>
-Substitutes
-</label>
-
-<input
-id="subs"
-type="number"
-min="0"
->
-
-</div>
-
-
-<div class="field full">
-
-<label>
-Prize Details
-</label>
-
-<textarea
-id="prizes"
-placeholder="Champion: ₹4500 + Trophy&#10;Runner: ₹3500 + Trophy"
-></textarea>
-
-</div>
-
-
-<div class="field full">
-
-<label>
-Description
-</label>
-
-<textarea
-id="description"
-placeholder="Tournament details..."
-></textarea>
-
-</div>
-
-
-<div class="field full">
-
-<label>
-Rules
-</label>
-
-<textarea
-id="rules"
-placeholder="Enter tournament rules..."
-></textarea>
-
-</div>
-
-
-<div class="field">
-
-<label>
-Tournament Image
-</label>
-
-<div class="upload">
-
-<input
-id="image"
-type="file"
-accept="image/*"
->
-
-<img
-id="imagePreview"
-class="preview"
->
-
-</div>
-
-</div>
-
-
-<div class="field">
-
-<label>
-Banner Image
-</label>
-
-<div class="upload">
-
-<input
-id="banner"
-type="file"
-accept="image/*"
->
-
-<img
-id="bannerPreview"
-class="preview"
->
-
-</div>
-
-</div>
-
-
-</div>
-
-
-<div class="actions">
-
-<button
-type="button"
-class="cancel"
-id="cancelBtn"
->
-Cancel
-</button>
-
-<button
-type="submit"
-class="save"
-id="saveBtn"
->
-SAVE TO PUBLIC WEBSITE
-</button>
-
-</div>
-
-</form>
-
-</div>
+  </div>
 
 </section>
+
+
+<!-- REGISTRATIONS -->
+
+<section id="registrations" class="page">
+
+  <h1 class="page-title">
+    Team Registrations
+  </h1>
+
+  <div class="card">
+
+    <input
+      id="registrationSearch"
+      class="search"
+      placeholder="Search team, captain, tournament...">
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Tournament</th>
+            <th>Team</th>
+            <th>Captain</th>
+            <th>Phone</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="registrationTable"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- TEAM APPROVAL -->
+
+<section id="teamApproval" class="page">
+
+  <h1 class="page-title">
+    Team Approval
+  </h1>
+
+  <div class="card">
+
+    <p class="small">
+      Approve or reject team registrations.
+    </p>
+
+    <div id="teamApprovalList">
+      Loading...
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PAYMENT APPROVAL -->
+
+<section id="payments" class="page">
+
+  <h1 class="page-title">
+    Payment Approval
+  </h1>
+
+  <div class="card">
+
+    <p class="small">
+      Review payment amount, UTR and screenshot.
+    </p>
+
+    <div id="paymentList">
+      Loading...
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- AADHAAR -->
+
+<section id="aadhaar" class="page">
+
+  <h1 class="page-title">
+    Aadhaar Approval
+  </h1>
+
+  <div class="card">
+
+    <p class="small">
+      Review Aadhaar number and uploaded front/back
+      documents. Keep this information private.
+    </p>
+
+    <div id="aadhaarList">
+      Loading...
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PLAYERS -->
+
+<section id="players" class="page">
+
+  <h1 class="page-title">
+    Players
+  </h1>
+
+  <div class="card">
+
+    <input
+      id="playerSearch"
+      class="search"
+      placeholder="Search player...">
+
+    <div id="playerList">
+      Loading...
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SUPPORT -->
+
+<section id="support" class="page">
+
+  <h1 class="page-title">
+    Contact / Support
+  </h1>
+
+  <div class="card">
+
+    <div class="grid">
+
+      <div class="field">
+        <label>Support WhatsApp</label>
+        <input id="supportWhatsapp">
+      </div>
+
+      <div class="field">
+        <label>Support Email</label>
+        <input id="supportEmail">
+      </div>
+
+      <div class="field full">
+        <label>Support Message</label>
+        <textarea id="supportMessage"></textarea>
+      </div>
+
+    </div>
+
+    <button
+      id="saveSupportSettings"
+      class="btn primary">
+      Save Support Settings
+    </button>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>User Support Requests</h2>
+
+    <div id="supportList">
+      Loading...
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ANNOUNCEMENTS -->
+
+<section id="announcements" class="page">
+
+  <h1 class="page-title">
+    Announcements
+  </h1>
+
+  <div class="card">
+
+    <div class="grid">
+
+      <div class="field">
+        <label>Announcement Title</label>
+        <input id="announcementTitle">
+      </div>
+
+      <div class="field">
+        <label>Status</label>
+        <select id="announcementStatus">
+          <option value="ON">ON</option>
+          <option value="OFF">OFF</option>
+        </select>
+      </div>
+
+      <div class="field full">
+        <label>Announcement Text</label>
+        <textarea id="announcementText"></textarea>
+      </div>
+
+    </div>
+
+    <button
+      id="saveAnnouncement"
+      class="btn primary">
+      Save Announcement
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- REFERRALS -->
+
+<section id="referrals" class="page">
+
+  <h1 class="page-title">
+    Referral System
+  </h1>
+
+  <div class="card">
+
+    <div class="grid">
+
+      <div class="field">
+        <label>Referral System</label>
+        <select id="referralEnabled">
+          <option value="true">Enabled</option>
+          <option value="false">Disabled</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Referral Reward</label>
+        <input id="referralReward">
+      </div>
+
+    </div>
+
+    <button
+      id="saveReferralSettings"
+      class="btn primary">
+      Save Referral Settings
+    </button>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Referral Records</h2>
+
+    <div id="referralList">
+      Loading...
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PAYMENT SETTINGS -->
+
+<section id="paymentSettings" class="page">
+
+  <h1 class="page-title">
+    Payment Settings
+  </h1>
+
+  <div class="card">
+
+    <div class="grid">
+
+      <div class="field">
+        <label>UPI ID</label>
+        <input id="upiId">
+      </div>
+
+      <div class="field">
+        <label>Payment Name</label>
+        <input id="paymentName">
+      </div>
+
+      <div class="field">
+        <label>Payment Instructions</label>
+        <textarea id="paymentInstructions"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Payment Status</label>
+        <select id="paymentEnabled">
+          <option value="true">Enabled</option>
+          <option value="false">Disabled</option>
+        </select>
+      </div>
+
+      <div class="field full">
+
+        <label>Payment QR</label>
+
+        <input
+          id="qrFile"
+          type="file"
+          accept="image/*">
+
+        <button
+          id="uploadQR"
+          class="btn secondary">
+          Upload QR
+        </button>
+
+        <img
+          id="qrPreview"
+          class="preview">
+
+      </div>
+
+    </div>
+
+    <button
+      id="savePaymentSettings"
+      class="btn primary">
+      Save Payment Settings
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- WEBSITE SETTINGS -->
+
+<section id="settings" class="page">
+
+  <h1 class="page-title">
+    Website Settings
+  </h1>
+
+  <div class="card">
+
+    <div class="grid">
+
+      <div class="field full">
+        <label>Website Name</label>
+        <input id="siteName">
+      </div>
+
+      <div class="field">
+        <label>Contact Number</label>
+        <input id="contactNumber">
+      </div>
+
+      <div class="field">
+        <label>Website Status</label>
+        <select id="websiteStatus">
+          <option value="online">Online</option>
+          <option value="maintenance">Maintenance</option>
+        </select>
+      </div>
+
+      <div class="field full">
+
+        <label>Website Logo</label>
+
+        <input
+          id="siteLogoFile"
+          type="file"
+          accept="image/*">
+
+        <button
+          id="uploadSiteLogo"
+          class="btn secondary">
+          Upload Logo
+        </button>
+
+        <img
+          id="siteLogoPreview"
+          class="preview">
+
+      </div>
+
+      <div class="field full">
+
+        <label>Website Banner</label>
+
+        <input
+          id="siteBannerFile"
+          type="file"
+          accept="image/*">
+
+        <button
+          id="uploadSiteBanner"
+          class="btn secondary">
+          Upload Banner
+        </button>
+
+        <img
+          id="siteBannerPreview"
+          class="preview">
+
+      </div>
+
+    </div>
+
+    <button
+      id="saveWebsiteSettings"
+      class="btn primary">
+      Save Website Settings
+    </button>
+
+  </div>
+
+</section>
+
 
 </main>
+</div>
+</div>
 
 
-<div class="status" id="statusBox"></div>
+<div id="notice" class="notice"></div>
+
+
+<!-- DETAIL MODAL -->
+
+<div id="detailModal" class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <h2 id="modalTitle">
+        Details
+      </h2>
+
+      <button
+        id="closeModal"
+        class="close">
+        ×
+      </button>
+
+    </div>
+
+    <div id="modalContent"></div>
+
+  </div>
+
+</div>
 
 
 <script type="module">
 
-
 import {
-
-auth,
-db,
-storage,
-provider,
-signInWithPopup,
-onAuthStateChanged,
-signOut
-
+  auth,
+  db,
+  provider,
+  signInWithPopup,
+  onAuthStateChanged,
+  signOut
 } from "./firebase.js";
 
-
 import {
-
-collection,
-addDoc,
-updateDoc,
-deleteDoc,
-doc,
-onSnapshot,
-serverTimestamp
-
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  getDoc,
+  setDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-import {
+/* ==============================
+   CONFIG
+============================== */
 
-ref,
-uploadBytes,
-getDownloadURL
+const ADMIN_EMAIL =
+  "rgmoviein@gmail.com";
 
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
+const CLOUD_NAME =
+  "h9wlhvjq";
 
-
-
-/* =========================
-   KPL ADMIN EMAIL
-========================= */
-
-const ADMIN_EMAIL = "rgmoviein@gmail.com";
+const UPLOAD_PRESET =
+  "kpl_upload";
 
 
+/* ==============================
+   ELEMENTS
+============================== */
 
 const loginScreen =
-document.getElementById("loginScreen");
+  document.getElementById("loginScreen");
 
-const dashboard =
-document.getElementById("dashboard");
+const adminScreen =
+  document.getElementById("adminScreen");
 
-const googleLogin =
-document.getElementById("googleLogin");
+const loginError =
+  document.getElementById("loginError");
 
-const logoutBtn =
-document.getElementById("logoutBtn");
+const notice =
+  document.getElementById("notice");
 
-const adminEmail =
-document.getElementById("adminEmail");
-
-const tournamentList =
-document.getElementById("tournamentList");
-
-const tournamentForm =
-document.getElementById("tournamentForm");
-
-const editId =
-document.getElementById("editId");
-
-const formTitle =
-document.getElementById("formTitle");
-
-const saveBtn =
-document.getElementById("saveBtn");
-
-const statusBox =
-document.getElementById("statusBox");
+let editingTournamentId = null;
+let allRegistrations = [];
 
 
+/* ==============================
+   NOTICE
+============================== */
 
-function showStatus(message){
+function showNotice(
+  message,
+  error=false
+){
 
-statusBox.textContent = message;
+  notice.textContent =
+    message;
 
-statusBox.style.display = "block";
+  notice.style.display =
+    "block";
 
-setTimeout(()=>{
+  notice.style.borderColor =
+    error
+      ? "rgba(255,83,109,.4)"
+      : "rgba(200,255,56,.25)";
 
-statusBox.style.display = "none";
-
-},3000);
+  setTimeout(
+    ()=>{
+      notice.style.display =
+        "none";
+    },
+    3000
+  );
 
 }
 
 
+/* ==============================
+   AUTH
+============================== */
 
-/* =========================
-   GOOGLE LOGIN
-========================= */
+document
+  .getElementById("googleLogin")
+  .addEventListener(
+    "click",
+    async()=>{
 
-googleLogin.addEventListener(
-"click",
-async()=>{
+      try{
 
-try{
+        loginError.textContent =
+          "";
 
-googleLogin.disabled = true;
+        await signInWithPopup(
+          auth,
+          provider
+        );
 
-googleLogin.textContent =
-"Signing in...";
+      }catch(error){
 
-await signInWithPopup(
-auth,
-provider
-);
+        loginError.textContent =
+          error.message;
 
-}catch(error){
+      }
 
-console.error(error);
-
-alert(
-"Login failed.\n\n"+
-error.message
-);
-
-googleLogin.disabled = false;
-
-googleLogin.textContent =
-"Continue with Google";
-
-}
-
-});
+    }
+  );
 
 
+document
+  .getElementById("logoutBtn")
+  .addEventListener(
+    "click",
+    ()=>signOut(auth)
+  );
 
-/* =========================
-   AUTH CHECK
-========================= */
 
 onAuthStateChanged(
-auth,
-user=>{
+  auth,
+  user=>{
 
-if(!user){
+    if(!user){
 
-loginScreen.style.display =
-"block";
+      loginScreen
+        .classList
+        .remove("hidden");
 
-dashboard.style.display =
-"none";
+      adminScreen
+        .classList
+        .add("hidden");
 
-logoutBtn.style.display =
-"none";
+      return;
 
-return;
+    }
+
+
+    if(
+      user.email !==
+      ADMIN_EMAIL
+    ){
+
+      loginError.textContent =
+        "Administrator Access Required.";
+
+      signOut(auth);
+
+      return;
+
+    }
+
+
+    loginScreen
+      .classList
+      .add("hidden");
+
+    adminScreen
+      .classList
+      .remove("hidden");
+
+
+    document.getElementById(
+      "adminEmail"
+    ).textContent =
+      user.email;
+
+
+    loadDashboard();
+
+  }
+);
+
+
+/* ==============================
+   NAVIGATION
+============================== */
+
+document
+  .querySelectorAll(".nav-btn")
+  .forEach(btn=>{
+
+    btn.addEventListener(
+      "click",
+      ()=>{
+
+        document
+          .querySelectorAll(".nav-btn")
+          .forEach(x=>
+            x.classList.remove(
+              "active"
+            )
+          );
+
+        btn.classList.add(
+          "active"
+        );
+
+
+        document
+          .querySelectorAll(".page")
+          .forEach(page=>
+            page.classList.remove(
+              "active"
+            )
+          );
+
+
+        document
+          .getElementById(
+            btn.dataset.page
+          )
+          .classList.add(
+            "active"
+          );
+
+
+        loadPage(
+          btn.dataset.page
+        );
+
+      }
+    );
+
+  });
+
+
+function loadPage(page){
+
+  if(page==="dashboard")
+    loadDashboard();
+
+  if(page==="tournaments")
+    loadTournaments();
+
+  if(page==="registrations")
+    loadRegistrations();
+
+  if(page==="teamApproval")
+    loadTeamApproval();
+
+  if(page==="payments")
+    loadPayments();
+
+  if(page==="aadhaar")
+    loadAadhaar();
+
+  if(page==="players")
+    loadPlayers();
+
+  if(page==="support")
+    loadSupport();
+
+  if(page==="announcements")
+    loadAnnouncements();
+
+  if(page==="referrals")
+    loadReferrals();
+
+  if(page==="paymentSettings")
+    loadPaymentSettings();
+
+  if(page==="settings")
+    loadWebsiteSettings();
 
 }
 
 
-if(
-user.email.toLowerCase()
-!== ADMIN_EMAIL.toLowerCase()
+/* ==============================
+   IMAGE UPLOAD
+============================== */
+
+async function uploadImage(file){
+
+  if(!file)
+    throw new Error(
+      "Please select an image."
+    );
+
+
+  const formData =
+    new FormData();
+
+  formData.append(
+    "file",
+    file
+  );
+
+  formData.append(
+    "upload_preset",
+    UPLOAD_PRESET
+  );
+
+
+  const response =
+    await fetch(
+      `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+      {
+        method:"POST",
+        body:formData
+      }
+    );
+
+
+  const data =
+    await response.json();
+
+
+  if(!response.ok){
+
+    throw new Error(
+      data.error?.message ||
+      "Image upload failed."
+    );
+
+  }
+
+
+  return data.secure_url;
+
+}
+
+
+/* ==============================
+   DASHBOARD
+============================== */
+
+async function loadDashboard(){
+
+  try{
+
+    const [
+      tournaments,
+      registrations
+    ] = await Promise.all([
+
+      getDocs(
+        collection(
+          db,
+          "tournaments"
+        )
+      ),
+
+      getDocs(
+        collection(
+          db,
+          "registrations"
+        )
+      )
+
+    ]);
+
+
+    let pendingPayments = 0;
+    let pendingVerification = 0;
+
+
+    registrations.forEach(
+      snap=>{
+
+        const d =
+          snap.data();
+
+
+        const payment =
+          String(
+            d.paymentStatus ||
+            "pending"
+          ).toLowerCase();
+
+
+        const verification =
+          String(
+            d.aadhaarStatus ||
+            d.verificationStatus ||
+            "pending"
+          ).toLowerCase();
+
+
+        if(
+          payment ===
+          "pending"
+        )
+          pendingPayments++;
+
+
+        if(
+          verification ===
+          "pending"
+        )
+          pendingVerification++;
+
+      }
+    );
+
+
+    document.getElementById(
+      "statTournaments"
+    ).textContent =
+      tournaments.size;
+
+
+    document.getElementById(
+      "statRegistrations"
+    ).textContent =
+      registrations.size;
+
+
+    document.getElementById(
+      "statPayments"
+    ).textContent =
+      pendingPayments;
+
+
+    document.getElementById(
+      "statVerification"
+    ).textContent =
+      pendingVerification;
+
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
+}
+
+
+/* ==============================
+   TOURNAMENTS
+============================== */
+
+document
+  .getElementById(
+    "uploadTournamentLogo"
+  )
+  .addEventListener(
+    "click",
+    async()=>{
+
+      try{
+
+        const file =
+          document.getElementById(
+            "tLogoFile"
+          ).files[0];
+
+
+        const url =
+          await uploadImage(file);
+
+
+        document.getElementById(
+          "tLogoUrl"
+        ).value =
+          url;
+
+
+        showPreview(
+          "tLogoPreview",
+          url
+        );
+
+
+        showNotice(
+          "Tournament logo uploaded."
+        );
+
+      }catch(error){
+
+        showNotice(
+          error.message,
+          true
+        );
+
+      }
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "uploadTournamentBanner"
+  )
+  .addEventListener(
+    "click",
+    async()=>{
+
+      try{
+
+        const file =
+          document.getElementById(
+            "tBannerFile"
+          ).files[0];
+
+
+        const url =
+          await uploadImage(file);
+
+
+        document.getElementById(
+          "tBannerUrl"
+        ).value =
+          url;
+
+
+        showPreview(
+          "tBannerPreview",
+          url
+        );
+
+
+        showNotice(
+          "Tournament banner uploaded."
+        );
+
+      }catch(error){
+
+        showNotice(
+          error.message,
+          true
+        );
+
+      }
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "saveTournament"
+  )
+  .addEventListener(
+    "click",
+    async()=>{
+
+      try{
+
+        const name =
+          document
+            .getElementById("tName")
+            .value
+            .trim();
+
+
+        if(!name){
+
+          showNotice(
+            "Tournament name required.",
+            true
+          );
+
+          return;
+
+        }
+
+
+        const data = {
+
+          name,
+
+          sport:
+            document.getElementById(
+              "tSport"
+            ).value,
+
+          entryFee:
+            document.getElementById(
+              "tEntryFee"
+            ).value,
+
+          prizePool:
+            document.getElementById(
+              "tPrizePool"
+            ).value,
+
+          date:
+            document.getElementById(
+              "tDate"
+            ).value,
+
+          deadline:
+            document.getElementById(
+              "tDeadline"
+            ).value,
+
+          venue:
+            document.getElementById(
+              "tVenue"
+            ).value
+            .trim(),
+
+          slots:
+            document.getElementById(
+              "tSlots"
+            ).value,
+
+          minPlayers:
+            document.getElementById(
+              "tMinPlayers"
+            ).value,
+
+          maxPlayers:
+            document.getElementById(
+              "tMaxPlayers"
+            ).value,
+
+          ageLimit:
+            document.getElementById(
+              "tAgeLimit"
+            ).value,
+
+          status:
+            document.getElementById(
+              "tStatus"
+            ).value,
+
+          logoUrl:
+            document.getElementById(
+              "tLogoUrl"
+            ).value,
+
+          bannerUrl:
+            document.getElementById(
+              "tBannerUrl"
+            ).value,
+
+          rules:
+            document.getElementById(
+              "tRules"
+            ).value
+            .trim(),
+
+          updatedAt:
+            serverTimestamp()
+
+        };
+
+
+        if(editingTournamentId){
+
+          await updateDoc(
+            doc(
+              db,
+              "tournaments",
+              editingTournamentId
+            ),
+            data
+          );
+
+          showNotice(
+            "Tournament updated."
+          );
+
+        }else{
+
+          await addDoc(
+            collection(
+              db,
+              "tournaments"
+            ),
+            {
+              ...data,
+              registeredTeams:0,
+              createdAt:
+                serverTimestamp()
+            }
+          );
+
+          showNotice(
+            "Tournament created."
+          );
+
+        }
+
+
+        resetTournamentForm();
+        loadTournaments();
+        loadDashboard();
+
+      }catch(error){
+
+        showNotice(
+          error.message,
+          true
+        );
+
+      }
+
+    }
+  );
+
+
+function resetTournamentForm(){
+
+  editingTournamentId =
+    null;
+
+
+  [
+    "tName",
+    "tEntryFee",
+    "tPrizePool",
+    "tDate",
+    "tDeadline",
+    "tVenue",
+    "tSlots",
+    "tMinPlayers",
+    "tMaxPlayers",
+    "tAgeLimit",
+    "tLogoUrl",
+    "tBannerUrl",
+    "tRules"
+  ].forEach(id=>{
+    document.getElementById(
+      id
+    ).value="";
+  });
+
+
+  document.getElementById(
+    "tStatus"
+  ).value="OPEN";
+
+
+  document.getElementById(
+    "tLogoFile"
+  ).value="";
+
+
+  document.getElementById(
+    "tBannerFile"
+  ).value="";
+
+
+  document.getElementById(
+    "tLogoPreview"
+  ).style.display="none";
+
+
+  document.getElementById(
+    "tBannerPreview"
+  ).style.display="none";
+
+
+  document
+    .getElementById(
+      "cancelTournament"
+    )
+    .classList
+    .add("hidden");
+
+}
+
+
+document
+  .getElementById(
+    "cancelTournament"
+  )
+  .addEventListener(
+    "click",
+    resetTournamentForm
+  );
+
+
+async function loadTournaments(){
+
+  const list =
+    document.getElementById(
+      "tournamentList"
+    );
+
+
+  list.innerHTML =
+    "Loading...";
+
+
+  try{
+
+    const snapshot =
+      await getDocs(
+        collection(
+          db,
+          "tournaments"
+        )
+      );
+
+
+    list.innerHTML="";
+
+
+    if(snapshot.empty){
+
+      list.innerHTML =
+        "<p class='small'>No tournaments yet.</p>";
+
+      return;
+
+    }
+
+
+    snapshot.forEach(
+      snap=>{
+
+        const d =
+          snap.data();
+
+
+        const item =
+          document.createElement(
+            "div"
+          );
+
+
+        item.className =
+          "item";
+
+
+        item.innerHTML = `
+
+          <div class="item-head">
+
+            <div>
+
+              <div class="item-title">
+                ${escapeHTML(
+                  d.name || "Tournament"
+                )}
+              </div>
+
+              <div class="item-meta">
+
+                ${escapeHTML(
+                  d.sport || ""
+                )}
+                •
+                Entry ₹${escapeHTML(
+                  d.entryFee || "0"
+                )}
+                •
+                Prize ₹${escapeHTML(
+                  d.prizePool || "0"
+                )}
+                •
+                Slots ${escapeHTML(
+                  d.slots || "0"
+                )}
+
+              </div>
+
+            </div>
+
+            <span class="badge">
+              ${escapeHTML(
+                d.status || "OPEN"
+              )}
+            </span>
+
+          </div>
+
+
+          <div class="btn-row">
+
+            <button
+              class="btn secondary"
+              data-edit="${snap.id}">
+              Edit
+            </button>
+
+            <button
+              class="btn danger"
+              data-delete="${snap.id}">
+              Delete
+            </button>
+
+          </div>
+
+        `;
+
+
+        list.appendChild(item);
+
+      }
+    );
+
+
+    list
+      .querySelectorAll(
+        "[data-edit]"
+      )
+      .forEach(btn=>
+        btn.addEventListener(
+          "click",
+          ()=>editTournament(
+            btn.dataset.edit
+          )
+        )
+      );
+
+
+    list
+      .querySelectorAll(
+        "[data-delete]"
+      )
+      .forEach(btn=>
+        btn.addEventListener(
+          "click",
+          ()=>deleteTournament(
+            btn.dataset.delete
+          )
+        )
+      );
+
+
+  }catch(error){
+
+    list.innerHTML =
+      escapeHTML(
+        error.message
+      );
+
+  }
+
+}
+
+
+async function editTournament(id){
+
+  const snap =
+    await getDoc(
+      doc(
+        db,
+        "tournaments",
+        id
+      )
+    );
+
+
+  if(!snap.exists())
+    return;
+
+
+  const d =
+    snap.data();
+
+
+  editingTournamentId =
+    id;
+
+
+  document.getElementById(
+    "tName"
+  ).value =
+    d.name || "";
+
+
+  document.getElementById(
+    "tSport"
+  ).value =
+    d.sport || "Football";
+
+
+  document.getElementById(
+    "tEntryFee"
+  ).value =
+    d.entryFee || "";
+
+
+  document.getElementById(
+    "tPrizePool"
+  ).value =
+    d.prizePool || "";
+
+
+  document.getElementById(
+    "tDate"
+  ).value =
+    d.date || "";
+
+
+  document.getElementById(
+    "tDeadline"
+  ).value =
+    d.deadline || "";
+
+
+  document.getElementById(
+    "tVenue"
+  ).value =
+    d.venue || "";
+
+
+  document.getElementById(
+    "tSlots"
+  ).value =
+    d.slots || "";
+
+
+  document.getElementById(
+    "tMinPlayers"
+  ).value =
+    d.minPlayers || "";
+
+
+  document.getElementById(
+    "tMaxPlayers"
+  ).value =
+    d.maxPlayers || "";
+
+
+  document.getElementById(
+    "tAgeLimit"
+  ).value =
+    d.ageLimit || "";
+
+
+  document.getElementById(
+    "tStatus"
+  ).value =
+    d.status || "OPEN";
+
+
+  document.getElementById(
+    "tLogoUrl"
+  ).value =
+    d.logoUrl || "";
+
+
+  document.getElementById(
+    "tBannerUrl"
+  ).value =
+    d.bannerUrl || "";
+
+
+  document.getElementById(
+    "tRules"
+  ).value =
+    d.rules || "";
+
+
+  if(d.logoUrl)
+    showPreview(
+      "tLogoPreview",
+      d.logoUrl
+    );
+
+
+  if(d.bannerUrl)
+    showPreview(
+      "tBannerPreview",
+      d.bannerUrl
+    );
+
+
+  document
+    .getElementById(
+      "cancelTournament"
+    )
+    .classList
+    .remove("hidden");
+
+}
+
+
+async function deleteTournament(id){
+
+  if(
+    !confirm(
+      "Delete this tournament?"
+    )
+  )
+    return;
+
+
+  await deleteDoc(
+    doc(
+      db,
+      "tournaments",
+      id
+    )
+  );
+
+
+  showNotice(
+    "Tournament deleted."
+  );
+
+
+  loadTournaments();
+  loadDashboard();
+
+}
+
+
+/* ==============================
+   REGISTRATIONS
+============================== */
+
+async function loadRegistrations(){
+
+  const table =
+    document.getElementById(
+      "registrationTable"
+    );
+
+
+  table.innerHTML =
+    "<tr><td colspan='6'>Loading...</td></tr>";
+
+
+  try{
+
+    const snapshot =
+      await getDocs(
+        collection(
+          db,
+          "registrations"
+        )
+      );
+
+
+    allRegistrations =
+      snapshot.docs.map(
+        d=>({
+          id:d.id,
+          ...d.data()
+        })
+      );
+
+
+    renderRegistrations(
+      allRegistrations
+    );
+
+  }catch(error){
+
+    table.innerHTML =
+      `<tr><td colspan="6">
+        ${escapeHTML(
+          error.message
+        )}
+      </td></tr>`;
+
+  }
+
+}
+
+
+function renderRegistrations(
+  records
 ){
 
-alert(
-"Administrator access required."
-);
+  const table =
+    document.getElementById(
+      "registrationTable"
+    );
 
-signOut(auth);
 
-return;
+  table.innerHTML="";
+
+
+  if(!records.length){
+
+    table.innerHTML =
+      "<tr><td colspan='6'>No registrations.</td></tr>";
+
+    return;
+
+  }
+
+
+  records.forEach(
+    d=>{
+
+      const row =
+        document.createElement(
+          "tr"
+        );
+
+
+      const status =
+        d.teamStatus ||
+        d.status ||
+        "pending";
+
+
+      row.innerHTML = `
+
+        <td>
+          ${escapeHTML(
+            d.tournament ||
+            d.tournamentName ||
+            ""
+          )}
+        </td>
+
+        <td>
+          ${escapeHTML(
+            d.teamName || ""
+          )}
+        </td>
+
+        <td>
+          ${escapeHTML(
+            d.captainName || ""
+          )}
+        </td>
+
+        <td>
+          ${escapeHTML(
+            d.phone || ""
+          )}
+        </td>
+
+        <td>
+          <span class="badge ${statusClass(status)}">
+            ${escapeHTML(
+              status.toUpperCase()
+            )}
+          </span>
+        </td>
+
+        <td>
+
+          <button
+            class="btn secondary"
+            data-view="${d.id}">
+            View
+          </button>
+
+        </td>
+
+      `;
+
+
+      table.appendChild(row);
+
+    }
+  );
+
+
+  table
+    .querySelectorAll(
+      "[data-view]"
+    )
+    .forEach(btn=>
+      btn.addEventListener(
+        "click",
+        ()=>showRegistration(
+          btn.dataset.view
+        )
+      )
+    );
 
 }
 
 
-loginScreen.style.display =
-"none";
+document
+  .getElementById(
+    "registrationSearch"
+  )
+  .addEventListener(
+    "input",
+    e=>{
 
-dashboard.style.display =
-"block";
-
-logoutBtn.style.display =
-"block";
-
-adminEmail.textContent =
-user.email;
-
-});
-
+      const q =
+        e.target.value
+          .toLowerCase()
+          .trim();
 
 
-logoutBtn.addEventListener(
-"click",
-()=>{
+      renderRegistrations(
+        allRegistrations.filter(
+          d=>
+            String(
+              d.teamName || ""
+            )
+            .toLowerCase()
+            .includes(q) ||
 
-signOut(auth);
+            String(
+              d.captainName || ""
+            )
+            .toLowerCase()
+            .includes(q) ||
 
-});
+            String(
+              d.tournament || ""
+            )
+            .toLowerCase()
+            .includes(q)
+        )
+      );
+
+    }
+  );
 
 
+function showRegistration(id){
 
-/* =========================
-   TABS
-========================= */
+  const d =
+    allRegistrations.find(
+      x=>x.id===id
+    );
+
+
+  if(!d)
+    return;
+
+
+  openModal(
+    "Team Registration",
+    `
+
+      <div class="item-meta">
+
+        <b>Team:</b>
+        ${escapeHTML(
+          d.teamName || "-"
+        )}
+
+        <br>
+
+        <b>Captain:</b>
+        ${escapeHTML(
+          d.captainName || "-"
+        )}
+
+        <br>
+
+        <b>Phone:</b>
+        ${escapeHTML(
+          d.phone || "-"
+        )}
+
+        <br>
+
+        <b>Email:</b>
+        ${escapeHTML(
+          d.email || "-"
+        )}
+
+        <br>
+
+        <b>Tournament:</b>
+        ${escapeHTML(
+          d.tournament ||
+          d.tournamentName ||
+          "-"
+        )}
+
+      </div>
+
+      <div class="btn-row">
+
+        <button
+          class="btn success"
+          id="approveRegistration">
+          Approve Team
+        </button>
+
+        <button
+          class="btn danger"
+          id="rejectRegistration">
+          Reject Team
+        </button>
+
+      </div>
+
+    `
+  );
+
+
+  document
+    .getElementById(
+      "approveRegistration"
+    )
+    .onclick =
+      ()=>changeStatus(
+        "registrations",
+        id,
+        "teamStatus",
+        "approved"
+      );
+
+
+  document
+    .getElementById(
+      "rejectRegistration"
+    )
+    .onclick =
+      ()=>changeStatus(
+        "registrations",
+        id,
+        "teamStatus",
+        "rejected"
+      );
+
+}
+
+
+/* ==============================
+   TEAM APPROVAL
+============================== */
+
+async function loadTeamApproval(){
+
+  const box =
+    document.getElementById(
+      "teamApprovalList"
+    );
+
+
+  box.innerHTML =
+    "Loading...";
+
+
+  try{
+
+    const snapshot =
+      await getDocs(
+        collection(
+          db,
+          "registrations"
+        )
+      );
+
+
+    box.innerHTML="";
+
+
+    snapshot.forEach(
+      snap=>{
+
+        const d =
+          snap.data();
+
+
+        const status =
+          d.teamStatus ||
+          d.status ||
+          "pending";
+
+
+        const item =
+          document.createElement(
+            "div"
+          );
+
+
+        item.className =
+          "item";
+
+
+        item.innerHTML = `
+
+          <div class="item-head">
+
+            <div>
+
+              <div class="item-title">
+                ${escapeHTML(
+                  d.teamName || "Team"
+                )}
+              </div>
+
+              <div class="item-meta">
+                Captain:
+                ${escapeHTML(
+                  d.captainName || "-"
+                )}
+
+                <br>
+
+                Tournament:
+                ${escapeHTML(
+                  d.tournament ||
+                  d.tournamentName ||
+                  "-"
+                )}
+              </div>
+
+            </div>
+
+            <span class="badge ${statusClass(status)}">
+              ${escapeHTML(
+                status
+              )}
+            </span>
+
+          </div>
+
+
+          <div class="btn-row">
+
+            <button
+              class="btn success"
+              data-team-approve="${snap.id}">
+              Approve
+            </button>
+
+            <button
+              class="btn danger"
+              data-team-reject="${snap.id}">
+              Reject
+            </button>
+
+          </div>
+
+        `;
+
+
+        box.appendChild(item);
+
+      }
+    );
+
+
+    box
+      .querySelectorAll(
+        "[data-team-approve]"
+      )
+      .forEach(btn=>
+        btn.onclick =
+          ()=>changeStatus(
+            "registrations",
+            btn.dataset.teamApprove,
+            "teamStatus",
+            "approved"
+          )
+      );
+
+
+    box
+      .querySelectorAll(
+        "[data-team-reject]"
+      )
+      .forEach(btn=>
+        btn.onclick =
+          ()=>changeStatus(
+            "registrations",
+            btn.dataset.teamReject,
+            "teamStatus",
+            "rejected"
+          )
+      );
+
+
+  }catch(error){
+
+    box.textContent =
+      error.message;
+
+  }
+
+}
+
+
+/* ==============================
+   PAYMENT APPROVAL
+============================== */
+
+async function loadPayments(){
+
+  const box =
+    document.getElementById(
+      "paymentList"
+    );
+
+
+  box.innerHTML =
+    "Loading...";
+
+
+  try{
+
+    const snapshot =
+      await getDocs(
+        collection(
+          db,
+          "registrations"
+        )
+      );
+
+
+    box.innerHTML="";
+
+
+    snapshot.forEach(
+      snap=>{
+
+        const d =
+          snap.data();
+
+
+        const status =
+          d.paymentStatus ||
+          "pending";
+
+
+        const item =
+          document.createElement(
+            "div"
+          );
+
+
+        item.className =
+          "item";
+
+
+        item.innerHTML = `
+
+          <div class="item-head">
+
+            <div>
+
+              <div class="item-title">
+                ${escapeHTML(
+                  d.teamName || "Team"
+                )}
+              </div>
+
+              <div class="item-meta">
+
+                Amount:
+                ₹${escapeHTML(
+                  d.paymentAmount ||
+                  d.amount ||
+                  d.entryFee ||
+                  "-"
+                )}
+
+                <br>
+
+                UTR:
+                ${escapeHTML(
+                  d.utr ||
+                  d.utrNumber ||
+                  "-"
+                )}
+
+                <br>
+
+                Tournament:
+                ${escapeHTML(
+                  d.tournament ||
+                  d.tournamentName ||
+                  "-"
+                )}
+
+              </div>
+
+            </div>
+
+            <span class="badge ${statusClass(status)}">
+              ${escapeHTML(
+                status
+              )}
+            </span>
+
+          </div>
+
+
+          ${
+            d.paymentScreenshot ||
+            d.paymentScreenshotUrl
+            ?
+            `<div style="margin-top:12px">
+              <img
+                src="${escapeHTML(
+                  d.paymentScreenshot ||
+                  d.paymentScreenshotUrl
+                )}"
+                style="max-width:280px;max-height:220px;border-radius:12px">
+            </div>`
+            :
+            `<p class="small">
+              No payment screenshot uploaded.
+            </p>`
+          }
+
+
+          <div class="btn-row">
+
+            <button
+              class="btn success"
+              data-pay-approve="${snap.id}">
+              Approve Payment
+            </button>
+
+            <button
+              class="btn danger"
+              data-pay-reject="${snap.id}">
+              Reject Payment
+            </button>
+
+          </div>
+
+        `;
+
+
+        box.appendChild(item);
+
+      }
+    );
+
+
+    box
+      .querySelectorAll(
+        "[data-pay-approve]"
+      )
+      .forEach(btn=>
+        btn.onclick =
+          ()=>changeStatus(
+            "registrations",
+            btn.dataset.payApprove,
+            "paymentStatus",
+            "approved"
+          )
+      );
+
+
+    box
+      .querySelectorAll(
+        "[data-pay-reject]"
+      )
+      .forEach(btn=>
+        btn.onclick =
+          ()=>changeStatus(
+            "registrations",
+            btn.dataset.payReject,
+            "paymentStatus",
+            "rejected"
+          )
+      );
+
+
+  }catch(error){
+
+    box.textContent =
+      error.message;
+
+  }
+
+}
+
+
+/* ==============================
+   AADHAAR
+============================== */
+
+async function loadAadhaar(){
+
+  const box =
+    document.getElementById(
+      "aadhaarList"
+    );
+
+
+  box.innerHTML =
+    "Loading...";
+
+
+  try{
+
+    const snapshot =
+      await getDocs(
+        collection(
+          db,
+          "registrations"
+        )
+      );
+
+
+    box.innerHTML="";
+
+
+    snapshot.forEach(
+      snap=>{
+
+        const d =
+          snap.data();
+
+
+        const status =
+          d.aadhaarStatus ||
+          d.verificationStatus ||
+          "pending";
+
+
+        const front =
+          d.aadhaarFrontUrl ||
+          d.aadhaarFront ||
+          "";
+
+
+        const back =
+          d.aadhaarBackUrl ||
+          d.aadhaarBack ||
+          "";
+
+
+        const item =
+          document.createElement(
+            "div"
+          );
+
+
+        item.className =
+          "item";
+
+
+        item.innerHTML = `
+
+          <div class="item-head">
+
+            <div>
+
+              <div class="item-title">
+                ${escapeHTML(
+                  d.playerName ||
+                  d.teamName ||
+                  "Player"
+                )}
+              </div>
+
+              <div class="item-meta">
+
+                Aadhaar:
+                ${escapeHTML(
+                  d.aadhaarNumber ||
+                  "-"
+                )}
+
+                <br>
+
+                Team:
+                ${escapeHTML(
+                  d.teamName ||
+                  "-"
+                )}
+
+              </div>
+
+            </div>
+
+            <span class="badge ${statusClass(status)}">
+              ${escapeHTML(
+                status
+              )}
+            </span>
+
+          </div>
+
+
+          <div style="
+            display:flex;
+            gap:10px;
+            flex-wrap:wrap;
+            margin-top:12px;
+          ">
+
+            ${
+              front
+              ?
+              `<a
+                href="${escapeHTML(front)}"
+                target="_blank">
+                <img
+                  src="${escapeHTML(front)}"
+                  style="width:180px;height:120px;object-fit:cover;border-radius:10px">
+              </a>`
+              :
+              ""
+            }
+
+            ${
+              back
+              ?
+              `<a
+                href="${escapeHTML(back)}"
+                target="_blank">
+                <img
+                  src="${escapeHTML(back)}"
+                  style="width:180px;height:120px;object-fit:cover;border-radius:10px">
+              </a>`
+              :
+              ""
+            }
+
+          </div>
+
+
+          <div class="btn-row">
+
+            <button
+              class="btn success"
+              data-aadhaar-approve="${snap.id}">
+              Approve
+            </button>
+
+            <button
+              class="btn danger"
+              data-aadhaar-reject="${snap.id}">
+              Reject
+            </button>
+
+          </div>
+
+        `;
+
+
+        box.appendChild(item);
+
+      }
+    );
+
+
+    box
+      .querySelectorAll(
+        "[data-aadhaar-approve]"
+      )
+      .forEach(btn=>
+        btn.onclick =
+          ()=>changeStatus(
+            "registrations",
+            btn.dataset.aadhaarApprove,
+            "aadhaarStatus",
+            "approved"
+          )
+      );
+
+
+    box
+      .querySelectorAll(
+        "[data-aadhaar-reject]"
+      )
+      .forEach(btn=>
+        btn.onclick =
+          ()=>changeStatus(
+            "registrations",
+            btn.dataset.aadhaarReject,
+            "aadhaarStatus",
+            "rejected"
+          )
+      );
+
+
+  }catch(error){
+
+    box.textContent =
+      error.message;
+
+  }
+
+}
+
+
+/* ==============================
+   PLAYERS
+============================== */
+
+async function loadPlayers(){
+
+  const box =
+    document.getElementById(
+      "playerList"
+    );
+
+
+  box.innerHTML =
+    "Loading...";
+
+
+  try{
+
+    const snapshot =
+      await getDocs(
+        collection(
+          db,
+          "registrations"
+        )
+      );
+
+
+    box.innerHTML="";
+
+
+    snapshot.forEach(
+      snap=>{
+
+        const d =
+          snap.data();
+
+
+        if(
+          !d.playerName &&
+          !d.aadhaarNumber
+        )
+          return;
+
+
+        const item =
+          document.createElement(
+            "div"
+          );
+
+
+        item.className =
+          "item";
+
+
+        item.innerHTML = `
+
+          <div class="item-title">
+            ${escapeHTML(
+              d.playerName ||
+              "Player"
+            )}
+          </div>
+
+          <div class="item-meta">
+
+            Age:
+            ${escapeHTML(
+              d.playerAge ||
+              "-"
+            )}
+
+            <br>
+
+            Role:
+            ${escapeHTML(
+              d.playerRole ||
+              "-"
+            )}
+
+            <br>
+
+            Team:
+            ${escapeHTML(
+              d.teamName ||
+              "-"
+            )}
+
+          </div>
+
+        `;
+
+
+        box.appendChild(item);
+
+      }
+    );
+
+
+    if(!box.children.length){
+
+      box.innerHTML =
+        "<p class='small'>No player records found.</p>";
+
+    }
+
+  }catch(error){
+
+    box.textContent =
+      error.message;
+
+  }
+
+}
+
+
+/* ==============================
+   SUPPORT
+============================== */
+
+async function loadSupport(){
+
+  const settings =
+    await getDoc(
+      doc(
+        db,
+        "settings",
+        "support"
+      )
+    );
+
+
+  if(settings.exists()){
+
+    const d =
+      settings.data();
+
+
+    document.getElementById(
+      "supportWhatsapp"
+    ).value =
+      d.whatsapp || "";
+
+
+    document.getElementById(
+      "supportEmail"
+    ).value =
+      d.email || "";
+
+
+    document.getElementById(
+      "supportMessage"
+    ).value =
+      d.message || "";
+
+  }
+
+
+  const box =
+    document.getElementById(
+      "supportList"
+    );
+
+
+  box.innerHTML =
+    "Loading...";
+
+
+  try{
+
+    const snapshot =
+      await getDocs(
+        collection(
+          db,
+          "support"
+        )
+      );
+
+
+    box.innerHTML="";
+
+
+    snapshot.forEach(
+      snap=>{
+
+        const d =
+          snap.data();
+
+
+        const item =
+          document.createElement(
+            "div"
+          );
+
+
+        item.className =
+          "item";
+
+
+        item.innerHTML = `
+
+          <div class="item-title">
+            ${escapeHTML(
+              d.subject ||
+              d.name ||
+              "Support Request"
+            )}
+          </div>
+
+          <div class="item-meta">
+            ${escapeHTML(
+              d.message ||
+              d.text ||
+              ""
+            )}
+          </div>
+
+          <div class="btn-row">
+
+            <button
+              class="btn success"
+              data-support="${snap.id}">
+              Mark Solved
+            </button>
+
+          </div>
+
+        `;
+
+
+        box.appendChild(item);
+
+      }
+    );
+
+
+    box
+      .querySelectorAll(
+        "[data-support]"
+      )
+      .forEach(btn=>
+        btn.onclick =
+          ()=>changeStatus(
+            "support",
+            btn.dataset.support,
+            "status",
+            "solved"
+          )
+      );
+
+
+  }catch(error){
+
+    box.innerHTML =
+      "<p class='small'>No support requests found.</p>";
+
+  }
+
+}
+
 
 document
-.querySelectorAll(".tab")
-.forEach(tab=>{
+  .getElementById(
+    "saveSupportSettings"
+  )
+  .addEventListener(
+    "click",
+    async()=>{
 
-tab.addEventListener(
-"click",
-()=>{
+      await setDoc(
+        doc(
+          db,
+          "settings",
+          "support"
+        ),
+        {
+
+          whatsapp:
+            document.getElementById(
+              "supportWhatsapp"
+            ).value.trim(),
+
+          email:
+            document.getElementById(
+              "supportEmail"
+            ).value.trim(),
+
+          message:
+            document.getElementById(
+              "supportMessage"
+            ).value.trim(),
+
+          updatedAt:
+            serverTimestamp()
+
+        },
+        {merge:true}
+      );
+
+
+      showNotice(
+        "Support settings saved."
+      );
+
+    }
+  );
+
+
+/* ==============================
+   ANNOUNCEMENTS
+============================== */
+
+async function loadAnnouncements(){
+
+  const snap =
+    await getDoc(
+      doc(
+        db,
+        "settings",
+        "announcement"
+      )
+    );
+
+
+  if(!snap.exists())
+    return;
+
+
+  const d =
+    snap.data();
+
+
+  document.getElementById(
+    "announcementTitle"
+  ).value =
+    d.title || "";
+
+
+  document.getElementById(
+    "announcementText"
+  ).value =
+    d.text || "";
+
+
+  document.getElementById(
+    "announcementStatus"
+  ).value =
+    d.status || "OFF";
+
+}
+
 
 document
-.querySelectorAll(".tab")
-.forEach(x=>
-x.classList.remove("active")
-);
+  .getElementById(
+    "saveAnnouncement"
+  )
+  .addEventListener(
+    "click",
+    async()=>{
 
-tab.classList.add("active");
+      await setDoc(
+        doc(
+          db,
+          "settings",
+          "announcement"
+        ),
+        {
 
-const target =
-tab.dataset.tab;
+          title:
+            document.getElementById(
+              "announcementTitle"
+            ).value.trim(),
+
+          text:
+            document.getElementById(
+              "announcementText"
+            ).value.trim(),
+
+          status:
+            document.getElementById(
+              "announcementStatus"
+            ).value,
+
+          updatedAt:
+            serverTimestamp()
+
+        },
+        {merge:true}
+      );
 
 
-document.getElementById(
-"tournamentsTab"
-).style.display =
-target === "tournaments"
-? "block"
-: "none";
+      showNotice(
+        "Announcement saved."
+      );
+
+    }
+  );
 
 
-document.getElementById(
-"addTab"
-).style.display =
-target === "add"
-? "block"
-: "none";
+/* ==============================
+   REFERRAL
+============================== */
 
-});
+async function loadReferrals(){
 
-});
+  const snap =
+    await getDoc(
+      doc(
+        db,
+        "settings",
+        "referral"
+      )
+    );
 
 
+  if(snap.exists()){
 
-/* =========================
-   IMAGE PREVIEW
-========================= */
+    const d =
+      snap.data();
 
-function previewFile(
-input,
-preview
+
+    document.getElementById(
+      "referralEnabled"
+    ).value =
+      String(
+        d.enabled ?? true
+      );
+
+
+    document.getElementById(
+      "referralReward"
+    ).value =
+      d.reward || "";
+
+  }
+
+
+  const box =
+    document.getElementById(
+      "referralList"
+    );
+
+
+  try{
+
+    const records =
+      await getDocs(
+        collection(
+          db,
+          "referrals"
+        )
+      );
+
+
+    box.innerHTML="";
+
+
+    records.forEach(
+      snap=>{
+
+        const d =
+          snap.data();
+
+
+        const item =
+          document.createElement(
+            "div"
+          );
+
+
+        item.className =
+          "item";
+
+
+        item.innerHTML = `
+
+          <div class="item-title">
+            ${escapeHTML(
+              d.code ||
+              d.referralCode ||
+              "Referral"
+            )}
+          </div>
+
+          <div class="item-meta">
+            User:
+            ${escapeHTML(
+              d.userEmail ||
+              d.email ||
+              "-"
+            )}
+
+            <br>
+
+            Referred:
+            ${escapeHTML(
+              d.count ||
+              d.referredCount ||
+              "0"
+            )}
+          </div>
+
+        `;
+
+
+        box.appendChild(item);
+
+      }
+    );
+
+
+  }catch(error){
+
+    box.innerHTML =
+      "<p class='small'>No referral records yet.</p>";
+
+  }
+
+}
+
+
+document
+  .getElementById(
+    "saveReferralSettings"
+  )
+  .addEventListener(
+    "click",
+    async()=>{
+
+      await setDoc(
+        doc(
+          db,
+          "settings",
+          "referral"
+        ),
+        {
+
+          enabled:
+            document.getElementById(
+              "referralEnabled"
+            ).value === "true",
+
+          reward:
+            document.getElementById(
+              "referralReward"
+            ).value.trim(),
+
+          updatedAt:
+            serverTimestamp()
+
+        },
+        {merge:true}
+      );
+
+
+      showNotice(
+        "Referral settings saved."
+      );
+
+    }
+  );
+
+
+/* ==============================
+   PAYMENT SETTINGS
+============================== */
+
+async function loadPaymentSettings(){
+
+  const snap =
+    await getDoc(
+      doc(
+        db,
+        "settings",
+        "site"
+      )
+    );
+
+
+  if(!snap.exists())
+    return;
+
+
+  const d =
+    snap.data();
+
+
+  document.getElementById(
+    "upiId"
+  ).value =
+    d.upiId || "";
+
+
+  document.getElementById(
+    "paymentName"
+  ).value =
+    d.paymentName || "";
+
+
+  document.getElementById(
+    "paymentInstructions"
+  ).value =
+    d.paymentInstructions || "";
+
+
+  document.getElementById(
+    "paymentEnabled"
+  ).value =
+    String(
+      d.paymentEnabled ??
+      true
+    );
+
+
+  if(d.upiQrUrl)
+    showPreview(
+      "qrPreview",
+      d.upiQrUrl
+    );
+
+}
+
+
+document
+  .getElementById(
+    "uploadQR"
+  )
+  .addEventListener(
+    "click",
+    async()=>{
+
+      try{
+
+        const file =
+          document.getElementById(
+            "qrFile"
+          ).files[0];
+
+
+        const url =
+          await uploadImage(file);
+
+
+        await setDoc(
+          doc(
+            db,
+            "settings",
+            "site"
+          ),
+          {
+            upiQrUrl:url,
+            updatedAt:
+              serverTimestamp()
+          },
+          {merge:true}
+        );
+
+
+        showPreview(
+          "qrPreview",
+          url
+        );
+
+
+        showNotice(
+          "Payment QR uploaded."
+        );
+
+      }catch(error){
+
+        showNotice(
+          error.message,
+          true
+        );
+
+      }
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "savePaymentSettings"
+  )
+  .addEventListener(
+    "click",
+    async()=>{
+
+      await setDoc(
+        doc(
+          db,
+          "settings",
+          "site"
+        ),
+        {
+
+          upiId:
+            document.getElementById(
+              "upiId"
+            ).value.trim(),
+
+          paymentName:
+            document.getElementById(
+              "paymentName"
+            ).value.trim(),
+
+          paymentInstructions:
+            document.getElementById(
+              "paymentInstructions"
+            ).value.trim(),
+
+          paymentEnabled:
+            document.getElementById(
+              "paymentEnabled"
+            ).value === "true",
+
+          updatedAt:
+            serverTimestamp()
+
+        },
+        {merge:true}
+      );
+
+
+      showNotice(
+        "Payment settings saved."
+      );
+
+    }
+  );
+
+
+/* ==============================
+   WEBSITE SETTINGS
+============================== */
+
+async function loadWebsiteSettings(){
+
+  const snap =
+    await getDoc(
+      doc(
+        db,
+        "settings",
+        "site"
+      )
+    );
+
+
+  if(!snap.exists())
+    return;
+
+
+  const d =
+    snap.data();
+
+
+  document.getElementById(
+    "siteName"
+  ).value =
+    d.siteName ||
+    "KPL OFFICIAL";
+
+
+  document.getElementById(
+    "contactNumber"
+  ).value =
+    d.contactNumber ||
+    "";
+
+
+  document.getElementById(
+    "websiteStatus"
+  ).value =
+    d.websiteStatus ||
+    "online";
+
+
+  if(d.logoUrl)
+    showPreview(
+      "siteLogoPreview",
+      d.logoUrl
+    );
+
+
+  if(d.bannerUrl)
+    showPreview(
+      "siteBannerPreview",
+      d.bannerUrl
+    );
+
+}
+
+
+document
+  .getElementById(
+    "uploadSiteLogo"
+  )
+  .addEventListener(
+    "click",
+    async()=>{
+
+      try{
+
+        const file =
+          document.getElementById(
+            "siteLogoFile"
+          ).files[0];
+
+
+        const url =
+          await uploadImage(file);
+
+
+        await setDoc(
+          doc(
+            db,
+            "settings",
+            "site"
+          ),
+          {
+            logoUrl:url,
+            updatedAt:
+              serverTimestamp()
+          },
+          {merge:true}
+        );
+
+
+        showPreview(
+          "siteLogoPreview",
+          url
+        );
+
+
+        showNotice(
+          "Website logo uploaded."
+        );
+
+      }catch(error){
+
+        showNotice(
+          error.message,
+          true
+        );
+
+      }
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "uploadSiteBanner"
+  )
+  .addEventListener(
+    "click",
+    async()=>{
+
+      try{
+
+        const file =
+          document.getElementById(
+            "siteBannerFile"
+          ).files[0];
+
+
+        const url =
+          await uploadImage(file);
+
+
+        await setDoc(
+          doc(
+            db,
+            "settings",
+            "site"
+          ),
+          {
+            bannerUrl:url,
+            updatedAt:
+              serverTimestamp()
+          },
+          {merge:true}
+        );
+
+
+        showPreview(
+          "siteBannerPreview",
+          url
+        );
+
+
+        showNotice(
+          "Website banner uploaded."
+        );
+
+      }catch(error){
+
+        showNotice(
+          error.message,
+          true
+        );
+
+      }
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "saveWebsiteSettings"
+  )
+  .addEventListener(
+    "click",
+    async()=>{
+
+      await setDoc(
+        doc(
+          db,
+          "settings",
+          "site"
+        ),
+        {
+
+          siteName:
+            document.getElementById(
+              "siteName"
+            ).value.trim(),
+
+          contactNumber:
+            document.getElementById(
+              "contactNumber"
+            ).value.trim(),
+
+          websiteStatus:
+            document.getElementById(
+              "websiteStatus"
+            ).value,
+
+          updatedAt:
+            serverTimestamp()
+
+        },
+        {merge:true}
+      );
+
+
+      showNotice(
+        "Website settings saved."
+      );
+
+    }
+  );
+
+
+/* ==============================
+   STATUS
+============================== */
+
+async function changeStatus(
+  collectionName,
+  id,
+  field,
+  value
 ){
 
-input.addEventListener(
-"change",
-()=>{
+  try{
 
-const file =
-input.files[0];
+    await updateDoc(
+      doc(
+        db,
+        collectionName,
+        id
+      ),
+      {
+        [field]:
+          value,
 
-if(!file)return;
+        updatedAt:
+          serverTimestamp()
+      }
+    );
 
-const url =
-URL.createObjectURL(file);
 
-preview.src = url;
+    showNotice(
+      "Status updated."
+    );
 
-preview.style.display =
-"block";
 
-});
+    closeModal();
+
+
+    loadDashboard();
+
+
+    const active =
+      document
+        .querySelector(
+          ".nav-btn.active"
+        )
+        ?.dataset.page;
+
+
+    if(active)
+      loadPage(active);
+
+  }catch(error){
+
+    showNotice(
+      error.message,
+      true
+    );
+
+  }
 
 }
 
 
-previewFile(
-document.getElementById("image"),
-document.getElementById("imagePreview")
-);
+/* ==============================
+   HELPERS
+============================== */
 
-
-previewFile(
-document.getElementById("banner"),
-document.getElementById("bannerPreview")
-);
-
-
-
-/* =========================
-   UPLOAD IMAGE
-========================= */
-
-async function uploadImage(
-file,
-folder
+function statusClass(
+  status
 ){
 
-if(!file)return "";
-
-const safeName =
-Date.now()+
-"_"+ 
-file.name.replace(
-/[^a-zA-Z0-9._-]/g,
-"_"
-);
-
-const storageRef =
-ref(
-storage,
-`${folder}/${safeName}`
-);
-
-await uploadBytes(
-storageRef,
-file
-);
-
-return await getDownloadURL(
-storageRef
-);
-
-}
+  status =
+    String(
+      status
+    ).toLowerCase();
 
 
-
-/* =========================
-   SAVE TO FIRESTORE
-========================= */
-
-tournamentForm.addEventListener(
-"submit",
-async e=>{
-
-e.preventDefault();
-
-try{
-
-saveBtn.disabled = true;
-
-saveBtn.textContent =
-"SAVING...";
+  if(
+    status.includes(
+      "approved"
+    ) ||
+    status.includes(
+      "success"
+    ) ||
+    status.includes(
+      "solved"
+    )
+  )
+    return "approved";
 
 
-const id =
-editId.value;
+  if(
+    status.includes(
+      "reject"
+    ) ||
+    status.includes(
+      "fail"
+    )
+  )
+    return "rejected";
 
 
-const imageFile =
-document.getElementById(
-"image"
-).files[0];
-
-
-const bannerFile =
-document.getElementById(
-"banner"
-).files[0];
-
-
-let imageUrl = "";
-
-let bannerUrl = "";
-
-
-if(imageFile){
-
-showStatus(
-"Uploading tournament image..."
-);
-
-imageUrl =
-await uploadImage(
-imageFile,
-"tournaments/images"
-);
+  return "pending";
 
 }
 
 
-if(bannerFile){
+function escapeHTML(
+  value
+){
 
-showStatus(
-"Uploading banner..."
-);
-
-bannerUrl =
-await uploadImage(
-bannerFile,
-"tournaments/banners"
-);
-
-}
-
-
-
-const data = {
-
-sport:
-document.getElementById(
-"sport"
-).value,
-
-status:
-document.getElementById(
-"status"
-).value,
-
-name:
-document.getElementById(
-"name"
-).value.trim(),
-
-category:
-document.getElementById(
-"category"
-).value.trim(),
-
-venue:
-document.getElementById(
-"venue"
-).value.trim(),
-
-date:
-document.getElementById(
-"date"
-).value,
-
-registrationDeadline:
-document.getElementById(
-"registrationDeadline"
-).value,
-
-entryFee:
-Number(
-document.getElementById(
-"entryFee"
-).value || 0
-),
-
-advance:
-Number(
-document.getElementById(
-"advance"
-).value || 0
-),
-
-prizePool:
-Number(
-document.getElementById(
-"prizePool"
-).value || 0
-),
-
-slots:
-Number(
-document.getElementById(
-"slots"
-).value || 0
-),
-
-players:
-Number(
-document.getElementById(
-"players"
-).value || 0
-),
-
-subs:
-Number(
-document.getElementById(
-"subs"
-).value || 0
-),
-
-prizes:
-document.getElementById(
-"prizes"
-).value.trim(),
-
-description:
-document.getElementById(
-"description"
-).value.trim(),
-
-rules:
-document.getElementById(
-"rules"
-).value.trim(),
-
-updatedAt:
-serverTimestamp()
-
-};
-
-
-
-if(imageUrl){
-
-data.imageUrl =
-imageUrl;
+  return String(
+    value ?? ""
+  )
+  .replaceAll(
+    "&",
+    "&amp;"
+  )
+  .replaceAll(
+    "<",
+    "&lt;"
+  )
+  .replaceAll(
+    ">",
+    "&gt;"
+  )
+  .replaceAll(
+    '"',
+    "&quot;"
+  )
+  .replaceAll(
+    "'",
+    "&#039;"
+  );
 
 }
 
 
-if(bannerUrl){
+function showPreview(
+  id,
+  url
+){
 
-data.bannerUrl =
-bannerUrl;
-
-}
-
-
-
-if(id){
-
-await updateDoc(
-doc(
-db,
-"tournaments",
-id
-),
-data
-);
-
-showStatus(
-"Tournament updated successfully."
-);
-
-}else{
-
-data.registeredCount = 0;
-
-data.createdAt =
-serverTimestamp();
+  const img =
+    document.getElementById(
+      id
+    );
 
 
-await addDoc(
-collection(
-db,
-"tournaments"
-),
-data
-);
+  img.src =
+    url;
 
-showStatus(
-"Tournament added successfully."
-);
+
+  img.style.display =
+    "block";
 
 }
 
 
-resetForm();
+/* ==============================
+   MODAL
+============================== */
+
+function openModal(
+  title,
+  content
+){
+
+  document.getElementById(
+    "modalTitle"
+  ).textContent =
+    title;
+
+
+  document.getElementById(
+    "modalContent"
+  ).innerHTML =
+    content;
+
+
+  document
+    .getElementById(
+      "detailModal"
+    )
+    .classList
+    .add("open");
+
+}
+
+
+function closeModal(){
+
+  document
+    .getElementById(
+      "detailModal"
+    )
+    .classList
+    .remove("open");
+
+}
 
 
 document
-.querySelector(
-'[data-tab="tournaments"]'
-)
-.click();
-
-
-}catch(error){
-
-console.error(error);
-
-alert(
-"Save failed.\n\n"+
-error.message
-);
-
-}finally{
-
-saveBtn.disabled = false;
-
-saveBtn.textContent =
-"SAVE TO PUBLIC WEBSITE";
-
-}
-
-});
-
-
-
-/* =========================
-   LOAD TOURNAMENTS
-========================= */
-
-onSnapshot(
-collection(db,"tournaments"),
-snapshot=>{
-
-if(snapshot.empty){
-
-tournamentList.innerHTML =
-
-`<p style="color:#8f92a8">
-No tournaments added yet.
-</p>`;
-
-return;
-
-}
-
-
-const tournaments = [];
-
-
-snapshot.forEach(item=>{
-
-tournaments.push({
-
-id:item.id,
-
-...item.data()
-
-});
-
-});
-
-
-tournaments.sort(
-(a,b)=>
-(a.date || "")
-.localeCompare(
-b.date || ""
-)
-);
-
-
-tournamentList.innerHTML =
-tournaments.map(t=>{
-
-const image =
-t.imageUrl ||
-t.bannerUrl ||
-"";
-
-
-const sport =
-String(
-t.sport || ""
-).toUpperCase();
-
-
-return `
-
-<div class="card tournament">
-
-${
-image
-?
-`<img
-src="${image}"
-alt=""
->`
-:
-`<div style="
-width:100%;
-height:85px;
-border-radius:12px;
-background:#090a15;
-display:grid;
-place-items:center;
-color:#b7ff21;
-font-weight:900;
-">
-KPL
-</div>`
-}
-
-<div>
-
-<h3>
-${escapeHtml(
-t.name || "Untitled"
-)}
-</h3>
-
-<p>
-
-${escapeHtml(sport)}
-•
-${escapeHtml(
-t.category ||
-"Tournament"
-)}
-
-<br>
-
-${escapeHtml(
-t.venue ||
-"Venue not set"
-)}
-
-<br>
-
-Entry ₹
-${Number(
-t.entryFee || 0
-)}
-
-•
-${Number(
-t.registeredCount || 0
-)}
-/
-${Number(
-t.slots || 0
-)}
-
-</p>
-
-</div>
-
-
-<div class="tour-actions">
-
-<button
-class="edit"
-data-edit="${t.id}"
->
-Edit
-</button>
-
-<button
-class="delete"
-data-delete="${t.id}"
->
-Delete
-</button>
-
-</div>
-
-</div>
-
-`;
-
-}).join("");
+  .getElementById(
+    "closeModal"
+  )
+  .addEventListener(
+    "click",
+    closeModal
+  );
 
 
 document
-.querySelectorAll(
-"[data-edit]"
-)
-.forEach(btn=>{
-
-btn.addEventListener(
-"click",
-()=>{
-
-const t =
-tournaments.find(
-x=>
-x.id ===
-btn.dataset.edit
-);
-
-if(t)
-editTournament(t);
-
-});
-
-});
-
-
-document
-.querySelectorAll(
-"[data-delete]"
-)
-.forEach(btn=>{
-
-btn.addEventListener(
-"click",
-async()=>{
-
-if(
-!confirm(
-"Delete this tournament permanently?"
-)
-)return;
-
-
-try{
-
-await deleteDoc(
-doc(
-db,
-"tournaments",
-btn.dataset.delete
-)
-);
-
-showStatus(
-"Tournament deleted."
-);
-
-}catch(error){
-
-alert(
-error.message
-);
-
-}
-
-});
-
-});
-
-},
-error=>{
-
-console.error(error);
-
-tournamentList.innerHTML =
-
-`<p style="color:#ff4267">
-
-Could not load tournaments.
-
-<br>
-
-${escapeHtml(
-error.message
-)}
-
-</p>`;
-
-});
-
-
-
-/* =========================
-   EDIT TOURNAMENT
-========================= */
-
-function editTournament(t){
-
-editId.value =
-t.id;
-
-
-document.getElementById(
-"sport"
-).value =
-t.sport ||
-"football";
-
-
-document.getElementById(
-"status"
-).value =
-t.status ||
-"upcoming";
-
-
-document.getElementById(
-"name"
-).value =
-t.name ||
-"";
-
-
-document.getElementById(
-"category"
-).value =
-t.category ||
-"";
-
-
-document.getElementById(
-"venue"
-).value =
-t.venue ||
-"";
-
-
-document.getElementById(
-"date"
-).value =
-t.date ||
-"";
-
-
-document.getElementById(
-"registrationDeadline"
-).value =
-t.registrationDeadline ||
-"";
-
-
-document.getElementById(
-"entryFee"
-).value =
-t.entryFee ||
-"";
-
-
-document.getElementById(
-"advance"
-).value =
-t.advance ||
-"";
-
-
-document.getElementById(
-"prizePool"
-).value =
-t.prizePool ||
-"";
-
-
-document.getElementById(
-"slots"
-).value =
-t.slots ||
-"";
-
-
-document.getElementById(
-"players"
-).value =
-t.players ||
-"";
-
-
-document.getElementById(
-"subs"
-).value =
-t.subs ||
-"";
-
-
-document.getElementById(
-"prizes"
-).value =
-t.prizes ||
-"";
-
-
-document.getElementById(
-"description"
-).value =
-t.description ||
-"";
-
-
-document.getElementById(
-"rules"
-).value =
-t.rules ||
-"";
-
-
-if(t.imageUrl){
-
-const preview =
-document.getElementById(
-"imagePreview"
-);
-
-preview.src =
-t.imageUrl;
-
-preview.style.display =
-"block";
-
-}
-
-
-if(t.bannerUrl){
-
-const preview =
-document.getElementById(
-"bannerPreview"
-);
-
-preview.src =
-t.bannerUrl;
-
-preview.style.display =
-"block";
-
-}
-
-
-formTitle.textContent =
-"Edit Tournament";
-
-
-document
-.querySelector(
-'[data-tab="add"]'
-)
-.click();
-
-}
-
-
-
-/* =========================
-   RESET
-========================= */
-
-function resetForm(){
-
-tournamentForm.reset();
-
-editId.value = "";
-
-formTitle.textContent =
-"Add Tournament";
-
-
-document
-.querySelectorAll(".preview")
-.forEach(x=>{
-
-x.src = "";
-
-x.style.display =
-"none";
-
-});
-
-}
-
-
-
-/* =========================
-   CANCEL
-========================= */
-
-document
-.getElementById("cancelBtn")
-.addEventListener(
-"click",
-resetForm
-);
-
-
-
-/* =========================
-   ESCAPE HTML
-========================= */
-
-function escapeHtml(value){
-
-return String(value ?? "")
-.replaceAll(
-"&",
-"&amp;"
-)
-.replaceAll(
-"<",
-"&lt;"
-)
-.replaceAll(
-">",
-"&gt;"
-)
-.replaceAll(
-'"',
-"&quot;"
-)
-.replaceAll(
-"'",
-"&#039;"
-);
-
-}
+  .getElementById(
+    "detailModal"
+  )
+  .addEventListener(
+    "click",
+    e=>{
+
+      if(
+        e.target.id ===
+        "detailModal"
+      )
+        closeModal();
+
+    }
+  );
+
+
+/* ==============================
+   START
+============================== */
+
+loadDashboard();
 
 </script>
 
 </body>
 </html>
-```
