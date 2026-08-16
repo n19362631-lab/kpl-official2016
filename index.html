@@ -3,32 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#07080d">
-<meta name="description" content="KPL Official - Football & Cricket Tournaments">
-<title>KPL Official | Football & Cricket</title>
+<meta name="description" content="KPL Official — Football & Cricket Tournaments">
+<title>KPL Official | Tournaments</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 :root{
-  --bg:#07080d;
-  --panel:#10121b;
-  --panel2:#151824;
-  --lime:#c8ff32;
-  --purple:#985cff;
-  --cyan:#35e4ff;
-  --white:#f7f7fa;
-  --muted:#9298aa;
+  --bg:#080b12;
+  --panel:#101620;
+  --panel2:#141c28;
+  --text:#f5f7fb;
+  --muted:#8d98aa;
+  --lime:#b7ff32;
+  --cyan:#39e7ff;
+  --purple:#8d5cff;
   --border:rgba(255,255,255,.09);
+  --radius:24px;
 }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 html{
   scroll-behavior:smooth;
@@ -36,12 +34,17 @@ html{
 
 body{
   background:
-    radial-gradient(circle at 85% 0%,rgba(152,92,255,.16),transparent 28%),
-    radial-gradient(circle at 0% 45%,rgba(53,228,255,.07),transparent 25%),
+    radial-gradient(circle at 15% 10%,rgba(183,255,50,.08),transparent 28%),
+    radial-gradient(circle at 90% 20%,rgba(57,231,255,.07),transparent 25%),
     var(--bg);
-  color:var(--white);
-  font-family:Inter,sans-serif;
-  overflow-x:hidden;
+  color:var(--text);
+  font-family:Inter,Arial,sans-serif;
+  min-height:100vh;
+}
+
+button{
+  font:inherit;
+  cursor:pointer;
 }
 
 a{
@@ -49,24 +52,19 @@ a{
   text-decoration:none;
 }
 
-button{
-  font-family:inherit;
-  cursor:pointer;
-}
+/* NAV */
 
-/* NAVBAR */
-
-.navbar{
+.nav{
   height:76px;
-  padding:0 5%;
   position:sticky;
   top:0;
-  z-index:1000;
+  z-index:50;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  background:rgba(7,8,13,.82);
-  backdrop-filter:blur(20px);
+  padding:0 5%;
+  background:rgba(8,11,18,.84);
+  backdrop-filter:blur(18px);
   border-bottom:1px solid var(--border);
 }
 
@@ -76,836 +74,561 @@ button{
   gap:12px;
 }
 
-.logo-box{
-  width:47px;
-  height:47px;
-  border-radius:15px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.logo-mark{
+  width:43px;
+  height:43px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
   background:linear-gradient(135deg,var(--lime),var(--cyan));
-  color:#050609;
-  font-family:"Barlow Condensed",sans-serif;
-  font-size:34px;
+  color:#07100c;
+  font-family:"Barlow Condensed";
   font-weight:900;
-  box-shadow:0 0 30px rgba(200,255,50,.15);
+  font-size:28px;
+  transform:rotate(-4deg);
+}
+
+.logo-text{
+  display:flex;
+  flex-direction:column;
+  line-height:.9;
 }
 
 .logo-text strong{
-  display:block;
-  font-family:"Barlow Condensed",sans-serif;
+  font-family:"Barlow Condensed";
   font-size:28px;
-  line-height:22px;
   letter-spacing:1px;
 }
 
-.logo-text span{
-  display:block;
-  margin-top:4px;
-  color:#858b9c;
+.logo-text small{
+  color:#9da8b9;
+  letter-spacing:5px;
   font-size:8px;
-  letter-spacing:4px;
+  margin-top:5px;
 }
 
-.desktop-nav{
+.nav-links{
   display:flex;
   gap:28px;
 }
 
-.desktop-nav a{
-  color:#9ba0b0;
-  font-size:12px;
+.nav-links a{
+  color:#aeb7c7;
+  font-size:13px;
   font-weight:700;
-  transition:.2s;
 }
 
-.desktop-nav a:hover{
+.nav-links a:hover{
   color:var(--lime);
 }
 
-.nav-register{
-  padding:12px 18px;
-  border:0;
-  border-radius:10px;
-  background:var(--lime);
-  color:#07080b;
-  font-size:12px;
-  font-weight:900;
-}
-
-.hamburger{
-  display:none;
-  border:0;
-  background:none;
-  color:#fff;
-  font-size:31px;
-}
-
-/* MOBILE MENU */
-
 .mobile-menu{
   display:none;
-  position:fixed;
-  top:76px;
-  left:0;
-  right:0;
-  z-index:999;
-  padding:18px;
-  background:#090a10;
-  border-bottom:1px solid var(--border);
-}
-
-.mobile-menu.active{
-  display:flex;
-  flex-direction:column;
-}
-
-.mobile-menu a{
-  padding:14px;
-  color:#fff;
-  font-size:14px;
-  font-weight:700;
-}
-
-.mobile-menu button{
-  margin-top:8px;
-  padding:14px;
-  border:0;
-  border-radius:10px;
-  background:var(--lime);
-  color:#07080b;
-  font-weight:900;
 }
 
 /* HERO */
 
 .hero{
+  padding:70px 5% 35px;
   max-width:1400px;
-  min-height:720px;
   margin:auto;
-  padding:75px 5%;
-  display:grid;
-  grid-template-columns:1.05fr .95fr;
-  align-items:center;
-  gap:50px;
 }
 
-.hero-label{
+.hero-top{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:30px;
+}
+
+.kicker{
   color:var(--lime);
-  font-size:10px;
-  font-weight:900;
-  letter-spacing:3px;
-}
-
-.hero-label:before{
-  content:"";
-  display:inline-block;
-  width:32px;
-  height:2px;
-  margin-right:10px;
-  vertical-align:middle;
-  background:var(--lime);
-}
-
-.hero-label b{
-  margin-left:10px;
-  color:#777d8d;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:4px;
+  margin-bottom:15px;
 }
 
 .hero h1{
-  max-width:720px;
-  margin-top:20px;
-  font-family:"Barlow Condensed",sans-serif;
-  font-size:clamp(75px,10vw,145px);
-  line-height:.8;
-  letter-spacing:-3px;
+  font-family:"Barlow Condensed";
+  font-size:clamp(58px,9vw,120px);
+  line-height:.82;
+  text-transform:uppercase;
+  letter-spacing:-2px;
 }
 
 .hero h1 span{
-  display:block;
   color:var(--lime);
 }
 
-.hero p{
-  max-width:570px;
-  margin-top:30px;
+.hero-desc{
+  max-width:390px;
   color:var(--muted);
-  font-size:16px;
-  line-height:1.75;
+  line-height:1.7;
+  font-size:14px;
 }
 
-.hero-buttons{
-  display:flex;
-  gap:12px;
-  margin-top:28px;
-}
+/* FILTERS */
 
-.primary-btn,
-.secondary-btn,
-.outline-btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:14px;
-  padding:15px 22px;
-  border-radius:12px;
-  font-weight:900;
-  transition:.25s;
-}
-
-.primary-btn{
-  background:var(--lime);
-  color:#07080b;
-  box-shadow:0 10px 35px rgba(200,255,50,.12);
-}
-
-.secondary-btn{
-  border:1px solid var(--border);
-  color:#fff;
-}
-
-.primary-btn:hover,
-.secondary-btn:hover,
-.outline-btn:hover{
-  transform:translateY(-3px);
-}
-
-.hero-info{
-  display:flex;
-  gap:40px;
-  margin-top:55px;
-}
-
-.hero-info strong{
-  display:block;
-  font-family:"Barlow Condensed",sans-serif;
-  font-size:38px;
-}
-
-.hero-info span{
-  color:#747a8a;
-  font-size:9px;
-  letter-spacing:2px;
-}
-
-/* HERO VISUAL */
-
-.hero-visual{
-  height:510px;
-  position:relative;
-}
-
-.glow{
-  position:absolute;
-  border-radius:50%;
-  pointer-events:none;
-}
-
-.glow-one{
-  width:420px;
-  height:420px;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  background:radial-gradient(circle,rgba(152,92,255,.25),transparent 68%);
-}
-
-.glow-two{
-  width:270px;
-  height:270px;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  background:radial-gradient(circle,rgba(53,228,255,.13),transparent 70%);
-}
-
-.center-logo{
-  width:175px;
-  height:175px;
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  z-index:3;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  border-radius:50%;
-  background:linear-gradient(145deg,#191c29,#0a0c13);
-  border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 30px 80px rgba(0,0,0,.5);
-}
-
-.center-logo div{
-  color:var(--lime);
-  font-family:"Barlow Condensed",sans-serif;
-  font-size:72px;
-  font-weight:900;
-}
-
-.center-logo span{
-  margin-top:-12px;
-  font-family:"Barlow Condensed",sans-serif;
-  font-size:22px;
-  letter-spacing:2px;
-}
-
-.center-logo small{
-  margin-top:3px;
-  color:#777d8e;
-  font-size:7px;
-  letter-spacing:4px;
-}
-
-.floating-card{
-  width:235px;
-  height:175px;
-  position:absolute;
-  z-index:4;
-  padding:20px;
-  border-radius:22px;
-  background:rgba(18,20,30,.92);
-  border:1px solid rgba(255,255,255,.1);
-  box-shadow:0 30px 70px rgba(0,0,0,.4);
-  backdrop-filter:blur(15px);
-}
-
-.floating-card span{
-  display:block;
-  color:#7c8292;
-  font-size:9px;
-  letter-spacing:2px;
-}
-
-.floating-card strong{
-  display:block;
-  margin-top:15px;
-  font-family:"Barlow Condensed",sans-serif;
-  font-size:31px;
-}
-
-.floating-card small{
-  color:#8e93a3;
-  font-size:10px;
-}
-
-.card-icon{
-  position:absolute;
-  top:17px;
-  right:18px;
-  font-size:43px;
-}
-
-.football-float{
-  top:70px;
-  left:0;
-  transform:rotate(-6deg);
-}
-
-.cricket-float{
-  right:0;
-  bottom:55px;
-  transform:rotate(6deg);
-}
-
-/* GENERAL SECTIONS */
-
-.section{
-  max-width:1300px;
+.tournament-section{
+  max-width:1400px;
   margin:auto;
-  padding:100px 5%;
+  padding:25px 5% 80px;
 }
 
 .section-title{
   display:flex;
   justify-content:space-between;
   align-items:end;
-  margin-bottom:35px;
-}
-
-.section-label{
-  color:var(--lime);
-  font-size:10px;
-  font-weight:900;
-  letter-spacing:3px;
+  margin-bottom:25px;
 }
 
 .section-title h2{
-  margin-top:8px;
-  font-family:"Barlow Condensed",sans-serif;
-  font-size:70px;
-  line-height:.85;
-}
-
-.section-title h2 span{
-  color:var(--lime);
-}
-
-.section-number{
-  color:#353947;
-  font-family:"Barlow Condensed",sans-serif;
-  font-size:85px;
-}
-
-/* TOURNAMENTS */
-
-.tournament-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:20px;
-}
-
-.loading-card{
-  grid-column:1/-1;
-  min-height:310px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  border-radius:25px;
-  border:1px dashed rgba(152,92,255,.35);
-  background:
-    radial-gradient(circle at center,rgba(152,92,255,.11),transparent 60%),
-    var(--panel);
-}
-
-.loading-icon{
+  font-family:"Barlow Condensed";
   font-size:48px;
+  text-transform:uppercase;
+  line-height:.9;
 }
 
-.loading-card h3{
-  margin-top:15px;
-  font-family:"Barlow Condensed",sans-serif;
-  font-size:34px;
-}
-
-.loading-card p{
-  margin-top:8px;
-  color:var(--muted);
-}
-
-/* SPORT */
-
-.sport-section{
-  max-width:1300px;
-  min-height:640px;
-  margin:auto;
-  padding:100px 5%;
-  display:grid;
-  grid-template-columns:55px 1fr 1fr;
-  align-items:center;
-  gap:35px;
-}
-
-.sport-number{
-  color:#343844;
-  font-family:"Barlow Condensed",sans-serif;
-  font-size:30px;
-}
-
-.sport-content h2{
-  margin-top:15px;
-  font-family:"Barlow Condensed",sans-serif;
-  font-size:clamp(90px,11vw,170px);
-  line-height:.68;
-}
-
-.sport-content h2 span{
-  display:block;
-  color:var(--lime);
-}
-
-.sport-content p{
-  max-width:470px;
-  margin-top:30px;
-  color:var(--muted);
-  line-height:1.7;
-}
-
-.outline-btn{
-  margin-top:25px;
-  border:1px solid var(--border);
-}
-
-.sport-visual{
-  height:420px;
-  position:relative;
+.filters{
   display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  border-radius:35px;
-  background:linear-gradient(145deg,#131622,#090a10);
+  gap:9px;
+  flex-wrap:wrap;
+}
+
+.filter{
   border:1px solid var(--border);
+  background:#0d131c;
+  color:#9da7b7;
+  padding:10px 17px;
+  border-radius:100px;
+  font-size:12px;
+  font-weight:800;
 }
 
-.sport-ring{
-  width:320px;
-  height:320px;
-  position:absolute;
-  border:1px solid rgba(200,255,50,.2);
-  border-radius:50%;
-  box-shadow:0 0 100px rgba(200,255,50,.07);
+.filter.active,
+.filter:hover{
+  background:var(--lime);
+  color:#07100c;
+  border-color:var(--lime);
 }
 
-.giant-ball,
-.giant-bat{
-  position:relative;
-  z-index:2;
-  font-size:150px;
-}
+/* TOURNAMENT GRID */
 
-/* PROCESS */
-
-.process-grid{
+.grid{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
 }
 
-.process-card{
-  min-height:190px;
-  padding:25px;
-  border-radius:20px;
-  background:var(--panel);
+.card{
+  overflow:hidden;
+  background:linear-gradient(145deg,#121a25,#0d131c);
   border:1px solid var(--border);
+  border-radius:var(--radius);
   transition:.25s;
 }
 
-.process-card:hover{
-  transform:translateY(-6px);
-  border-color:rgba(200,255,50,.3);
+.card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(183,255,50,.35);
+  box-shadow:0 20px 60px rgba(0,0,0,.3);
 }
 
-.process-card>span{
-  color:var(--lime);
-  font-family:"Barlow Condensed",sans-serif;
-  font-size:32px;
-}
-
-.process-card h3{
-  margin-top:20px;
-  font-family:"Barlow Condensed",sans-serif;
-  font-size:28px;
-}
-
-.process-card p{
-  margin-top:8px;
-  color:var(--muted);
-  font-size:11px;
-  line-height:1.6;
-}
-
-/* RESULTS */
-
-.results-card{
-  min-height:280px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  border-radius:25px;
+.card-image{
+  height:220px;
+  position:relative;
+  overflow:hidden;
   background:
-    radial-gradient(circle at center,rgba(53,228,255,.08),transparent 60%),
-    var(--panel);
-  border:1px dashed rgba(53,228,255,.25);
-  text-align:center;
+    radial-gradient(circle at 80% 30%,rgba(183,255,50,.25),transparent 25%),
+    linear-gradient(135deg,#182233,#090d14);
 }
 
-.trophy{
-  font-size:50px;
+.card-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
-.results-card h3{
-  margin-top:12px;
-  font-family:"Barlow Condensed",sans-serif;
-  font-size:32px;
+.image-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(transparent 40%,rgba(5,8,13,.9));
 }
 
-.results-card p{
-  margin-top:8px;
+.sport-tag{
+  position:absolute;
+  top:15px;
+  left:15px;
+  padding:7px 11px;
+  border-radius:8px;
+  background:rgba(7,10,15,.75);
+  backdrop-filter:blur(10px);
+  color:var(--lime);
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.card-status{
+  position:absolute;
+  right:15px;
+  top:15px;
+  padding:7px 11px;
+  border-radius:8px;
+  background:var(--lime);
+  color:#07100c;
+  font-size:9px;
+  font-weight:900;
+}
+
+.card-title-overlay{
+  position:absolute;
+  bottom:16px;
+  left:18px;
+  right:18px;
+}
+
+.card-title-overlay h3{
+  font-family:"Barlow Condensed";
+  font-size:29px;
+  line-height:.95;
+}
+
+.card-body{
+  padding:18px;
+}
+
+.meta{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:16px;
+}
+
+.meta-box{
+  background:#0b1119;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:11px;
+}
+
+.meta-box span{
+  display:block;
+  color:#758196;
+  font-size:9px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin-bottom:4px;
+}
+
+.meta-box strong{
+  font-size:13px;
+}
+
+.register-btn{
+  width:100%;
+  border:0;
+  padding:14px;
+  border-radius:13px;
+  background:var(--lime);
+  color:#07100c;
+  font-weight:900;
+  font-size:13px;
+}
+
+.register-btn:hover{
+  filter:brightness(1.08);
+}
+
+/* LOADING */
+
+.loading{
+  grid-column:1/-1;
+  min-height:300px;
+  display:grid;
+  place-items:center;
+  border:1px dashed var(--border);
+  border-radius:var(--radius);
   color:var(--muted);
+}
+
+.spinner{
+  width:35px;
+  height:35px;
+  border:3px solid #26303d;
+  border-top-color:var(--lime);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin:auto auto 15px;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+/* EMPTY */
+
+.empty{
+  grid-column:1/-1;
+  padding:70px 20px;
+  text-align:center;
+  border:1px dashed var(--border);
+  border-radius:var(--radius);
+}
+
+.empty h3{
+  font-family:"Barlow Condensed";
+  font-size:32px;
+  margin-bottom:8px;
+}
+
+.empty p{
+  color:var(--muted);
+  font-size:13px;
 }
 
 /* FOOTER */
 
 footer{
-  padding:50px 5% 25px;
-  background:#05060a;
   border-top:1px solid var(--border);
-}
-
-.footer-main{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.footer-brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.footer-brand strong{
-  font-family:"Barlow Condensed",sans-serif;
-  font-size:25px;
-}
-
-.footer-brand p{
-  margin-top:4px;
-  color:#686d7b;
-  font-size:10px;
-}
-
-.footer-links{
-  display:flex;
-  gap:25px;
-}
-
-.footer-links a{
-  color:#777c8b;
+  padding:35px 5%;
+  color:#687486;
   font-size:11px;
-}
-
-.footer-links a:hover{
-  color:var(--lime);
-}
-
-.footer-bottom{
   display:flex;
   justify-content:space-between;
-  margin-top:45px;
-  padding-top:18px;
-  border-top:1px solid var(--border);
-  color:#555a68;
-  font-size:9px;
+  gap:20px;
 }
 
 /* MODAL */
 
 .modal{
-  display:none;
   position:fixed;
   inset:0;
-  z-index:3000;
+  z-index:100;
+  display:none;
   align-items:center;
   justify-content:center;
   padding:20px;
-  background:rgba(0,0,0,.8);
-  backdrop-filter:blur(15px);
+  background:rgba(0,0,0,.75);
+  backdrop-filter:blur(12px);
 }
 
-.modal.active{
+.modal.show{
   display:flex;
 }
 
 .modal-box{
-  width:min(420px,100%);
-  position:relative;
-  padding:35px;
+  width:min(480px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:#101620;
+  border:1px solid var(--border);
   border-radius:25px;
-  background:#12141e;
-  border:1px solid rgba(152,92,255,.35);
-  box-shadow:0 40px 100px rgba(0,0,0,.6);
-}
-
-.modal-logo{
-  width:55px;
-  height:55px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:15px;
-  background:linear-gradient(135deg,var(--lime),var(--cyan));
-  color:#08090d;
-  font-family:"Barlow Condensed",sans-serif;
-  font-size:35px;
-  font-weight:900;
+  padding:25px;
+  position:relative;
+  box-shadow:0 30px 100px rgba(0,0,0,.5);
 }
 
 .close{
   position:absolute;
-  right:15px;
-  top:10px;
-  border:0;
-  background:none;
-  color:#fff;
-  font-size:30px;
+  right:18px;
+  top:15px;
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  border:1px solid var(--border);
+  background:#171f2b;
+  color:white;
+  font-size:20px;
 }
 
 .modal-box h2{
-  margin-top:15px;
-  font-family:"Barlow Condensed",sans-serif;
-  font-size:45px;
+  font-family:"Barlow Condensed";
+  font-size:40px;
+  margin-bottom:6px;
 }
 
-.modal-box p{
-  margin:10px 0 25px;
+.modal-sub{
   color:var(--muted);
+  font-size:12px;
+  margin-bottom:22px;
   line-height:1.6;
 }
 
 .google-btn{
   width:100%;
-  padding:15px;
-  border:0;
-  border-radius:11px;
-  background:#fff;
+  padding:14px;
+  background:white;
   color:#111;
+  border:0;
+  border-radius:13px;
   font-weight:800;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+}
+
+.google-icon{
+  font-weight:900;
+  color:#4285f4;
+}
+
+.form{
+  display:none;
+}
+
+.form.show{
+  display:block;
+}
+
+.user-info{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:18px;
+  padding:10px;
+  background:#0a1018;
+  border-radius:12px;
+}
+
+.user-info img{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+}
+
+.field{
+  margin-bottom:13px;
+}
+
+.field label{
+  display:block;
+  font-size:10px;
+  color:#8994a6;
+  font-weight:800;
+  margin-bottom:6px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.field input,
+.field select{
+  width:100%;
+  border:1px solid var(--border);
+  background:#0b1119;
+  color:white;
+  border-radius:11px;
+  padding:13px;
+  outline:none;
+}
+
+.field input:focus,
+.field select:focus{
+  border-color:var(--lime);
+}
+
+.submit{
+  width:100%;
+  border:0;
+  border-radius:12px;
+  padding:14px;
+  background:var(--lime);
+  color:#07100c;
+  font-weight:900;
+  margin-top:5px;
+}
+
+.message{
+  margin-top:12px;
+  padding:10px;
+  border-radius:10px;
+  font-size:11px;
+  display:none;
+}
+
+.message.show{
+  display:block;
+}
+
+.success{
+  background:rgba(183,255,50,.1);
+  color:var(--lime);
+}
+
+.error{
+  background:rgba(255,60,90,.1);
+  color:#ff7c91;
 }
 
 /* MOBILE */
 
 @media(max-width:900px){
-
-  .desktop-nav,
-  .nav-register{
-    display:none;
-  }
-
-  .hamburger{
-    display:block;
-  }
-
-  .hero{
-    grid-template-columns:1fr;
-    padding-top:55px;
-  }
-
-  .hero-visual{
-    height:430px;
-  }
-
-  .sport-section{
-    grid-template-columns:1fr;
-  }
-
-  .sport-number{
-    display:none;
-  }
-
-  .process-grid{
+  .grid{
     grid-template-columns:repeat(2,1fr);
+  }
+
+  .nav-links{
+    display:none;
+  }
+
+  .hero-top{
+    flex-direction:column;
+    align-items:flex-start;
   }
 }
 
 @media(max-width:600px){
-
-  .navbar{
-    height:72px;
+  .nav{
+    height:70px;
     padding:0 18px;
   }
 
-  .logo-box{
-    width:45px;
-    height:45px;
+  .logo-mark{
+    width:39px;
+    height:39px;
   }
 
-  .hero{
-    padding:55px 20px;
-  }
-
-  .hero h1{
-    font-size:76px;
-  }
-
-  .hero p{
-    font-size:14px;
-  }
-
-  .hero-buttons{
-    flex-direction:column;
-  }
-
-  .hero-info{
-    gap:22px;
-  }
-
-  .hero-visual{
-    height:360px;
-  }
-
-  .center-logo{
-    width:130px;
-    height:130px;
-  }
-
-  .center-logo div{
-    font-size:52px;
-  }
-
-  .floating-card{
-    width:175px;
-    height:140px;
-    padding:15px;
-  }
-
-  .floating-card strong{
+  .logo-text strong{
     font-size:24px;
   }
 
-  .card-icon{
-    font-size:30px;
+  .hero{
+    padding:48px 20px 25px;
   }
 
-  .football-float{
-    top:20px;
+  .hero h1{
+    font-size:68px;
   }
 
-  .cricket-float{
-    bottom:20px;
+  .hero-desc{
+    margin-top:20px;
   }
 
-  .section{
-    padding:70px 20px;
+  .tournament-section{
+    padding:20px 18px 60px;
+  }
+
+  .section-title{
+    display:block;
   }
 
   .section-title h2{
-    font-size:52px;
+    margin-bottom:18px;
   }
 
-  .section-number{
-    font-size:55px;
-  }
-
-  .tournament-grid{
+  .grid{
     grid-template-columns:1fr;
   }
 
-  .sport-section{
-    padding:70px 20px;
+  .card-image{
+    height:210px;
   }
 
-  .sport-content h2{
-    font-size:95px;
-  }
-
-  .sport-visual{
-    height:300px;
-  }
-
-  .giant-ball,
-  .giant-bat{
-    font-size:110px;
-  }
-
-  .process-grid{
-    grid-template-columns:1fr;
-  }
-
-  .footer-main,
-  .footer-bottom{
+  footer{
     flex-direction:column;
-    align-items:flex-start;
-    gap:20px;
-  }
-
-  .footer-links{
-    flex-wrap:wrap;
   }
 }
 </style>
@@ -913,456 +636,887 @@ footer{
 
 <body>
 
-<header class="navbar">
-
-  <a href="#home" class="logo">
-    <div class="logo-box">K</div>
-
+<header class="nav">
+  <a href="#" class="logo">
+    <div class="logo-mark">K</div>
     <div class="logo-text">
       <strong>KPL</strong>
-      <span>OFFICIAL</span>
+      <small>OFFICIAL</small>
     </div>
   </a>
 
-  <nav class="desktop-nav">
-    <a href="#home">Home</a>
+  <nav class="nav-links">
     <a href="#tournaments">Tournaments</a>
     <a href="#football">Football</a>
     <a href="#cricket">Cricket</a>
-    <a href="#results">Results</a>
   </nav>
-
-  <button class="nav-register" id="loginBtn">
-    Login / Register
-  </button>
-
-  <button class="hamburger" id="menuBtn">
-    ☰
-  </button>
-
 </header>
 
-
-<div class="mobile-menu" id="mobileMenu">
-
-  <a href="#home">Home</a>
-  <a href="#tournaments">Tournaments</a>
-  <a href="#football">Football</a>
-  <a href="#cricket">Cricket</a>
-  <a href="#results">Results</a>
-
-  <button id="mobileLoginBtn">
-    Login / Register
-  </button>
-
-</div>
-
-
-<main>
-
-<section class="hero" id="home">
-
-  <div>
-
-    <div class="hero-label">
-      KPL OFFICIAL
-      <b>SEASON 01</b>
+<section class="hero">
+  <div class="hero-top">
+    <div>
+      <div class="kicker">KPL OFFICIAL / 2026</div>
+      <h1>PLAY.<br><span>COMPETE.</span><br>WIN.</h1>
     </div>
 
-    <h1>
-      WHERE
-      <span>COMPETITION</span>
-      BEGINS.
-    </h1>
-
-    <p>
-      Football and cricket tournaments built for players,
-      teams and competitors who want to play for something.
+    <p class="hero-desc">
+      Football & Cricket tournaments. Real competitions.
+      Real teams. Register directly from KPL Official.
     </p>
-
-    <div class="hero-buttons">
-
-      <a href="#tournaments" class="primary-btn">
-        Explore Tournaments →
-      </a>
-
-      <a href="#football" class="secondary-btn">
-        Explore Sports
-      </a>
-
-    </div>
-
-    <div class="hero-info">
-
-      <div>
-        <strong>02</strong>
-        <span>SPORTS</span>
-      </div>
-
-      <div>
-        <strong>16+</strong>
-        <span>TEAM SLOTS</span>
-      </div>
-
-      <div>
-        <strong>01</strong>
-        <span>PLATFORM</span>
-      </div>
-
-    </div>
-
   </div>
-
-
-  <div class="hero-visual">
-
-    <div class="glow glow-one"></div>
-    <div class="glow glow-two"></div>
-
-    <div class="floating-card football-float">
-
-      <div class="card-icon">⚽</div>
-
-      <span>01 / SPORT</span>
-
-      <strong>FOOTBALL</strong>
-
-      <small>Competitive tournaments</small>
-
-    </div>
-
-
-    <div class="floating-card cricket-float">
-
-      <div class="card-icon">🏏</div>
-
-      <span>02 / SPORT</span>
-
-      <strong>CRICKET</strong>
-
-      <small>Upcoming tournaments</small>
-
-    </div>
-
-
-    <div class="center-logo">
-
-      <div>K</div>
-
-      <span>KPL</span>
-
-      <small>OFFICIAL</small>
-
-    </div>
-
-  </div>
-
 </section>
 
-
-<section class="section" id="tournaments">
+<section class="tournament-section" id="tournaments">
 
   <div class="section-title">
-
     <div>
-
-      <span class="section-label">
-        LIVE FROM KPL
-      </span>
-
-      <h2>
-        UPCOMING
-        <span>TOURNAMENTS</span>
-      </h2>
-
+      <div class="kicker">LIVE & UPCOMING</div>
+      <h2>TOURNAMENTS</h2>
     </div>
 
-    <span class="section-number">01</span>
-
+    <div class="filters">
+      <button class="filter active" data-filter="all">ALL</button>
+      <button class="filter" data-filter="football">FOOTBALL</button>
+      <button class="filter" data-filter="cricket">CRICKET</button>
+    </div>
   </div>
 
+  <div id="tournamentGrid" class="grid">
 
-  <div class="tournament-grid">
-
-    <div class="loading-card">
-
-      <div class="loading-icon">⚡</div>
-
-      <h3>
+    <div class="loading">
+      <div>
+        <div class="spinner"></div>
         Loading tournaments...
-      </h3>
-
-      <p>
-        Fetching the latest KPL tournaments.
-      </p>
-
+      </div>
     </div>
 
   </div>
 
 </section>
-
-
-<section class="sport-section" id="football">
-
-  <div class="sport-number">01</div>
-
-  <div class="sport-content">
-
-    <span class="section-label">
-      KPL / SPORT
-    </span>
-
-    <h2>
-      FOOT
-      <span>BALL.</span>
-    </h2>
-
-    <p>
-      Find upcoming football tournaments,
-      check tournament details, build your squad
-      and register your team.
-    </p>
-
-    <a href="#tournaments" class="outline-btn">
-      View Football Tournaments →
-    </a>
-
-  </div>
-
-
-  <div class="sport-visual">
-
-    <div class="sport-ring"></div>
-
-    <div class="giant-ball">
-      ⚽
-    </div>
-
-  </div>
-
-</section>
-
-
-<section class="sport-section" id="cricket">
-
-  <div class="sport-number">02</div>
-
-  <div class="sport-content">
-
-    <span class="section-label">
-      KPL / SPORT
-    </span>
-
-    <h2>
-      CRIC
-      <span>KET.</span>
-    </h2>
-
-    <p>
-      Cricket tournaments, team registrations,
-      fixtures and results — all managed
-      through KPL Official.
-    </p>
-
-    <a href="#tournaments" class="outline-btn">
-      View Cricket Tournaments →
-    </a>
-
-  </div>
-
-
-  <div class="sport-visual">
-
-    <div class="sport-ring"></div>
-
-    <div class="giant-bat">
-      🏏
-    </div>
-
-  </div>
-
-</section>
-
-
-<section class="section">
-
-  <div class="section-title">
-
-    <div>
-
-      <span class="section-label">
-        SIMPLE PROCESS
-      </span>
-
-      <h2>
-        PLAY.
-        <span>REGISTER.</span>
-      </h2>
-
-    </div>
-
-    <span class="section-number">02</span>
-
-  </div>
-
-
-  <div class="process-grid">
-
-    <div class="process-card">
-      <span>01</span>
-      <h3>LOGIN</h3>
-      <p>Sign in securely and access your KPL account.</p>
-    </div>
-
-    <div class="process-card">
-      <span>02</span>
-      <h3>CHOOSE</h3>
-      <p>Select your sport and tournament.</p>
-    </div>
-
-    <div class="process-card">
-      <span>03</span>
-      <h3>REGISTER</h3>
-      <p>Enter your team and player information.</p>
-    </div>
-
-    <div class="process-card">
-      <span>04</span>
-      <h3>COMPETE</h3>
-      <p>Complete your registration and get ready.</p>
-    </div>
-
-  </div>
-
-</section>
-
-
-<section class="section" id="results">
-
-  <div class="section-title">
-
-    <div>
-
-      <span class="section-label">
-        KPL RECORDS
-      </span>
-
-      <h2>
-        LATEST
-        <span>RESULTS.</span>
-      </h2>
-
-    </div>
-
-  </div>
-
-
-  <div class="results-card">
-
-    <div class="trophy">🏆</div>
-
-    <h3>
-      RESULTS WILL APPEAR HERE
-    </h3>
-
-    <p>
-      Tournament results and standings will be published by KPL.
-    </p>
-
-  </div>
-
-</section>
-
-</main>
-
 
 <footer>
-
-  <div class="footer-main">
-
-    <div class="footer-brand">
-
-      <div class="logo-box">K</div>
-
-      <div>
-        <strong>KPL OFFICIAL</strong>
-        <p>Football • Cricket • Competition</p>
-      </div>
-
-    </div>
-
-
-    <div class="footer-links">
-
-      <a href="#home">Home</a>
-      <a href="#tournaments">Tournaments</a>
-      <a href="#football">Football</a>
-      <a href="#cricket">Cricket</a>
-      <a href="#results">Results</a>
-
-    </div>
-
-  </div>
-
-
-  <div class="footer-bottom">
-
-    <span>© 2026 KPL Official</span>
-
-    <span>PLAY. COMPETE. CONQUER.</span>
-
-  </div>
-
+  <strong>KPL OFFICIAL</strong>
+  <span>Football • Cricket • Competition</span>
+  <span>© 2026 KPL Official</span>
 </footer>
 
 
-<div class="modal" id="loginModal">
+<!-- REGISTER MODAL -->
+
+<div class="modal" id="registerModal">
 
   <div class="modal-box">
 
     <button class="close" id="closeModal">×</button>
 
-    <div class="modal-logo">K</div>
+    <div class="kicker">KPL REGISTRATION</div>
 
-    <span class="section-label">
-      KPL OFFICIAL
-    </span>
+    <h2 id="modalTitle">Tournament</h2>
 
-    <h2>Welcome to KPL.</h2>
-
-    <p>
-      Login to register for tournaments
-      and manage your registrations.
+    <p class="modal-sub" id="modalDetails">
+      Register your team for this tournament.
     </p>
 
-    <button class="google-btn" id="googleBtn">
-      <span>G</span>
-      Continue with Google
-    </button>
+    <!-- GOOGLE LOGIN -->
+
+    <div id="loginArea">
+
+      <button class="google-btn" id="googleLogin">
+        <span class="google-icon">G</span>
+        Continue with Google
+      </button>
+
+      <p class="modal-sub" style="margin-top:12px">
+        Login is required before registration.
+      </p>
+
+    </div>
+
+
+    <!-- REGISTRATION FORM -->
+
+    <div class="form" id="registrationForm">
+
+      <div class="user-info">
+        <img id="userAvatar" src="" alt="">
+        <div>
+          <strong id="userName">User</strong>
+          <div id="userEmail" style="font-size:10px;color:#8994a6"></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Team Name</label>
+        <input id="teamName" type="text" placeholder="Enter team name">
+      </div>
+
+      <div class="field">
+        <label>Captain Name</label>
+        <input id="captainName" type="text" placeholder="Captain name">
+      </div>
+
+      <div class="field">
+        <label>Captain WhatsApp Number</label>
+        <input id="phone" type="tel" placeholder="10 digit WhatsApp number">
+      </div>
+
+      <div class="field">
+        <label>Sport</label>
+        <input id="sportInput" type="text" readonly>
+      </div>
+
+      <button class="submit" id="submitRegistration">
+        SUBMIT REGISTRATION →
+      </button>
+
+      <div class="message" id="formMessage"></div>
+
+    </div>
 
   </div>
 
 </div>
 
 
-<script type="module" src="script.js"></script>
-
 <script>
-const menuBtn = document.getElementById("menuBtn");
-const mobileMenu = document.getElementById("mobileMenu");
 
-if(menuBtn){
-  menuBtn.addEventListener("click",()=>{
-    mobileMenu.classList.toggle("active");
-  });
+/* =========================================
+   SUPABASE
+========================================= */
+
+const SUPABASE_URL =
+"https://womcjbkdouvawjjtlddg.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_B5Ho6axYtVg0u-NRKHafgw_xdch_6RL";
+
+const supabaseClient =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+
+/* =========================================
+   GLOBAL
+========================================= */
+
+let allTournaments = [];
+let selectedTournament = null;
+let currentUser = null;
+
+
+/* =========================================
+   LOAD TOURNAMENTS
+========================================= */
+
+async function loadTournaments(){
+
+  const grid =
+    document.getElementById("tournamentGrid");
+
+  grid.innerHTML = `
+    <div class="loading">
+      <div>
+        <div class="spinner"></div>
+        Loading tournaments...
+      </div>
+    </div>
+  `;
+
+  try{
+
+    const { data, error } =
+      await supabaseClient
+        .from("tournaments")
+        .select("*")
+        .order("created_at", { ascending:false });
+
+    if(error){
+      console.error(error);
+      throw error;
+    }
+
+    allTournaments = data || [];
+
+    renderTournaments(allTournaments);
+
+  }catch(error){
+
+    console.error("Tournament loading error:",error);
+
+    grid.innerHTML = `
+      <div class="empty">
+        <h3>No tournaments loaded</h3>
+        <p>
+          Check your Supabase tournaments table and RLS policy.
+        </p>
+      </div>
+    `;
+  }
 }
 
-document.querySelectorAll(".mobile-menu a").forEach(link=>{
-  link.addEventListener("click",()=>{
-    mobileMenu.classList.remove("active");
+
+/* =========================================
+   NORMALIZE DATA
+========================================= */
+
+function value(obj, ...keys){
+
+  for(const key of keys){
+
+    if(
+      obj[key] !== undefined &&
+      obj[key] !== null &&
+      obj[key] !== ""
+    ){
+      return obj[key];
+    }
+
+  }
+
+  return "";
+}
+
+
+function normalizeTournament(t){
+
+  return {
+
+    id:value(t,"id"),
+    title:value(t,"title","name","tournament_name"),
+    sport:String(
+      value(t,"sport","category","game")
+    ).toLowerCase(),
+
+    date:value(
+      t,
+      "match_date",
+      "date",
+      "tournament_date"
+    ),
+
+    venue:value(
+      t,
+      "venue",
+      "location",
+      "ground"
+    ),
+
+    entry:value(
+      t,
+      "entry_fee",
+      "entry",
+      "fee"
+    ),
+
+    prize:value(
+      t,
+      "prize_pool",
+      "prize",
+      "prizepool"
+    ),
+
+    slots:value(
+      t,
+      "slots",
+      "total_slots",
+      "max_slots"
+    ),
+
+    registered:value(
+      t,
+      "registered_teams",
+      "registered",
+      "team_count"
+    ) || 0,
+
+    status:value(
+      t,
+      "status"
+    ) || "OPEN",
+
+    image:value(
+      t,
+      "image_url",
+      "image",
+      "banner_url",
+      "poster_url"
+    ),
+
+    description:value(
+      t,
+      "description",
+      "details"
+    )
+
+  };
+}
+
+
+/* =========================================
+   RENDER
+========================================= */
+
+function renderTournaments(list){
+
+  const grid =
+    document.getElementById("tournamentGrid");
+
+  if(!list.length){
+
+    grid.innerHTML = `
+      <div class="empty">
+        <h3>No tournaments available</h3>
+        <p>
+          New KPL tournaments will appear here automatically.
+        </p>
+      </div>
+    `;
+
+    return;
+  }
+
+  grid.innerHTML =
+    list.map(raw => {
+
+      const t =
+        normalizeTournament(raw);
+
+      const sport =
+        t.sport.includes("cricket")
+          ? "CRICKET"
+          : "FOOTBALL";
+
+      const count =
+        Number(t.registered) || 0;
+
+      const slots =
+        Number(t.slots) || 0;
+
+      const imageHTML =
+        t.image
+          ? `<img src="${escapeHTML(t.image)}" alt="${escapeHTML(t.title)}">`
+          : "";
+
+      return `
+
+      <article
+        class="card"
+        data-sport="${sport.toLowerCase()}"
+      >
+
+        <div class="card-image">
+
+          ${imageHTML}
+
+          <div class="image-overlay"></div>
+
+          <div class="sport-tag">
+            ${sport}
+          </div>
+
+          <div class="card-status">
+            ${escapeHTML(t.status)}
+          </div>
+
+          <div class="card-title-overlay">
+            <h3>
+              ${escapeHTML(
+                t.title || "KPL Tournament"
+              )}
+            </h3>
+          </div>
+
+        </div>
+
+        <div class="card-body">
+
+          <div class="meta">
+
+            <div class="meta-box">
+              <span>DATE</span>
+              <strong>
+                ${escapeHTML(t.date || "TBA")}
+              </strong>
+            </div>
+
+            <div class="meta-box">
+              <span>VENUE</span>
+              <strong>
+                ${escapeHTML(t.venue || "TBA")}
+              </strong>
+            </div>
+
+            <div class="meta-box">
+              <span>ENTRY</span>
+              <strong>
+                ${t.entry !== "" ? "₹"+escapeHTML(t.entry) : "TBA"}
+              </strong>
+            </div>
+
+            <div class="meta-box">
+              <span>PRIZE POOL</span>
+              <strong>
+                ${t.prize !== "" ? "₹"+escapeHTML(t.prize) : "TBA"}
+              </strong>
+            </div>
+
+          </div>
+
+          <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:14px;
+            font-size:11px;
+            color:#8d98aa;
+          ">
+
+            <span>
+              ${slots ? slots+" SLOTS" : "TEAM SLOTS"}
+            </span>
+
+            <strong style="color:var(--lime)">
+              ${count}${slots ? "/"+slots : ""} REGISTERED
+            </strong>
+
+          </div>
+
+          <button
+            class="register-btn"
+            onclick="openRegistration('${escapeJS(t.id)}')"
+          >
+            REGISTER NOW →
+          </button>
+
+        </div>
+
+      </article>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================================
+   FILTER
+========================================= */
+
+document.querySelectorAll(".filter")
+.forEach(button => {
+
+  button.addEventListener("click",()=>{
+
+    document
+      .querySelectorAll(".filter")
+      .forEach(x=>x.classList.remove("active"));
+
+    button.classList.add("active");
+
+    const filter =
+      button.dataset.filter;
+
+    if(filter === "all"){
+
+      renderTournaments(allTournaments);
+
+    }else{
+
+      const filtered =
+        allTournaments.filter(t=>{
+
+          const sport =
+            String(
+              value(t,"sport","category","game")
+            ).toLowerCase();
+
+          return sport.includes(filter);
+
+        });
+
+      renderTournaments(filtered);
+    }
+
   });
+
 });
+
+
+/* =========================================
+   OPEN REGISTRATION
+========================================= */
+
+window.openRegistration =
+function(id){
+
+  const raw =
+    allTournaments.find(
+      x => String(x.id) === String(id)
+    );
+
+  if(!raw) return;
+
+  selectedTournament =
+    normalizeTournament(raw);
+
+  document.getElementById("modalTitle")
+    .textContent =
+    selectedTournament.title ||
+    "KPL Tournament";
+
+  document.getElementById("modalDetails")
+    .textContent =
+    `${selectedTournament.sport.toUpperCase()} • ${selectedTournament.date || "Date TBA"} • ${selectedTournament.venue || "Venue TBA"}`;
+
+  document.getElementById("sportInput")
+    .value =
+    selectedTournament.sport.toUpperCase();
+
+  document.getElementById("registerModal")
+    .classList.add("show");
+
+  updateLoginUI();
+};
+
+
+/* =========================================
+   CLOSE MODAL
+========================================= */
+
+document.getElementById("closeModal")
+.addEventListener("click",closeModal);
+
+document.getElementById("registerModal")
+.addEventListener("click",e=>{
+
+  if(e.target.id === "registerModal"){
+    closeModal();
+  }
+
+});
+
+function closeModal(){
+
+  document.getElementById("registerModal")
+    .classList.remove("show");
+
+}
+
+
+/* =========================================
+   GOOGLE LOGIN
+========================================= */
+
+document.getElementById("googleLogin")
+.addEventListener("click", async ()=>{
+
+  const { error } =
+    await supabaseClient.auth.signInWithOAuth({
+
+      provider:"google",
+
+      options:{
+        redirectTo:
+          window.location.origin +
+          window.location.pathname
+      }
+
+    });
+
+  if(error){
+
+    alert(
+      "Google login error: "+
+      error.message
+    );
+
+  }
+
+});
+
+
+/* =========================================
+   AUTH STATE
+========================================= */
+
+supabaseClient.auth.onAuthStateChange(
+  async(event,session)=>{
+
+    currentUser =
+      session?.user || null;
+
+    updateLoginUI();
+
+  }
+);
+
+
+async function checkUser(){
+
+  const {
+    data
+  } =
+    await supabaseClient.auth.getSession();
+
+  currentUser =
+    data.session?.user || null;
+
+  updateLoginUI();
+
+}
+
+
+function updateLoginUI(){
+
+  const loginArea =
+    document.getElementById("loginArea");
+
+  const form =
+    document.getElementById("registrationForm");
+
+  if(!currentUser){
+
+    loginArea.style.display = "block";
+    form.classList.remove("show");
+
+    return;
+  }
+
+  loginArea.style.display = "none";
+  form.classList.add("show");
+
+  const meta =
+    currentUser.user_metadata || {};
+
+  document.getElementById("userName")
+    .textContent =
+    meta.full_name ||
+    meta.name ||
+    currentUser.email ||
+    "KPL Player";
+
+  document.getElementById("userEmail")
+    .textContent =
+    currentUser.email || "";
+
+  document.getElementById("userAvatar")
+    .src =
+    meta.avatar_url ||
+    "https://ui-avatars.com/api/?name=KPL&background=b7ff32&color=07100c";
+
+}
+
+
+/* =========================================
+   SUBMIT REGISTRATION
+========================================= */
+
+document.getElementById("submitRegistration")
+.addEventListener("click", async()=>{
+
+  const message =
+    document.getElementById("formMessage");
+
+  message.className =
+    "message";
+
+  message.textContent = "";
+
+  if(!currentUser){
+
+    showMessage(
+      "Please login with Google first.",
+      "error"
+    );
+
+    return;
+  }
+
+  if(!selectedTournament){
+
+    showMessage(
+      "Tournament not selected.",
+      "error"
+    );
+
+    return;
+  }
+
+  const teamName =
+    document.getElementById("teamName")
+      .value.trim();
+
+  const captainName =
+    document.getElementById("captainName")
+      .value.trim();
+
+  const phone =
+    document.getElementById("phone")
+      .value.trim();
+
+  if(!teamName || !captainName || !phone){
+
+    showMessage(
+      "Please fill all required fields.",
+      "error"
+    );
+
+    return;
+  }
+
+  if(phone.length < 10){
+
+    showMessage(
+      "Enter a valid WhatsApp number.",
+      "error"
+    );
+
+    return;
+  }
+
+  const button =
+    document.getElementById("submitRegistration");
+
+  button.disabled = true;
+  button.textContent = "SUBMITTING...";
+
+
+  try{
+
+    /*
+      IMPORTANT:
+      Your Supabase table should be named:
+      registrations
+
+      Recommended columns:
+      tournament_id
+      tournament_name
+      user_id
+      email
+      team_name
+      captain_name
+      phone
+      sport
+    */
+
+    const { error } =
+      await supabaseClient
+        .from("registrations")
+        .insert({
+
+          tournament_id:
+            selectedTournament.id,
+
+          tournament_name:
+            selectedTournament.title,
+
+          user_id:
+            currentUser.id,
+
+          email:
+            currentUser.email,
+
+          team_name:
+            teamName,
+
+          captain_name:
+            captainName,
+
+          phone:
+            phone,
+
+          sport:
+            selectedTournament.sport
+
+        });
+
+
+    if(error){
+      throw error;
+    }
+
+
+    showMessage(
+      "Registration submitted successfully! KPL team will contact you.",
+      "success"
+    );
+
+    document.getElementById("teamName").value="";
+    document.getElementById("captainName").value="";
+    document.getElementById("phone").value="";
+
+    setTimeout(()=>{
+      closeModal();
+      loadTournaments();
+    },1800);
+
+
+  }catch(error){
+
+    console.error(error);
+
+    showMessage(
+      "Registration failed: "+error.message,
+      "error"
+    );
+
+  }
+
+
+  button.disabled = false;
+  button.textContent =
+    "SUBMIT REGISTRATION →";
+
+});
+
+
+function showMessage(text,type){
+
+  const message =
+    document.getElementById("formMessage");
+
+  message.textContent = text;
+
+  message.className =
+    "message show "+type;
+
+}
+
+
+/* =========================================
+   SECURITY HELPERS
+========================================= */
+
+function escapeHTML(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+function escapeJS(value){
+
+  return String(value ?? "")
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'");
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+checkUser();
+loadTournaments();
+
 </script>
 
 </body>
