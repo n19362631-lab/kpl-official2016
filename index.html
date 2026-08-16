@@ -1,13 +1,17 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <meta name="description" content="KPL Official — Football & Cricket tournaments.">
+
   <title>KPL Official | Football & Cricket</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
@@ -17,17 +21,13 @@
 
 <header class="nav">
 
-  <a class="brand" href="#home" aria-label="KPL Official home">
-
-    <span class="brand-mark" id="websiteLogo">
-      K
-    </span>
+  <a class="brand" href="#home">
+    <span class="brand-mark">K</span>
 
     <span>
-      <b id="websiteName">KPL</b>
+      <b>KPL</b>
       <small>OFFICIAL</small>
     </span>
-
   </a>
 
   <nav class="desktop-nav">
@@ -42,7 +42,7 @@
     Login / Register
   </button>
 
-  <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+  <button class="menu-btn" id="menuBtn">
     ☰
   </button>
 
@@ -66,65 +66,60 @@
 
 <main>
 
-
-<!-- HERO -->
+<!-- ================= HERO ================= -->
 
 <section class="hero" id="home">
 
-  <div class="hero-copy">
+  <div class="hero-content">
 
-    <div class="eyebrow">
+    <div class="hero-label">
       <span></span>
-      KPL OFFICIAL • SEASON 01
+      KPL OFFICIAL
     </div>
 
     <h1>
-      PLAY HARD.<br>
-      <em>COMPETE.</em><br>
-      CONQUER.
+      KPL
+      <em>OFFICIAL</em>
     </h1>
 
     <p>
-      Professional local tournaments for players and teams
-      who want to compete, connect and make their mark.
+      Football & Cricket tournaments,
+      registrations and results — all in one place.
     </p>
 
-    <div class="hero-actions">
-
-      <a class="btn primary" href="#tournaments">
-        Explore Tournaments
-        <span>→</span>
-      </a>
-
-      <button class="btn ghost" id="heroLogin">
-        Register Now
-      </button>
-
-    </div>
+    <a href="#tournaments" class="btn primary">
+      Explore Tournaments
+      <span>→</span>
+    </a>
 
   </div>
 
 
-  <div class="hero-visual">
+  <div class="hero-sports">
 
-    <div class="orb"></div>
+    <div class="sport-box football-box">
 
-    <div class="sport-card football-card">
-      <span>⚽</span>
-      <b>FOOTBALL</b>
-      <small>TOURNAMENTS</small>
+      <div class="sport-icon">⚽</div>
+
+      <div>
+        <small>01 / SPORT</small>
+        <h3>FOOTBALL</h3>
+        <p>Competitive tournaments</p>
+      </div>
+
     </div>
 
-    <div class="sport-card cricket-card">
-      <span>🏏</span>
-      <b>CRICKET</b>
-      <small>TOURNAMENTS</small>
-    </div>
 
-    <div class="hero-badge">
-      KPL
-      <br>
-      <small>OFFICIAL</small>
+    <div class="sport-box cricket-box">
+
+      <div class="sport-icon">🏏</div>
+
+      <div>
+        <small>02 / SPORT</small>
+        <h3>CRICKET</h3>
+        <p>Upcoming tournaments</p>
+      </div>
+
     </div>
 
   </div>
@@ -132,7 +127,7 @@
 </section>
 
 
-<!-- STATS -->
+<!-- ================= STATS ================= -->
 
 <section class="stats">
 
@@ -148,7 +143,7 @@
 
   <div>
     <strong>01</strong>
-    <span>Simple Registration</span>
+    <span>Registration</span>
   </div>
 
   <div>
@@ -159,20 +154,15 @@
 </section>
 
 
-<!-- TOURNAMENTS -->
+<!-- ================= TOURNAMENTS ================= -->
 
 <section class="section" id="tournaments">
 
   <div class="section-head">
 
     <div>
-      <span class="eyebrow">
-        UPCOMING
-      </span>
-
-      <h2>
-        TOURNAMENTS
-      </h2>
+      <span class="eyebrow">LIVE FROM KPL ADMIN</span>
+      <h2>TOURNAMENTS</h2>
     </div>
 
     <a href="#tournaments">
@@ -183,27 +173,16 @@
 
 
   <!-- IMPORTANT:
-       NO HARD-CODED TOURNAMENTS HERE.
-       Firebase Admin Panel data will appear here.
+       script.js will load admin tournaments here.
   -->
 
-  <div
-    class="tournament-grid"
-    id="tournamentGrid"
-  >
+  <div class="tournament-grid">
 
-    <div
-      class="empty-card"
-      id="tournamentLoading"
-    >
+    <div class="empty-card">
 
-      <div class="empty-icon">
-        ⚡
-      </div>
+      <div class="loading-circle"></div>
 
-      <h3>
-        Loading tournaments...
-      </h3>
+      <h3>Loading tournaments...</h3>
 
       <p>
         Fetching the latest KPL tournaments.
@@ -216,42 +195,37 @@
 </section>
 
 
-<!-- FOOTBALL -->
+<!-- ================= FOOTBALL ================= -->
 
-<section
-  class="split-section"
-  id="football"
->
+<section class="sport-section" id="football">
 
-  <div class="split-copy">
+  <div class="sport-content">
 
     <span class="eyebrow">
       01 / SPORT
     </span>
 
     <h2>
-      FOOTBALL<br>
-      <em>STARTS HERE.</em>
+      FOOTBALL
+      <em>TOURNAMENTS.</em>
     </h2>
 
     <p>
-      Find upcoming football tournaments, check the rules,
-      build your squad and register in a few simple steps.
+      Explore KPL football tournaments,
+      check tournament details and register
+      your team.
     </p>
 
-    <a
-      class="btn primary"
-      href="#tournaments"
-    >
+    <a href="#tournaments" class="btn primary">
       View Football →
     </a>
 
   </div>
 
 
-  <div class="split-art football-art">
+  <div class="sport-visual football-visual">
 
-    <div class="giant">
+    <div class="giant-icon">
       ⚽
     </div>
 
@@ -262,42 +236,37 @@
 </section>
 
 
-<!-- CRICKET -->
+<!-- ================= CRICKET ================= -->
 
-<section
-  class="split-section reverse"
-  id="cricket"
->
+<section class="sport-section reverse" id="cricket">
 
-  <div class="split-copy">
+  <div class="sport-content">
 
     <span class="eyebrow">
       02 / SPORT
     </span>
 
     <h2>
-      CRICKET<br>
-      <em>YOUR GAME.</em>
+      CRICKET
+      <em>TOURNAMENTS.</em>
     </h2>
 
     <p>
-      Cricket tournaments, team registrations and results —
-      all in one clean place.
+      Find upcoming cricket tournaments,
+      registration information and tournament
+      results.
     </p>
 
-    <a
-      class="btn primary"
-      href="#tournaments"
-    >
+    <a href="#tournaments" class="btn primary">
       View Cricket →
     </a>
 
   </div>
 
 
-  <div class="split-art cricket-art">
+  <div class="sport-visual cricket-visual">
 
-    <div class="giant">
+    <div class="giant-icon">
       🏏
     </div>
 
@@ -308,9 +277,9 @@
 </section>
 
 
-<!-- HOW IT WORKS -->
+<!-- ================= HOW IT WORKS ================= -->
 
-<section class="how section">
+<section class="section process">
 
   <div class="section-head">
 
@@ -321,7 +290,7 @@
       </span>
 
       <h2>
-        REGISTER IN MINUTES
+        HOW IT WORKS
       </h2>
 
     </div>
@@ -332,34 +301,34 @@
   <div class="steps">
 
     <div>
-      <i>01</i>
+      <b>01</b>
       <h3>Login</h3>
       <p>
-        Continue securely with your Google account.
+        Continue securely with your account.
       </p>
     </div>
 
     <div>
-      <i>02</i>
+      <b>02</b>
       <h3>Choose</h3>
       <p>
-        Select Football or Cricket and your tournament.
+        Select your Football or Cricket tournament.
       </p>
     </div>
 
     <div>
-      <i>03</i>
+      <b>03</b>
       <h3>Register</h3>
       <p>
-        Enter only the details required for that tournament.
+        Enter your team and player details.
       </p>
     </div>
 
     <div>
-      <i>04</i>
-      <h3>Pay & Submit</h3>
+      <b>04</b>
+      <h3>Play</h3>
       <p>
-        Pay using the organiser's UPI and submit proof.
+        Complete registration and participate.
       </p>
     </div>
 
@@ -368,12 +337,9 @@
 </section>
 
 
-<!-- RESULTS -->
+<!-- ================= RESULTS ================= -->
 
-<section
-  class="results section"
-  id="results"
->
+<section class="section" id="results">
 
   <div class="section-head">
 
@@ -394,7 +360,7 @@
 
   <div class="empty-card">
 
-    <div class="empty-icon">
+    <div class="result-icon">
       🏆
     </div>
 
@@ -403,8 +369,7 @@
     </h3>
 
     <p>
-      Once KPL tournaments are completed, results and standings
-      can be published from the admin panel.
+      Tournament results and standings can be published from the admin panel.
     </p>
 
   </div>
@@ -414,7 +379,7 @@
 </main>
 
 
-<!-- FOOTER -->
+<!-- ================= FOOTER ================= -->
 
 <footer>
 
@@ -425,10 +390,13 @@
     </span>
 
     <div>
+
       <b>KPL OFFICIAL</b>
+
       <p>
         Football • Cricket • Competition
       </p>
+
     </div>
 
   </div>
@@ -451,20 +419,13 @@
 </footer>
 
 
-<!-- LOGIN MODAL -->
+<!-- ================= LOGIN MODAL ================= -->
 
-<div
-  class="modal"
-  id="loginModal"
-  aria-hidden="true"
->
+<div class="modal" id="loginModal">
 
   <div class="modal-box">
 
-    <button
-      class="close"
-      id="closeModal"
-    >
+    <button class="close" id="closeModal">
       ×
     </button>
 
@@ -477,20 +438,19 @@
     </span>
 
     <h2>
-      Welcome back.
+      Welcome.
     </h2>
 
     <p>
-      Sign in to register for tournaments
-      and manage your registrations.
+      Sign in to register for KPL tournaments.
     </p>
 
-    <button
-      class="google-btn"
-      id="googleBtn"
-    >
+    <button class="google-btn" id="googleBtn">
+
       <span>G</span>
+
       Continue with Google
+
     </button>
 
   </div>
@@ -498,10 +458,8 @@
 </div>
 
 
-<script
-  type="module"
-  src="script.js">
-</script>
+<script type="module" src="script.js"></script>
 
 </body>
 </html>
+```
