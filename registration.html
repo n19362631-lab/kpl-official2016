@@ -1,1045 +1,311 @@
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>KPL Official | Registration</title>
-
-<style>
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:Inter,Arial,sans-serif;
-  background:#f5f6fa;
-  color:#111;
-}
-
-.nav{
-  min-height:70px;
-  background:#111;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:12px 20px;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  color:#fff;
-  text-decoration:none;
-  font-weight:900;
-}
-
-.brand-mark{
-  width:40px;
-  height:40px;
-  border-radius:10px;
-  background:#ff3b30;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-}
-
-.brand-mark img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
-
-.brand-text small{
-  display:block;
-  font-size:9px;
-  letter-spacing:2px;
-  opacity:.7;
-}
-
-.home{
-  color:#fff;
-  text-decoration:none;
-  font-weight:700;
-}
-
-.container{
-  width:100%;
-  max-width:900px;
-  margin:30px auto;
-  padding:0 15px;
-}
-
-.box{
-  background:#fff;
-  border-radius:22px;
-  padding:25px;
-  box-shadow:0 12px 45px rgba(0,0,0,.08);
-}
-
-.eyebrow{
-  color:#ff3b30;
-  font-size:11px;
-  font-weight:900;
-  letter-spacing:2px;
-}
-
-h1{
-  margin:8px 0;
-  font-size:30px;
-}
-
-.subtitle{
-  color:#777;
-  line-height:1.5;
-}
-
-.user{
-  background:#f3f4f6;
-  padding:13px;
-  border-radius:12px;
-  margin:20px 0;
-  font-size:14px;
-}
-
-.tournament-info{
-  background:#111;
-  color:#fff;
-  border-radius:18px;
-  padding:20px;
-  margin:20px 0;
-}
-
-.tournament-info h2{
-  margin:5px 0 12px;
-}
-
-.info-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-}
-
-.info-item{
-  background:rgba(255,255,255,.08);
-  padding:10px;
-  border-radius:10px;
-}
-
-.info-item small{
-  display:block;
-  opacity:.6;
-  margin-bottom:4px;
-}
-
-.section{
-  margin-top:28px;
-  padding-top:25px;
-  border-top:1px solid #eee;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:16px;
-}
-
-.full{
-  grid-column:1/-1;
-}
-
-.field{
-  display:flex;
-  flex-direction:column;
-  gap:7px;
-}
-
-label{
-  font-weight:800;
-  font-size:14px;
-}
-
-input,select{
-  width:100%;
-  padding:13px;
-  border:1px solid #ddd;
-  border-radius:11px;
-  font-size:15px;
-  outline:none;
-}
-
-input:focus,select:focus{
-  border-color:#111;
-}
-
-.required{
-  color:#ff3b30;
-}
-
-.player-card{
-  border:1px solid #ddd;
-  border-radius:16px;
-  padding:17px;
-  margin-top:15px;
-  background:#fafafa;
-}
-
-.player-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:15px;
-}
-
-.player-title strong{
-  font-size:17px;
-}
-
-.file-box{
-  border:2px dashed #ddd;
-  border-radius:13px;
-  padding:14px;
-  background:#fff;
-}
-
-.preview{
-  display:none;
-  width:100%;
-  max-width:280px;
-  max-height:180px;
-  object-fit:contain;
-  margin-top:10px;
-  border-radius:10px;
-  border:1px solid #ddd;
-}
-
-.payment-box{
-  background:#fff8ed;
-  border:1px solid #fed7aa;
-  border-radius:16px;
-  padding:18px;
-}
-
-.qr{
-  display:block;
-  width:220px;
-  max-width:100%;
-  margin:15px auto;
-  border-radius:14px;
-  border:1px solid #ddd;
-}
-
-.upi{
-  text-align:center;
-  font-weight:900;
-  font-size:18px;
-}
-
-.notice{
-  padding:14px;
-  border-radius:12px;
-  background:#fff7ed;
-  border:1px solid #fed7aa;
-  color:#9a3412;
-  font-size:13px;
-  line-height:1.5;
-}
-
-.submit{
-  width:100%;
-  margin-top:25px;
-  padding:16px;
-  border:0;
-  border-radius:13px;
-  background:#111;
-  color:#fff;
-  font-size:16px;
-  font-weight:900;
-  cursor:pointer;
-}
-
-.submit:disabled{
-  opacity:.55;
-  cursor:not-allowed;
-}
-
-.status{
-  display:none;
-  margin-top:18px;
-  padding:14px;
-  border-radius:12px;
-  font-weight:700;
-}
-
-.success{
-  display:block;
-  background:#dcfce7;
-  color:#166534;
-}
-
-.error{
-  display:block;
-  background:#fee2e2;
-  color:#991b1b;
-}
-
-.login-box{
-  text-align:center;
-  padding:35px 15px;
-}
-
-.google{
-  border:0;
-  background:#111;
-  color:#fff;
-  padding:14px 20px;
-  border-radius:12px;
-  font-weight:800;
-  cursor:pointer;
-}
-
-.hidden{
-  display:none!important;
-}
-
-@media(max-width:700px){
-  .grid,
-  .info-grid{
-    grid-template-columns:1fr;
-  }
-
-  .full{
-    grid-column:auto;
-  }
-
-  .box{
-    padding:18px;
-  }
-
-  h1{
-    font-size:25px;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<header class="nav">
-
-  <a href="index.html" class="brand">
-
-    <span class="brand-mark" id="logoBox">
-      K
-    </span>
-
-    <span class="brand-text">
-      <b id="brandName">KPL OFFICIAL</b>
-      <small>SPORTS & TOURNAMENTS</small>
-    </span>
-
-  </a>
-
-  <a href="index.html" class="home">
-    Home
-  </a>
-
-</header>
-
-
-<main class="container">
-
-<div class="box">
-
-  <span class="eyebrow">
-    KPL OFFICIAL
-  </span>
-
-  <h1>
-    Tournament Registration
-  </h1>
-
-  <p class="subtitle">
-    Register your team and submit the required player and payment details.
-  </p>
-
-
-  <!-- LOGIN REQUIRED -->
-
-  <div id="loginRequired" class="login-box hidden">
-
-    <h2>Login Required</h2>
-
-    <p>
-      Please continue with Google before registering.
-    </p>
-
-    <button id="googleLogin" class="google">
-      Continue with Google
-    </button>
-
-  </div>
-
-
-  <!-- REGISTRATION -->
-
-  <div id="registrationArea" class="hidden">
-
-    <div class="user">
-      <strong>Logged in:</strong>
-      <span id="userEmail"></span>
-    </div>
-
-
-    <!-- LIVE TOURNAMENT -->
-
-    <div class="tournament-info">
-
-      <span class="eyebrow">
-        SELECTED TOURNAMENT
-      </span>
-
-      <h2 id="tourName">
-        Loading...
-      </h2>
-
-      <div class="info-grid">
-
-        <div class="info-item">
-          <small>Sport</small>
-          <b id="tourSport">-</b>
-        </div>
-
-        <div class="info-item">
-          <small>Entry Fee</small>
-          <b id="tourFee">₹0</b>
-        </div>
-
-        <div class="info-item">
-          <small>Prize Pool</small>
-          <b id="tourPrize">₹0</b>
-        </div>
-
-        <div class="info-item">
-          <small>Venue</small>
-          <b id="tourVenue">-</b>
-        </div>
-
-        <div class="info-item">
-          <small>Match Date</small>
-          <b id="tourDate">-</b>
-        </div>
-
-        <div class="info-item">
-          <small>Player Limit</small>
-          <b id="tourPlayers">-</b>
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <form id="registrationForm">
-
-
-      <!-- TEAM -->
-
-      <div class="section">
-
-        <h2>Team Details</h2>
-
-        <div class="grid">
-
-          <div class="field">
-
-            <label>
-              Team Name <span class="required">*</span>
-            </label>
-
-            <input
-              id="teamName"
-              required
-              placeholder="Enter team name">
-
-          </div>
-
-
-          <div class="field">
-
-            <label>
-              Captain Name <span class="required">*</span>
-            </label>
-
-            <input
-              id="captainName"
-              required
-              placeholder="Enter captain name">
-
-          </div>
-
-
-          <div class="field">
-
-            <label>
-              Contact Number <span class="required">*</span>
-            </label>
-
-            <input
-              id="phone"
-              type="tel"
-              maxlength="10"
-              pattern="[0-9]{10}"
-              inputmode="numeric"
-              required
-              placeholder="10 digit number">
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- PLAYERS -->
-
-      <div class="section">
-
-        <h2>Player Details</h2>
-
-        <p class="subtitle">
-          Player count will follow the limits set by the Admin Panel.
-        </p>
-
-        <div id="playersContainer"></div>
-
-      </div>
-
-
-      <!-- PAYMENT -->
-
-      <div class="section">
-
-        <h2>Payment</h2>
-
-        <div class="payment-box">
-
-          <p>
-            Pay the tournament entry fee using the UPI details below.
-          </p>
-
-          <div class="upi" id="upiText">
-            UPI not available
-          </div>
-
-          <img
-            id="paymentQR"
-            class="qr hidden"
-            alt="Payment QR">
-
-          <div class="field">
-
-            <label>
-              UTR / Transaction ID
-              <span class="required">*</span>
-            </label>
-
-            <input
-              id="utr"
-              required
-              placeholder="Enter payment UTR">
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- IMPORTANT -->
-
-      <div class="section">
-
-        <div class="notice">
-
-          <strong>Important:</strong><br>
-
-          Aadhaar number and Aadhaar images are collected
-          only for tournament verification. They should not
-          be displayed publicly. Upload clear front and back
-          images for every registered player.
-
-        </div>
-
-      </div>
-
-
-      <button
-        id="submitBtn"
-        class="submit"
-        type="submit">
-
-        Submit Registration
-
-      </button>
-
-
-      <div id="status" class="status"></div>
-
-    </form>
-
-  </div>
-
-</div>
-
-</main>
-
-
-<script type="module">
+// ======================================================
+// KPL OFFICIAL - REGISTRATION.JS
+// FULL PLAYER DETAILS VERSION
+// ======================================================
 
 import {
   auth,
   db,
-  provider,
-  onAuthStateChanged,
-  signInWithPopup
+  storage
 } from "./firebase.js";
 
+import {
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 import {
   doc,
   getDoc,
-  collection,
   addDoc,
+  collection,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-
-/*
-  SUPABASE
-  Use the private bucket:
-  aadhaar-documents
-
-  Do NOT make this bucket public.
-*/
-
 import {
-  createClient
-} from "https://esm.sh/@supabase/supabase-js@2";
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
 
 
-const SUPABASE_URL =
-  "https://womcjbkdouvawjjtlddg.supabase.co";
+// ======================================================
+// ELEMENTS
+// ======================================================
 
-const SUPABASE_KEY =
-  "sb_publishable_B5Ho6axYtVg0u-NRKHafgw_xdch_6RL";
-
-
-const supabase =
-  createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+const form = document.getElementById("registrationForm");
+const tournamentId =
+  new URLSearchParams(window.location.search).get("tournament");
 
 
-const AADHAAR_BUCKET =
-  "aadhaar-documents";
-
-
-/* ELEMENTS */
-
-const loginRequired =
-  document.getElementById("loginRequired");
-
-const registrationArea =
-  document.getElementById("registrationArea");
-
-const userEmail =
-  document.getElementById("userEmail");
-
-const form =
-  document.getElementById("registrationForm");
-
-const submitBtn =
-  document.getElementById("submitBtn");
-
-const statusBox =
-  document.getElementById("status");
-
-const playersContainer =
-  document.getElementById("playersContainer");
-
+// ======================================================
+// GLOBAL
+// ======================================================
 
 let currentUser = null;
 let tournamentData = null;
-let tournamentId = null;
+
+let minPlayers = 1;
+let maxPlayers = 20;
 
 
-/* URL TOURNAMENT ID */
+// ======================================================
+// SAFE
+// ======================================================
 
-const params =
-  new URLSearchParams(
-    window.location.search
-  );
+function safe(value) {
 
-tournamentId =
-  params.get("tournament");
-
-
-/* STATUS */
-
-function showStatus(
-  message,
-  error = false
-){
-
-  statusBox.textContent =
-    message;
-
-  statusBox.className =
-    "status " +
-    (error ? "error" : "success");
-
-}
-
-
-/* DATE */
-
-function formatDate(value){
-
-  if(!value) return "-";
-
-  const d =
-    new Date(value);
-
-  if(isNaN(d.getTime())){
-    return value;
+  if (
+    value === null ||
+    value === undefined
+  ) {
+    return "";
   }
 
-  return d.toLocaleDateString(
-    "en-IN",
-    {
-      day:"2-digit",
-      month:"short",
-      year:"numeric"
-    }
-  );
-
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 
-/* ESCAPE */
-
-function safe(value){
-
-  return String(
-    value ?? ""
-  )
-  .replaceAll("&","&amp;")
-  .replaceAll("<","&lt;")
-  .replaceAll(">","&gt;")
-  .replaceAll('"',"&quot;")
-  .replaceAll("'","&#039;");
-
-}
-
-
-/* AUTH */
+// ======================================================
+// AUTH
+// ======================================================
 
 onAuthStateChanged(
   auth,
-  async user => {
+  async (user) => {
 
-    currentUser =
-      user;
+    if (!user) {
 
-    if(user){
+      alert(
+        "Please login with Google first."
+      );
 
-      loginRequired
-        .classList
-        .add("hidden");
+      window.location.href =
+        "index.html";
 
-      registrationArea
-        .classList
-        .remove("hidden");
-
-      userEmail.textContent =
-        user.email || "";
-
-      await loadWebsiteSettings();
-
-      await loadTournament();
-
-    }else{
-
-      loginRequired
-        .classList
-        .remove("hidden");
-
-      registrationArea
-        .classList
-        .add("hidden");
-
+      return;
     }
+
+    currentUser = user;
+
+    const email =
+      document.getElementById("userEmail");
+
+    const userName =
+      document.getElementById("loggedUserName");
+
+    if (email) {
+      email.textContent =
+        user.email || "";
+    }
+
+    if (userName) {
+      userName.textContent =
+        user.displayName || "User";
+    }
+
+    await loadTournament();
 
   }
 );
 
 
-/* GOOGLE LOGIN */
+// ======================================================
+// LOAD TOURNAMENT
+// ======================================================
 
-document
-  .getElementById("googleLogin")
-  .addEventListener(
-    "click",
-    async () => {
+async function loadTournament() {
 
-      try{
+  if (!tournamentId) {
 
-        await signInWithPopup(
-          auth,
-          provider
-        );
-
-      }catch(error){
-
-        console.error(error);
-
-        showStatus(
-          "Google login failed: " +
-          error.message,
-          true
-        );
-
-      }
-
-    }
-  );
-
-
-/* LOAD WEBSITE SETTINGS */
-
-async function loadWebsiteSettings(){
-
-  try{
-
-    const snap =
-      await getDoc(
-        doc(
-          db,
-          "settings",
-          "site"
-        )
-      );
-
-
-    if(!snap.exists()){
-      return;
-    }
-
-
-    const data =
-      snap.data();
-
-
-    /* WEBSITE LOGO */
-
-    if(data.logoUrl){
-
-      document
-        .getElementById("logoBox")
-        .innerHTML = `
-
-          <img
-            src="${safe(data.logoUrl)}"
-            alt="KPL">
-
-        `;
-
-    }
-
-
-    /* SITE NAME */
-
-    if(data.siteName){
-
-      document
-        .getElementById("brandName")
-        .textContent =
-          data.siteName;
-
-    }
-
-
-    /* UPI */
-
-    if(data.upiId){
-
-      document
-        .getElementById("upiText")
-        .textContent =
-          data.upiId;
-
-    }
-
-
-    /* QR */
-
-    if(data.qrUrl){
-
-      const qr =
-        document
-          .getElementById("paymentQR");
-
-      qr.src =
-        data.qrUrl;
-
-      qr.classList
-        .remove("hidden");
-
-    }
-
-  }catch(error){
-
-    console.error(
-      "Settings error:",
-      error
-    );
-
-  }
-
-}
-
-
-/* LOAD TOURNAMENT */
-
-async function loadTournament(){
-
-  if(!tournamentId){
-
-    showStatus(
-      "No tournament was selected.",
-      true
+    alert(
+      "Tournament ID missing."
     );
 
     return;
-
   }
 
+  try {
 
-  try{
+    const tournamentRef =
+      doc(
+        db,
+        "tournaments",
+        tournamentId
+      );
 
     const snap =
       await getDoc(
-        doc(
-          db,
-          "tournaments",
-          tournamentId
-        )
+        tournamentRef
       );
 
+    if (!snap.exists()) {
 
-    if(!snap.exists()){
-
-      showStatus(
-        "Tournament not found.",
-        true
+      alert(
+        "Tournament not found."
       );
 
       return;
-
     }
-
 
     tournamentData =
       snap.data();
 
 
-    document
-      .getElementById("tourName")
-      .textContent =
-        tournamentData.name ||
-        "KPL Tournament";
+    // ----------------------------------------------
+    // BASIC DETAILS
+    // ----------------------------------------------
+
+    const tournamentName =
+      getField(
+        tournamentData,
+        [
+          "name",
+          "tournamentName",
+          "title"
+        ],
+        "KPL Tournament"
+      );
+
+    const sport =
+      getField(
+        tournamentData,
+        [
+          "sport",
+          "category",
+          "type"
+        ],
+        "Football"
+      );
+
+    const entryFee =
+      getField(
+        tournamentData,
+        [
+          "entryFee",
+          "entry_fee",
+          "fee"
+        ],
+        ""
+      );
+
+    const prizePool =
+      getField(
+        tournamentData,
+        [
+          "prizePool",
+          "prize_pool",
+          "prize"
+        ],
+        ""
+      );
 
 
-    document
-      .getElementById("tourSport")
-      .textContent =
-        tournamentData.sport ||
-        "-";
+    // ----------------------------------------------
+    // PLAYER LIMIT
+    // ----------------------------------------------
 
-
-    document
-      .getElementById("tourFee")
-      .textContent =
-        "₹" +
-        (
-          tournamentData.entryFee ||
-          "0"
-        );
-
-
-    document
-      .getElementById("tourPrize")
-      .textContent =
-        "₹" +
-        (
-          tournamentData.prizePool ||
-          "0"
-        );
-
-
-    document
-      .getElementById("tourVenue")
-      .textContent =
-        tournamentData.venue ||
-        "-";
-
-
-    document
-      .getElementById("tourDate")
-      .textContent =
-        formatDate(
-          tournamentData.date
-        );
-
-
-    const min =
-      Number(
-        tournamentData.minPlayers ||
+    minPlayers = Number(
+      getField(
+        tournamentData,
+        [
+          "minPlayers",
+          "minimumPlayers",
+          "minimum_players",
+          "minPlayer"
+        ],
         1
-      );
-
-    const max =
-      Number(
-        tournamentData.maxPlayers ||
-        min
-      );
-
-
-    document
-      .getElementById("tourPlayers")
-      .textContent =
-        min === max
-          ? `${min} Players`
-          : `${min}-${max} Players`;
-
-
-    buildPlayers(
-      min,
-      max
+      )
     );
 
-  }catch(error){
+    maxPlayers = Number(
+      getField(
+        tournamentData,
+        [
+          "maxPlayers",
+          "maximumPlayers",
+          "maximum_players",
+          "maxPlayer"
+        ],
+        20
+      )
+    );
 
-    console.error(error);
 
-    showStatus(
-      "Could not load tournament: " +
-      error.message,
-      true
+    if (
+      !Number.isFinite(minPlayers) ||
+      minPlayers < 1
+    ) {
+      minPlayers = 1;
+    }
+
+    if (
+      !Number.isFinite(maxPlayers) ||
+      maxPlayers < minPlayers
+    ) {
+      maxPlayers = 20;
+    }
+
+
+    // ----------------------------------------------
+    // DISPLAY
+    // ----------------------------------------------
+
+    setText(
+      "tournamentName",
+      tournamentName
+    );
+
+    setText(
+      "tournamentSport",
+      sport
+    );
+
+    setText(
+      "tournamentEntryFee",
+      entryFee
+        ? "₹" + entryFee
+        : "TBA"
+    );
+
+    setText(
+      "tournamentPrizePool",
+      prizePool
+        ? "₹" + prizePool
+        : "TBA"
+    );
+
+    setText(
+      "playerLimit",
+      `${minPlayers} - ${maxPlayers} Players`
+    );
+
+
+    // ----------------------------------------------
+    // CREATE PLAYERS
+    // ----------------------------------------------
+
+    createPlayerFields();
+
+    console.log(
+      "Tournament loaded:",
+      tournamentData
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Tournament loading error:",
+      error
+    );
+
+    alert(
+      "Tournament loading failed: " +
+      error.message
     );
 
   }
@@ -1047,468 +313,820 @@ async function loadTournament(){
 }
 
 
-/* PLAYER FORM */
+// ======================================================
+// FIELD HELPER
+// ======================================================
 
-function buildPlayers(
-  min,
-  max
-){
+function getField(
+  data,
+  fields,
+  fallback = ""
+) {
 
-  playersContainer.innerHTML =
-    "";
+  for (
+    const field of fields
+  ) {
+
+    if (
+      data[field] !== undefined &&
+      data[field] !== null &&
+      data[field] !== ""
+    ) {
+
+      return data[field];
+
+    }
+
+  }
+
+  return fallback;
+}
 
 
-  for(
+// ======================================================
+// TEXT HELPER
+// ======================================================
+
+function setText(
+  id,
+  value
+) {
+
+  const element =
+    document.getElementById(id);
+
+  if (element) {
+
+    element.textContent =
+      value;
+
+  }
+
+}
+
+
+// ======================================================
+// CREATE PLAYER FIELDS
+// ======================================================
+
+function createPlayerFields() {
+
+  const container =
+    document.getElementById(
+      "playersContainer"
+    );
+
+  if (!container) {
+
+    console.error(
+      "playersContainer not found."
+    );
+
+    return;
+  }
+
+
+  container.innerHTML = "";
+
+
+  for (
     let i = 1;
-    i <= max;
+    i <= maxPlayers;
     i++
-  ){
+  ) {
 
     const required =
-      i <= min;
+      i <= minPlayers;
 
 
-    const card =
+    const player =
       document.createElement(
         "div"
       );
 
-    card.className =
+
+    player.className =
       "player-card";
 
 
-    card.innerHTML = `
+    player.dataset.player =
+      i;
 
-      <div class="player-title">
 
-        <strong>
+    player.innerHTML = `
+
+      <div class="player-header">
+
+        <h3>
           Player ${i}
-        </strong>
+        </h3>
 
         ${
           required
-            ? `<span class="required">
-                 Required
-               </span>`
-            : `<span>
-                 Optional
-               </span>`
+            ? `<span class="required-player">
+                REQUIRED
+              </span>`
+            : `<span class="optional-player">
+                OPTIONAL
+              </span>`
         }
 
       </div>
 
 
-      <div class="grid">
+      <!-- NAME -->
 
-        <div class="field">
+      <div class="form-group">
 
-          <label>
-            Player Name
-            ${
-              required
-                ? '<span class="required">*</span>'
-                : ''
-            }
-          </label>
+        <label>
+          Player Name
+          ${required ? "*" : ""}
+        </label>
 
-          <input
-            class="player-name"
-            data-index="${i}"
-            ${
-              required
-                ? "required"
-                : ""
-            }
-            placeholder="Full name">
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Age
-            ${
-              required
-                ? '<span class="required">*</span>'
-                : ''
-            }
-          </label>
-
-          <input
-            class="player-age"
-            type="number"
-            min="1"
-            max="100"
-            data-index="${i}"
-            ${
-              required
-                ? "required"
-                : ""
-            }
-            placeholder="Age">
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Role
-          </label>
-
-          <select
-            class="player-role"
-            data-index="${i}">
-
-            <option value="">
-              Select role
-            </option>
-
-            <option value="Player">
-              Player
-            </option>
-
-            <option value="Captain">
-              Captain
-            </option>
-
-            <option value="Goalkeeper">
-              Goalkeeper
-            </option>
-
-            <option value="Batsman">
-              Batsman
-            </option>
-
-            <option value="Bowler">
-              Bowler
-            </option>
-
-            <option value="All Rounder">
-              All Rounder
-            </option>
-
-          </select>
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Aadhaar Number
-            ${
-              required
-                ? '<span class="required">*</span>'
-                : ''
-            }
-          </label>
-
-          <input
-            class="aadhaar-number"
-            type="text"
-            inputmode="numeric"
-            maxlength="12"
-            data-index="${i}"
-            ${
-              required
-                ? "required"
-                : ""
-            }
-            placeholder="12 digit Aadhaar">
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Aadhaar Front
-            ${
-              required
-                ? '<span class="required">*</span>'
-                : ''
-            }
-          </label>
-
-          <div class="file-box">
-
-            <input
-              class="aadhaar-front"
-              type="file"
-              accept="image/jpeg,image/png,image/webp"
-              data-index="${i}"
-              ${
-                required
-                  ? "required"
-                  : ""
-              }>
-
-            <img
-              class="preview front-preview"
-              data-index="${i}">
-
-          </div>
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Aadhaar Back
-            ${
-              required
-                ? '<span class="required">*</span>'
-                : ''
-            }
-          </label>
-
-          <div class="file-box">
-
-            <input
-              class="aadhaar-back"
-              type="file"
-              accept="image/jpeg,image/png,image/webp"
-              data-index="${i}"
-              ${
-                required
-                  ? "required"
-                  : ""
-              }>
-
-            <img
-              class="preview back-preview"
-              data-index="${i}">
-
-          </div>
-
-        </div>
+        <input
+          type="text"
+          name="player_${i}_name"
+          class="player-name"
+          data-player="${i}"
+          placeholder="Enter full name"
+          ${required ? "required" : ""}
+        >
 
       </div>
+
+
+      <!-- MOBILE -->
+
+      <div class="form-group">
+
+        <label>
+          Mobile Number
+          ${required ? "*" : ""}
+        </label>
+
+        <input
+          type="tel"
+          name="player_${i}_mobile"
+          class="player-mobile"
+          data-player="${i}"
+          placeholder="10 digit mobile number"
+          inputmode="numeric"
+          maxlength="10"
+          pattern="[0-9]{10}"
+          ${required ? "required" : ""}
+        >
+
+      </div>
+
+
+      <!-- DOB -->
+
+      <div class="form-group">
+
+        <label>
+          Date of Birth
+          ${required ? "*" : ""}
+        </label>
+
+        <input
+          type="date"
+          name="player_${i}_dob"
+          class="player-dob"
+          data-player="${i}"
+          ${required ? "required" : ""}
+        >
+
+      </div>
+
+
+      <!-- AGE -->
+
+      <div class="form-group">
+
+        <label>
+          Age
+          ${required ? "*" : ""}
+        </label>
+
+        <input
+          type="number"
+          name="player_${i}_age"
+          class="player-age"
+          data-player="${i}"
+          min="1"
+          max="100"
+          placeholder="Age"
+          ${required ? "required" : ""}
+        >
+
+      </div>
+
+
+      <!-- ROLE -->
+
+      <div class="form-group">
+
+        <label>
+          Player Role
+          ${required ? "*" : ""}
+        </label>
+
+        <select
+          name="player_${i}_role"
+          class="player-role"
+          data-player="${i}"
+          ${required ? "required" : ""}
+        >
+
+          <option value="">
+            Select Role
+          </option>
+
+          <option value="Player">
+            Player
+          </option>
+
+          <option value="Captain">
+            Captain
+          </option>
+
+          <option value="Vice Captain">
+            Vice Captain
+          </option>
+
+          <option value="Goalkeeper">
+            Goalkeeper
+          </option>
+
+          <option value="Batsman">
+            Batsman
+          </option>
+
+          <option value="Bowler">
+            Bowler
+          </option>
+
+          <option value="All Rounder">
+            All Rounder
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- AADHAAR NUMBER -->
+
+      <div class="form-group">
+
+        <label>
+          Aadhaar Number
+          ${required ? "*" : ""}
+        </label>
+
+        <input
+          type="text"
+          name="player_${i}_aadhaar"
+          class="player-aadhaar"
+          data-player="${i}"
+          placeholder="12 digit Aadhaar number"
+          inputmode="numeric"
+          maxlength="12"
+          pattern="[0-9]{12}"
+          ${required ? "required" : ""}
+        >
+
+      </div>
+
+
+      <!-- AADHAAR FRONT -->
+
+      <div class="form-group">
+
+        <label>
+          Aadhaar Front Photo
+          ${required ? "*" : ""}
+        </label>
+
+        <input
+          type="file"
+          name="player_${i}_aadhaar_front"
+          class="player-aadhaar-front"
+          data-player="${i}"
+          accept="image/jpeg,image/png,image/webp"
+          ${required ? "required" : ""}
+        >
+
+        <small>
+          JPG, PNG or WEBP
+        </small>
+
+      </div>
+
+
+      <!-- AADHAAR BACK -->
+
+      <div class="form-group">
+
+        <label>
+          Aadhaar Back Photo
+          ${required ? "*" : ""}
+        </label>
+
+        <input
+          type="file"
+          name="player_${i}_aadhaar_back"
+          class="player-aadhaar-back"
+          data-player="${i}"
+          accept="image/jpeg,image/png,image/webp"
+          ${required ? "required" : ""}
+        >
+
+        <small>
+          JPG, PNG or WEBP
+        </small>
+
+      </div>
+
 
     `;
 
 
-    playersContainer
-      .appendChild(card);
+    container.appendChild(
+      player
+    );
 
   }
 
 
-  addPreviewListeners();
+  // ----------------------------------------------
+  // AUTO AGE FROM DOB
+  // ----------------------------------------------
+
+  container
+    .querySelectorAll(
+      ".player-dob"
+    )
+    .forEach(
+      (dobInput) => {
+
+        dobInput.addEventListener(
+          "change",
+          () => {
+
+            const player =
+              dobInput.dataset.player;
+
+            const ageInput =
+              container.querySelector(
+                `.player-age[data-player="${player}"]`
+              );
+
+            if (!ageInput) return;
+
+            const age =
+              calculateAge(
+                dobInput.value
+              );
+
+            if (age !== null) {
+
+              ageInput.value =
+                age;
+
+            }
+
+          }
+        );
+
+      }
+    );
 
 }
 
 
-/* PREVIEW */
+// ======================================================
+// CALCULATE AGE
+// ======================================================
 
-function addPreviewListeners(){
+function calculateAge(
+  dob
+) {
 
-  document
-    .querySelectorAll(
-      ".aadhaar-front"
+  if (!dob) return null;
+
+  const birth =
+    new Date(dob);
+
+  if (
+    isNaN(
+      birth.getTime()
     )
-    .forEach(input => {
+  ) {
+    return null;
+  }
 
-      input.addEventListener(
-        "change",
-        () => {
 
-          previewFile(
-            input,
-            document.querySelector(
-              `.front-preview[data-index="${input.dataset.index}"]`
-            )
-          );
+  const today =
+    new Date();
 
-        }
+
+  let age =
+    today.getFullYear() -
+    birth.getFullYear();
+
+
+  const month =
+    today.getMonth() -
+    birth.getMonth();
+
+
+  if (
+    month < 0 ||
+    (
+      month === 0 &&
+      today.getDate() <
+      birth.getDate()
+    )
+  ) {
+
+    age--;
+
+  }
+
+
+  return age;
+
+}
+
+
+// ======================================================
+// VALIDATE PLAYER
+// ======================================================
+
+function validatePlayer(
+  player,
+  index
+) {
+
+  const name =
+    player.name.trim();
+
+  const mobile =
+    player.mobile.trim();
+
+  const dob =
+    player.dob;
+
+  const age =
+    Number(player.age);
+
+  const role =
+    player.role;
+
+  const aadhaar =
+    player.aadhaar.trim();
+
+
+  if (!name) {
+
+    throw new Error(
+      `Player ${index}: Name is required.`
+    );
+
+  }
+
+
+  if (
+    !/^[0-9]{10}$/.test(
+      mobile
+    )
+  ) {
+
+    throw new Error(
+      `Player ${index}: Enter valid 10 digit mobile number.`
+    );
+
+  }
+
+
+  if (!dob) {
+
+    throw new Error(
+      `Player ${index}: Date of Birth is required.`
+    );
+
+  }
+
+
+  if (
+    !Number.isFinite(age) ||
+    age < 1 ||
+    age > 100
+  ) {
+
+    throw new Error(
+      `Player ${index}: Enter valid age.`
+    );
+
+  }
+
+
+  if (!role) {
+
+    throw new Error(
+      `Player ${index}: Select player role.`
+    );
+
+  }
+
+
+  if (
+    !/^[0-9]{12}$/.test(
+      aadhaar
+    )
+  ) {
+
+    throw new Error(
+      `Player ${index}: Aadhaar number must be 12 digits.`
+    );
+
+  }
+
+
+  if (!player.frontFile) {
+
+    throw new Error(
+      `Player ${index}: Aadhaar front photo is required.`
+    );
+
+  }
+
+
+  if (!player.backFile) {
+
+    throw new Error(
+      `Player ${index}: Aadhaar back photo is required.`
+    );
+
+  }
+
+
+  return true;
+
+}
+
+
+// ======================================================
+// GET PLAYERS
+// ======================================================
+
+function getPlayers() {
+
+  const players = [];
+
+
+  for (
+    let i = 1;
+    i <= maxPlayers;
+    i++
+  ) {
+
+    const nameInput =
+      document.querySelector(
+        `.player-name[data-player="${i}"]`
       );
 
-    });
-
-
-  document
-    .querySelectorAll(
-      ".aadhaar-back"
-    )
-    .forEach(input => {
-
-      input.addEventListener(
-        "change",
-        () => {
-
-          previewFile(
-            input,
-            document.querySelector(
-              `.back-preview[data-index="${input.dataset.index}"]`
-            )
-          );
-
-        }
+    const mobileInput =
+      document.querySelector(
+        `.player-mobile[data-player="${i}"]`
       );
 
-    });
+    const dobInput =
+      document.querySelector(
+        `.player-dob[data-player="${i}"]`
+      );
+
+    const ageInput =
+      document.querySelector(
+        `.player-age[data-player="${i}"]`
+      );
+
+    const roleInput =
+      document.querySelector(
+        `.player-role[data-player="${i}"]`
+      );
+
+    const aadhaarInput =
+      document.querySelector(
+        `.player-aadhaar[data-player="${i}"]`
+      );
+
+    const frontInput =
+      document.querySelector(
+        `.player-aadhaar-front[data-player="${i}"]`
+      );
+
+    const backInput =
+      document.querySelector(
+        `.player-aadhaar-back[data-player="${i}"]`
+      );
+
+
+    if (!nameInput) continue;
+
+
+    const name =
+      nameInput.value.trim();
+
+    const mobile =
+      mobileInput?.value.trim() || "";
+
+    const dob =
+      dobInput?.value || "";
+
+    const age =
+      ageInput?.value || "";
+
+    const role =
+      roleInput?.value || "";
+
+    const aadhaar =
+      aadhaarInput?.value.trim() || "";
+
+    const frontFile =
+      frontInput?.files?.[0] || null;
+
+    const backFile =
+      backInput?.files?.[0] || null;
+
+
+    const isEmpty =
+      !name &&
+      !mobile &&
+      !dob &&
+      !age &&
+      !role &&
+      !aadhaar &&
+      !frontFile &&
+      !backFile;
+
+
+    // Optional empty player
+    if (
+      i > minPlayers &&
+      isEmpty
+    ) {
+
+      continue;
+
+    }
+
+
+    const player = {
+
+      index: i,
+
+      name,
+
+      mobile,
+
+      phone: mobile,
+
+      mobileNumber: mobile,
+
+      dob,
+
+      dateOfBirth: dob,
+
+      age: Number(age),
+
+      role,
+
+      aadhaarNumber: aadhaar,
+
+      aadhaar: aadhaar,
+
+      frontFile,
+
+      backFile
+
+    };
+
+
+    validatePlayer(
+      player,
+      i
+    );
+
+
+    players.push(
+      player
+    );
+
+  }
+
+
+  if (
+    players.length <
+    minPlayers
+  ) {
+
+    throw new Error(
+      `Minimum ${minPlayers} players are required.`
+    );
+
+  }
+
+
+  if (
+    players.length >
+    maxPlayers
+  ) {
+
+    throw new Error(
+      `Maximum ${maxPlayers} players are allowed.`
+    );
+
+  }
+
+
+  return players;
 
 }
 
 
-function previewFile(
-  input,
-  preview
-){
+// ======================================================
+// UPLOAD IMAGE
+// ======================================================
 
-  const file =
-    input.files[0];
-
-
-  if(!file){
-    preview.style.display =
-      "none";
-    return;
-  }
-
-
-  if(!file.type.startsWith("image/")){
-
-    input.value = "";
-
-    showStatus(
-      "Please select an image file.",
-      true
-    );
-
-    return;
-
-  }
-
-
-  if(
-    file.size >
-    5 * 1024 * 1024
-  ){
-
-    input.value = "";
-
-    showStatus(
-      "Each Aadhaar image must be below 5 MB.",
-      true
-    );
-
-    return;
-
-  }
-
-
-  preview.src =
-    URL.createObjectURL(
-      file
-    );
-
-  preview.style.display =
-    "block";
-
-}
-
-
-/* SUPABASE PRIVATE UPLOAD */
-
-async function uploadAadhaar(
+async function uploadPlayerImage(
   file,
+  tournamentId,
+  registrationId,
   playerNumber,
   side
-){
+) {
 
-  if(!file){
-
-    throw new Error(
-      `Player ${playerNumber} Aadhaar ${side} image is required.`
-    );
-
+  if (!file) {
+    return "";
   }
 
 
-  if(
-    !file.type.startsWith("image/")
-  ){
-
-    throw new Error(
-      `Player ${playerNumber} Aadhaar ${side} must be an image.`
-    );
-
-  }
-
-
-  if(
-    file.size >
-    5 * 1024 * 1024
-  ){
-
-    throw new Error(
-      `Player ${playerNumber} Aadhaar ${side} must be below 5 MB.`
-    );
-
-  }
-
-
-  const cleanName =
+  const extension =
     file.name
-      .replace(
-        /[^a-zA-Z0-9._-]/g,
-        "_"
-      );
+      .split(".")
+      .pop()
+      .toLowerCase();
 
 
-  const path =
-    `${currentUser.uid}/${tournamentId}/player-${playerNumber}/${Date.now()}-${side}-${cleanName}`;
+  const filePath =
+    `registrations/${tournamentId}/${registrationId}/player-${playerNumber}/aadhaar-${side}.${extension}`;
 
 
-  const result =
-    await supabase.storage
-      .from(AADHAAR_BUCKET)
-      .upload(
-        path,
-        file,
-        {
-          contentType:file.type,
-          upsert:false
-        }
-      );
+  const storageRef =
+    ref(
+      storage,
+      filePath
+    );
 
 
-  if(result.error){
+  await uploadBytes(
+    storageRef,
+    file,
+    {
+      contentType:
+        file.type
+    }
+  );
 
-    throw result.error;
 
-  }
+  const downloadURL =
+    await getDownloadURL(
+      storageRef
+    );
 
 
-  /*
-    IMPORTANT:
-    Store only the PRIVATE STORAGE PATH.
-    Do not create a public URL for Aadhaar.
-  */
-
-  return path;
+  return downloadURL;
 
 }
 
 
-/* SUBMIT */
+// ======================================================
+// TEAM FORM SUBMIT
+// ======================================================
 
-form.addEventListener(
+form?.addEventListener(
   "submit",
-  async event => {
+  async (event) => {
 
     event.preventDefault();
 
 
-    if(!currentUser){
+    if (!currentUser) {
 
-      showStatus(
-        "Please login with Google first.",
-        true
+      alert(
+        "Please login first."
       );
 
       return;
@@ -1516,240 +1134,170 @@ form.addEventListener(
     }
 
 
-    if(!tournamentData){
-
-      showStatus(
-        "Tournament information is still loading.",
-        true
-      );
-
-      return;
-
-    }
-
-
-    const aadhaarNumbers =
-      document.querySelectorAll(
-        ".aadhaar-number"
+    const submitBtn =
+      form.querySelector(
+        'button[type="submit"]'
       );
 
 
-    const players = [];
+    try {
 
+      if (submitBtn) {
 
-    const minPlayers =
-      Number(
-        tournamentData.minPlayers ||
-        1
-      );
+        submitBtn.disabled =
+          true;
 
-    const maxPlayers =
-      Number(
-        tournamentData.maxPlayers ||
-        minPlayers
-      );
-
-
-    for(
-      let i = 1;
-      i <= maxPlayers;
-      i++
-    ){
-
-      const nameInput =
-        document.querySelector(
-          `.player-name[data-index="${i}"]`
-        );
-
-      const ageInput =
-        document.querySelector(
-          `.player-age[data-index="${i}"]`
-        );
-
-      const roleInput =
-        document.querySelector(
-          `.player-role[data-index="${i}"]`
-        );
-
-      const aadhaarInput =
-        document.querySelector(
-          `.aadhaar-number[data-index="${i}"]`
-        );
-
-      const frontInput =
-        document.querySelector(
-          `.aadhaar-front[data-index="${i}"]`
-        );
-
-      const backInput =
-        document.querySelector(
-          `.aadhaar-back[data-index="${i}"]`
-        );
-
-
-      const name =
-        nameInput.value.trim();
-
-
-      const age =
-        ageInput.value;
-
-
-      /*
-        Optional players can remain empty.
-      */
-
-      if(
-        !name &&
-        !age &&
-        !aadhaarInput.value &&
-        !frontInput.files.length &&
-        !backInput.files.length
-      ){
-
-        continue;
+        submitBtn.textContent =
+          "Submitting...";
 
       }
 
 
-      if(
-        !name ||
-        !age ||
-        !aadhaarInput.value ||
-        !frontInput.files[0] ||
-        !backInput.files[0]
-      ){
+      // ----------------------------------------------
+      // TEAM DETAILS
+      // ----------------------------------------------
 
-        showStatus(
-          `Please complete all required details for Player ${i}.`,
-          true
+      const teamName =
+        document.getElementById(
+          "teamName"
+        )?.value.trim() || "";
+
+
+      const captainName =
+        document.getElementById(
+          "captainName"
+        )?.value.trim() || "";
+
+
+      const teamContact =
+        document.getElementById(
+          "teamContact"
+        )?.value.trim() || "";
+
+
+      if (!teamName) {
+
+        throw new Error(
+          "Team name is required."
         );
-
-        return;
 
       }
 
 
-      const aadhaar =
-        aadhaarInput.value
-          .replace(
-            /\D/g,
-            ""
-          );
+      if (!captainName) {
 
-
-      if(
-        aadhaar.length !== 12
-      ){
-
-        showStatus(
-          `Player ${i}: enter a valid 12 digit Aadhaar number.`,
-          true
+        throw new Error(
+          "Captain name is required."
         );
-
-        return;
 
       }
 
 
-      players.push({
+      if (
+        !/^[0-9]{10}$/.test(
+          teamContact
+        )
+      ) {
 
-        number:i,
+        throw new Error(
+          "Enter valid 10 digit team contact number."
+        );
 
-        name,
-
-        age:Number(age),
-
-        role:
-          roleInput.value || "Player",
-
-        aadhaarNumber:aadhaar,
-
-        frontFile:
-          frontInput.files[0],
-
-        backFile:
-          backInput.files[0]
-
-      });
-
-    }
+      }
 
 
-    if(
-      players.length <
-      minPlayers
-    ){
+      // ----------------------------------------------
+      // PLAYERS
+      // ----------------------------------------------
 
-      showStatus(
-        `Minimum ${minPlayers} players are required.`,
-        true
-      );
-
-      return;
-
-    }
+      const players =
+        getPlayers();
 
 
-    const utr =
-      document
-        .getElementById("utr")
-        .value
-        .trim();
+      // ----------------------------------------------
+      // CREATE REGISTRATION ID
+      // ----------------------------------------------
+
+      const registrationRef =
+        doc(
+          collection(
+            db,
+            "registrations"
+          )
+        );
 
 
-    if(!utr){
-
-      showStatus(
-        "Enter the payment UTR / Transaction ID.",
-        true
-      );
-
-      return;
-
-    }
+      const registrationId =
+        registrationRef.id;
 
 
-    submitBtn.disabled =
-      true;
+      // ----------------------------------------------
+      // UPLOAD PLAYER DOCUMENTS
+      // ----------------------------------------------
 
-    submitBtn.textContent =
-      "Uploading & Submitting...";
-
-
-    try{
-
-      const uploadedPlayers =
-        [];
+      const finalPlayers = [];
 
 
-      for(
-        const player of players
-      ){
+      for (
+        let index = 0;
+        index < players.length;
+        index++
+      ) {
 
-        const frontPath =
-          await uploadAadhaar(
+        const player =
+          players[index];
+
+
+        if (submitBtn) {
+
+          submitBtn.textContent =
+            `Uploading Player ${index + 1}/${players.length}...`;
+
+        }
+
+
+        const frontUrl =
+          await uploadPlayerImage(
             player.frontFile,
-            player.number,
+            tournamentId,
+            registrationId,
+            player.index,
             "front"
           );
 
 
-        const backPath =
-          await uploadAadhaar(
+        const backUrl =
+          await uploadPlayerImage(
             player.backFile,
-            player.number,
+            tournamentId,
+            registrationId,
+            player.index,
             "back"
           );
 
 
-        uploadedPlayers.push({
+        finalPlayers.push({
 
           playerNumber:
-            player.number,
+            player.index,
 
           name:
             player.name,
+
+          mobile:
+            player.mobile,
+
+          mobileNumber:
+            player.mobile,
+
+          phone:
+            player.mobile,
+
+          dob:
+            player.dob,
+
+          dateOfBirth:
+            player.dob,
 
           age:
             player.age,
@@ -1760,13 +1308,182 @@ form.addEventListener(
           aadhaarNumber:
             player.aadhaarNumber,
 
-          aadhaarFrontPath:
-            frontPath,
+          aadhaar:
+            player.aadhaarNumber,
 
-          aadhaarBackPath:
-            backPath
+          aadhaarFrontUrl:
+            frontUrl,
+
+          aadhaarBackUrl:
+            backUrl,
+
+          aadhaarFront:
+            frontUrl,
+
+          aadhaarBack:
+            backUrl
 
         });
+
+      }
+
+
+      // ----------------------------------------------
+      // PAYMENT
+      // ----------------------------------------------
+
+      const utr =
+        document.getElementById(
+          "utr"
+        )?.value.trim() || "";
+
+
+      const paymentScreenshot =
+        document.getElementById(
+          "paymentScreenshot"
+        )?.files?.[0] || null;
+
+
+      // ----------------------------------------------
+      // PAYMENT SCREENSHOT
+      // ----------------------------------------------
+
+      let paymentScreenshotUrl =
+        "";
+
+
+      if (paymentScreenshot) {
+
+        if (submitBtn) {
+
+          submitBtn.textContent =
+            "Uploading payment proof...";
+
+        }
+
+
+        paymentScreenshotUrl =
+          await uploadPlayerImage(
+            paymentScreenshot,
+            tournamentId,
+            registrationId,
+            "team",
+            "payment"
+          );
+
+      }
+
+
+      // ----------------------------------------------
+      // FIRESTORE DATA
+      // ----------------------------------------------
+
+      const registrationData = {
+
+        // ID
+        registrationId,
+
+        tournamentId,
+
+        // USER
+        userId:
+          currentUser.uid,
+
+        uid:
+          currentUser.uid,
+
+        email:
+          currentUser.email || "",
+
+        googleName:
+          currentUser.displayName || "",
+
+        googlePhoto:
+          currentUser.photoURL || "",
+
+
+        // TEAM
+        teamName,
+
+        captainName,
+
+        teamContact,
+
+        contactNumber:
+          teamContact,
+
+
+        // TOURNAMENT
+        tournamentName:
+          getField(
+            tournamentData,
+            [
+              "name",
+              "tournamentName",
+              "title"
+            ],
+            ""
+          ),
+
+        sport:
+          getField(
+            tournamentData,
+            [
+              "sport",
+              "category",
+              "type"
+            ],
+            ""
+          ),
+
+
+        // PLAYERS
+        players:
+          finalPlayers,
+
+        playerCount:
+          finalPlayers.length,
+
+        minimumPlayers:
+          minPlayers,
+
+        maximumPlayers:
+          maxPlayers,
+
+
+        // PAYMENT
+        utr,
+
+        paymentScreenshotUrl,
+
+        paymentStatus:
+          "pending",
+
+
+        // REGISTRATION
+        status:
+          "pending",
+
+        approved:
+          false,
+
+        createdAt:
+          serverTimestamp(),
+
+        updatedAt:
+          serverTimestamp()
+
+      };
+
+
+      // ----------------------------------------------
+      // SAVE
+      // ----------------------------------------------
+
+      if (submitBtn) {
+
+        submitBtn.textContent =
+          "Saving registration...";
 
       }
 
@@ -1776,108 +1493,83 @@ form.addEventListener(
           db,
           "registrations"
         ),
-        {
-
-          userId:
-            currentUser.uid,
-
-          email:
-            currentUser.email || "",
-
-          tournamentId:
-            tournamentId,
-
-          tournamentName:
-            tournamentData.name || "",
-
-          sport:
-            tournamentData.sport || "",
-
-          teamName:
-            document
-              .getElementById("teamName")
-              .value
-              .trim(),
-
-          captainName:
-            document
-              .getElementById("captainName")
-              .value
-              .trim(),
-
-          phone:
-            document
-              .getElementById("phone")
-              .value
-              .trim(),
-
-          players:
-            uploadedPlayers,
-
-          utr:
-            utr,
-
-          entryFee:
-            tournamentData.entryFee || 0,
-
-          paymentStatus:
-            "submitted",
-
-          createdAt:
-            serverTimestamp()
-
-        }
+        registrationData
       );
 
 
-      showStatus(
-        "✅ Registration submitted successfully!"
+      alert(
+        "Registration submitted successfully!"
       );
 
 
-      form.reset();
-
-      playersContainer.innerHTML =
-        "";
+      window.location.href =
+        "index.html";
 
 
-      buildPlayers(
-        minPlayers,
-        maxPlayers
+    } catch (error) {
+
+      console.error(
+        "REGISTRATION ERROR:",
+        error
       );
 
 
-      submitBtn.disabled =
-        false;
-
-      submitBtn.textContent =
-        "Submit Registration";
-
-
-    }catch(error){
-
-      console.error(error);
-
-      showStatus(
-        "Registration failed: " +
-        error.message,
-        true
+      alert(
+        error.message ||
+        "Registration failed."
       );
 
 
-      submitBtn.disabled =
-        false;
+      if (submitBtn) {
 
-      submitBtn.textContent =
-        "Submit Registration";
+        submitBtn.disabled =
+          false;
+
+        submitBtn.textContent =
+          "Submit Registration";
+
+      }
 
     }
 
   }
 );
 
-</script>
 
-</body>
-</html>
-```
+// ======================================================
+// MOBILE INPUT ONLY NUMBERS
+// ======================================================
+
+document.addEventListener(
+  "input",
+  (event) => {
+
+    if (
+      event.target.matches(
+        ".player-mobile"
+      ) ||
+      event.target.matches(
+        ".player-aadhaar"
+      )
+    ) {
+
+      event.target.value =
+        event.target.value
+          .replace(
+            /\D/g,
+            ""
+          );
+
+    }
+
+  }
+);
+
+
+// ======================================================
+// CONSOLE
+// ======================================================
+
+console.log(
+  "KPL Registration System Loaded"
+);
