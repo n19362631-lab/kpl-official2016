@@ -1,17 +1,686 @@
-// ======================================================
-// KPL OFFICIAL - REGISTRATION.JS
-// FULL PLAYER DETAILS VERSION
-// ======================================================
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>KPL Official | Registration</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Inter,Arial,sans-serif;
+  background:#f5f6fa;
+  color:#111;
+}
+
+.nav{
+  min-height:70px;
+  background:#111;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 20px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#fff;
+  text-decoration:none;
+  font-weight:900;
+}
+
+.brand-mark{
+  width:42px;
+  height:42px;
+  border-radius:10px;
+  background:#ff3b30;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.brand-mark img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.brand-text small{
+  display:block;
+  font-size:9px;
+  letter-spacing:2px;
+  opacity:.7;
+}
+
+.home{
+  color:#fff;
+  text-decoration:none;
+  font-weight:700;
+}
+
+.container{
+  width:100%;
+  max-width:850px;
+  margin:30px auto;
+  padding:0 15px;
+}
+
+.box{
+  background:#fff;
+  border-radius:22px;
+  padding:25px;
+  box-shadow:0 12px 45px rgba(0,0,0,.08);
+}
+
+.eyebrow{
+  color:#ff3b30;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+h1{
+  margin:8px 0;
+  font-size:30px;
+}
+
+.subtitle{
+  color:#777;
+  line-height:1.5;
+}
+
+.user{
+  background:#f3f4f6;
+  padding:13px;
+  border-radius:12px;
+  margin:20px 0;
+  font-size:14px;
+}
+
+.tournament-info{
+  background:#111;
+  color:#fff;
+  border-radius:18px;
+  padding:20px;
+  margin:20px 0;
+}
+
+.tournament-info h2{
+  margin:5px 0 15px;
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.info-item{
+  background:rgba(255,255,255,.08);
+  padding:12px;
+  border-radius:10px;
+}
+
+.info-item small{
+  display:block;
+  opacity:.6;
+  margin-bottom:5px;
+}
+
+.section{
+  margin-top:28px;
+  padding-top:25px;
+  border-top:1px solid #eee;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.full{
+  grid-column:1/-1;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+label{
+  font-weight:800;
+  font-size:14px;
+}
+
+input,
+select{
+  width:100%;
+  padding:13px;
+  border:1px solid #ddd;
+  border-radius:11px;
+  font-size:15px;
+  outline:none;
+}
+
+input:focus,
+select:focus{
+  border-color:#111;
+}
+
+.required{
+  color:#ff3b30;
+}
+
+.role-box{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:18px;
+}
+
+.role-option{
+  border:2px solid #ddd;
+  padding:18px;
+  border-radius:14px;
+  cursor:pointer;
+  text-align:center;
+  font-weight:900;
+  background:#fff;
+}
+
+.role-option.active{
+  border-color:#111;
+  background:#111;
+  color:#fff;
+}
+
+.role-option input{
+  display:none;
+}
+
+.payment-box{
+  background:#fff8ed;
+  border:1px solid #fed7aa;
+  border-radius:16px;
+  padding:18px;
+}
+
+.qr{
+  display:block;
+  width:220px;
+  max-width:100%;
+  margin:15px auto;
+  border-radius:14px;
+  border:1px solid #ddd;
+}
+
+.upi{
+  text-align:center;
+  font-weight:900;
+  font-size:18px;
+}
+
+.submit{
+  width:100%;
+  margin-top:25px;
+  padding:16px;
+  border:0;
+  border-radius:13px;
+  background:#111;
+  color:#fff;
+  font-size:16px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.submit:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+.status{
+  display:none;
+  margin-top:18px;
+  padding:14px;
+  border-radius:12px;
+  font-weight:700;
+}
+
+.success{
+  display:block;
+  background:#dcfce7;
+  color:#166534;
+}
+
+.error{
+  display:block;
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.login-box{
+  text-align:center;
+  padding:35px 15px;
+}
+
+.google{
+  border:0;
+  background:#111;
+  color:#fff;
+  padding:14px 20px;
+  border-radius:12px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.fee-display{
+  background:#f3f4f6;
+  padding:14px;
+  border-radius:12px;
+  margin-top:10px;
+  font-weight:900;
+}
+
+@media(max-width:700px){
+
+  .grid,
+  .info-grid{
+    grid-template-columns:1fr;
+  }
+
+  .full{
+    grid-column:auto;
+  }
+
+  .box{
+    padding:18px;
+  }
+
+  h1{
+    font-size:25px;
+  }
+
+  .role-box{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="nav">
+
+  <a href="index.html" class="brand">
+
+    <span class="brand-mark" id="logoBox">
+      K
+    </span>
+
+    <span class="brand-text">
+      <b id="brandName">KPL OFFICIAL</b>
+      <small>SPORTS & TOURNAMENTS</small>
+    </span>
+
+  </a>
+
+  <a href="index.html" class="home">
+    Home
+  </a>
+
+</header>
+
+
+<main class="container">
+
+<div class="box">
+
+  <span class="eyebrow">
+    KPL OFFICIAL
+  </span>
+
+  <h1>
+    Tournament Registration
+  </h1>
+
+  <p class="subtitle">
+    Register as a Captain or Player.
+  </p>
+
+
+  <!-- LOGIN -->
+
+  <div id="loginRequired" class="login-box hidden">
+
+    <h2>Login Required</h2>
+
+    <p>
+      Please continue with Google before registration.
+    </p>
+
+    <button id="googleLogin" class="google">
+      Continue with Google
+    </button>
+
+  </div>
+
+
+  <!-- REGISTRATION -->
+
+  <div id="registrationArea" class="hidden">
+
+    <div class="user">
+      <strong>Logged in:</strong>
+      <span id="userEmail"></span>
+    </div>
+
+
+    <!-- TOURNAMENT -->
+
+    <div class="tournament-info">
+
+      <span class="eyebrow">
+        SELECTED TOURNAMENT
+      </span>
+
+      <h2 id="tourName">
+        Loading...
+      </h2>
+
+      <div class="info-grid">
+
+        <div class="info-item">
+          <small>Venue</small>
+          <b id="tourVenue">-</b>
+        </div>
+
+        <div class="info-item">
+          <small>Match Date</small>
+          <b id="tourDate">-</b>
+        </div>
+
+        <div class="info-item">
+          <small>Registration Deadline</small>
+          <b id="tourDeadline">-</b>
+        </div>
+
+        <div class="info-item">
+          <small>Auction Date</small>
+          <b id="tourAuction">-</b>
+        </div>
+
+        <div class="info-item">
+          <small>Prize Pool</small>
+          <b id="tourPrize">₹0</b>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <form id="registrationForm">
+
+
+      <!-- REGISTRATION TYPE -->
+
+      <div class="section">
+
+        <h2>Registration Type</h2>
+
+        <p class="subtitle">
+          Select how you want to register.
+        </p>
+
+        <div class="role-box">
+
+          <label class="role-option active" id="captainOption">
+
+            <input
+              type="radio"
+              name="registrationType"
+              value="Captain"
+              checked
+            >
+
+            Captain Registration
+
+          </label>
+
+
+          <label class="role-option" id="playerOption">
+
+            <input
+              type="radio"
+              name="registrationType"
+              value="Player"
+            >
+
+            Player Registration
+
+          </label>
+
+        </div>
+
+
+        <div class="fee-display">
+
+          Registration Fee:
+          <span id="selectedFee">
+            ₹0
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- PLAYER DETAILS -->
+
+      <div class="section">
+
+        <h2>Player Details</h2>
+
+        <div class="grid">
+
+
+          <div class="field">
+
+            <label>
+              Full Name
+              <span class="required">*</span>
+            </label>
+
+            <input
+              id="playerName"
+              type="text"
+              required
+              placeholder="Enter full name"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              WhatsApp Number
+              <span class="required">*</span>
+            </label>
+
+            <input
+              id="whatsapp"
+              type="tel"
+              maxlength="10"
+              inputmode="numeric"
+              pattern="[0-9]{10}"
+              required
+              placeholder="10 digit WhatsApp number"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Date of Birth
+              <span class="required">*</span>
+            </label>
+
+            <input
+              id="dob"
+              type="date"
+              required
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Age
+              <span class="required">*</span>
+            </label>
+
+            <input
+              id="age"
+              type="number"
+              min="1"
+              max="100"
+              required
+              readonly
+              placeholder="Auto calculated"
+            >
+
+          </div>
+
+
+          <div class="field full">
+
+            <label>
+              Playing Role
+              <span class="required">*</span>
+            </label>
+
+            <select id="playerRole" required>
+
+              <option value="">
+                Select Role
+              </option>
+
+              <option value="Batter">
+                Batter
+              </option>
+
+              <option value="Bowler">
+                Bowler
+              </option>
+
+              <option value="All Rounder">
+                All Rounder
+              </option>
+
+              <option value="Wicket Keeper">
+                Wicket Keeper
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- PAYMENT -->
+
+      <div class="section">
+
+        <h2>Payment</h2>
+
+        <div class="payment-box">
+
+          <p>
+            Pay the selected registration fee using the UPI details below.
+          </p>
+
+          <div class="upi" id="upiText">
+            UPI not available
+          </div>
+
+
+          <img
+            id="paymentQR"
+            class="qr hidden"
+            alt="Payment QR"
+          >
+
+
+          <div class="field">
+
+            <label>
+              UTR / Transaction ID
+              <span class="required">*</span>
+            </label>
+
+            <input
+              id="utr"
+              required
+              placeholder="Enter payment UTR"
+            >
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <button
+        id="submitBtn"
+        class="submit"
+        type="submit"
+      >
+        Submit Registration
+      </button>
+
+
+      <div id="status" class="status"></div>
+
+    </form>
+
+  </div>
+
+</div>
+
+</main>
+
+
+<script type="module">
 
 import {
   auth,
   db,
-  storage
+  provider,
+  onAuthStateChanged,
+  signInWithPopup
 } from "./firebase.js";
 
-import {
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 import {
   doc,
@@ -21,146 +690,350 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
 
+const loginRequired =
+  document.getElementById("loginRequired");
 
-// ======================================================
-// ELEMENTS
-// ======================================================
+const registrationArea =
+  document.getElementById("registrationArea");
 
-const form = document.getElementById("registrationForm");
-const tournamentId =
-  new URLSearchParams(window.location.search).get("tournament");
+const userEmail =
+  document.getElementById("userEmail");
 
+const form =
+  document.getElementById("registrationForm");
 
-// ======================================================
-// GLOBAL
-// ======================================================
+const submitBtn =
+  document.getElementById("submitBtn");
+
+const statusBox =
+  document.getElementById("status");
+
+const captainOption =
+  document.getElementById("captainOption");
+
+const playerOption =
+  document.getElementById("playerOption");
+
+const selectedFee =
+  document.getElementById("selectedFee");
+
+const whatsapp =
+  document.getElementById("whatsapp");
+
+const dob =
+  document.getElementById("dob");
+
+const age =
+  document.getElementById("age");
+
 
 let currentUser = null;
 let tournamentData = null;
-
-let minPlayers = 1;
-let maxPlayers = 20;
+let tournamentId = null;
 
 
-// ======================================================
-// SAFE
-// ======================================================
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
 
-function safe(value) {
+tournamentId =
+  params.get("tournament");
 
-  if (
-    value === null ||
-    value === undefined
-  ) {
-    return "";
-  }
 
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+function safe(value){
+
+  return String(
+    value ?? ""
+  )
+  .replaceAll("&","&amp;")
+  .replaceAll("<","&lt;")
+  .replaceAll(">","&gt;")
+  .replaceAll('"',"&quot;")
+  .replaceAll("'","&#039;");
+
 }
 
 
-// ======================================================
-// AUTH
-// ======================================================
+function showStatus(
+  message,
+  error=false
+){
+
+  statusBox.textContent =
+    message;
+
+  statusBox.className =
+    "status " +
+    (error ? "error" : "success");
+
+}
+
+
+function formatDate(value){
+
+  if(!value) return "-";
+
+  const d =
+    new Date(value);
+
+  if(
+    isNaN(
+      d.getTime()
+    )
+  ){
+
+    return String(value);
+
+  }
+
+  return d.toLocaleDateString(
+    "en-IN",
+    {
+      day:"2-digit",
+      month:"short",
+      year:"numeric"
+    }
+  );
+
+}
+
+
+function getField(
+  data,
+  fields,
+  fallback=""
+){
+
+  for(
+    const field of fields
+  ){
+
+    if(
+      data[field] !== undefined &&
+      data[field] !== null &&
+      data[field] !== ""
+    ){
+
+      return data[field];
+
+    }
+
+  }
+
+  return fallback;
+
+}
+
+
+/* LOGIN */
 
 onAuthStateChanged(
   auth,
-  async (user) => {
+  async user => {
 
-    if (!user) {
+    currentUser =
+      user;
 
-      alert(
-        "Please login with Google first."
-      );
+    if(user){
 
-      window.location.href =
-        "index.html";
+      loginRequired
+        .classList
+        .add("hidden");
 
-      return;
-    }
+      registrationArea
+        .classList
+        .remove("hidden");
 
-    currentUser = user;
-
-    const email =
-      document.getElementById("userEmail");
-
-    const userName =
-      document.getElementById("loggedUserName");
-
-    if (email) {
-      email.textContent =
+      userEmail.textContent =
         user.email || "";
-    }
 
-    if (userName) {
-      userName.textContent =
-        user.displayName || "User";
-    }
+      await loadSettings();
+      await loadTournament();
 
-    await loadTournament();
+    }else{
+
+      loginRequired
+        .classList
+        .remove("hidden");
+
+      registrationArea
+        .classList
+        .add("hidden");
+
+    }
 
   }
 );
 
 
-// ======================================================
-// LOAD TOURNAMENT
-// ======================================================
+/* GOOGLE */
 
-async function loadTournament() {
+document
+.getElementById("googleLogin")
+.addEventListener(
+  "click",
+  async () => {
 
-  if (!tournamentId) {
+    try{
 
-    alert(
-      "Tournament ID missing."
-    );
-
-    return;
-  }
-
-  try {
-
-    const tournamentRef =
-      doc(
-        db,
-        "tournaments",
-        tournamentId
+      await signInWithPopup(
+        auth,
+        provider
       );
+
+    }catch(error){
+
+      showStatus(
+        "Google login failed: " +
+        error.message,
+        true
+      );
+
+    }
+
+  }
+);
+
+
+/* SETTINGS */
+
+async function loadSettings(){
+
+  try{
 
     const snap =
       await getDoc(
-        tournamentRef
+        doc(
+          db,
+          "settings",
+          "site"
+        )
       );
 
-    if (!snap.exists()) {
+    if(!snap.exists()){
+      return;
+    }
 
-      alert(
-        "Tournament not found."
+    const data =
+      snap.data();
+
+
+    if(data.siteName){
+
+      document
+        .getElementById("brandName")
+        .textContent =
+        data.siteName;
+
+    }
+
+
+    if(data.logoUrl){
+
+      document
+        .getElementById("logoBox")
+        .innerHTML = `
+          <img
+            src="${safe(data.logoUrl)}"
+            alt="KPL"
+          >
+        `;
+
+    }
+
+
+    if(data.upiId){
+
+      document
+        .getElementById("upiText")
+        .textContent =
+        data.upiId;
+
+    }
+
+
+    const qrUrl =
+      data.upiQrUrl ||
+      data.qrUrl ||
+      "";
+
+    if(qrUrl){
+
+      const qr =
+        document.getElementById(
+          "paymentQR"
+        );
+
+      qr.src =
+        qrUrl;
+
+      qr.classList.remove(
+        "hidden"
+      );
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Settings error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* TOURNAMENT */
+
+async function loadTournament(){
+
+  if(!tournamentId){
+
+    showStatus(
+      "Tournament ID missing.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    const snap =
+      await getDoc(
+        doc(
+          db,
+          "tournaments",
+          tournamentId
+        )
+      );
+
+
+    if(!snap.exists()){
+
+      showStatus(
+        "Tournament not found.",
+        true
       );
 
       return;
+
     }
+
 
     tournamentData =
       snap.data();
 
 
-    // ----------------------------------------------
-    // BASIC DETAILS
-    // ----------------------------------------------
-
-    const tournamentName =
+    document
+      .getElementById("tourName")
+      .textContent =
       getField(
         tournamentData,
         [
@@ -171,141 +1044,78 @@ async function loadTournament() {
         "KPL Tournament"
       );
 
-    const sport =
-      getField(
-        tournamentData,
-        [
-          "sport",
-          "category",
-          "type"
-        ],
-        "Football"
-      );
 
-    const entryFee =
+    document
+      .getElementById("tourVenue")
+      .textContent =
       getField(
         tournamentData,
-        [
-          "entryFee",
-          "entry_fee",
-          "fee"
-        ],
-        ""
-      );
-
-    const prizePool =
-      getField(
-        tournamentData,
-        [
-          "prizePool",
-          "prize_pool",
-          "prize"
-        ],
-        ""
+        ["venue","location","ground"],
+        "-"
       );
 
 
-    // ----------------------------------------------
-    // PLAYER LIMIT
-    // ----------------------------------------------
-
-    minPlayers = Number(
-      getField(
-        tournamentData,
-        [
-          "minPlayers",
-          "minimumPlayers",
-          "minimum_players",
-          "minPlayer"
-        ],
-        1
-      )
-    );
-
-    maxPlayers = Number(
-      getField(
-        tournamentData,
-        [
-          "maxPlayers",
-          "maximumPlayers",
-          "maximum_players",
-          "maxPlayer"
-        ],
-        20
-      )
-    );
+    document
+      .getElementById("tourDate")
+      .textContent =
+      formatDate(
+        getField(
+          tournamentData,
+          ["date","matchDate","match_date"],
+          ""
+        )
+      );
 
 
-    if (
-      !Number.isFinite(minPlayers) ||
-      minPlayers < 1
-    ) {
-      minPlayers = 1;
-    }
-
-    if (
-      !Number.isFinite(maxPlayers) ||
-      maxPlayers < minPlayers
-    ) {
-      maxPlayers = 20;
-    }
-
-
-    // ----------------------------------------------
-    // DISPLAY
-    // ----------------------------------------------
-
-    setText(
-      "tournamentName",
-      tournamentName
-    );
-
-    setText(
-      "tournamentSport",
-      sport
-    );
-
-    setText(
-      "tournamentEntryFee",
-      entryFee
-        ? "₹" + entryFee
-        : "TBA"
-    );
-
-    setText(
-      "tournamentPrizePool",
-      prizePool
-        ? "₹" + prizePool
-        : "TBA"
-    );
-
-    setText(
-      "playerLimit",
-      `${minPlayers} - ${maxPlayers} Players`
-    );
+    document
+      .getElementById("tourDeadline")
+      .textContent =
+      formatDate(
+        getField(
+          tournamentData,
+          [
+            "deadline",
+            "registrationDeadline",
+            "registration_deadline"
+          ],
+          ""
+        )
+      );
 
 
-    // ----------------------------------------------
-    // CREATE PLAYERS
-    // ----------------------------------------------
+    document
+      .getElementById("tourAuction")
+      .textContent =
+      formatDate(
+        getField(
+          tournamentData,
+          [
+            "auctionDate",
+            "auction_date"
+          ],
+          ""
+        )
+      );
 
-    createPlayerFields();
 
-    console.log(
-      "Tournament loaded:",
-      tournamentData
-    );
+    document
+      .getElementById("tourPrize")
+      .textContent =
+      tournamentData.prizePool
+        ? "₹" + tournamentData.prizePool
+        : "TBA";
 
-  } catch (error) {
 
-    console.error(
-      "Tournament loading error:",
-      error
-    );
+    updateFee();
 
-    alert(
-      "Tournament loading failed: " +
-      error.message
+  }catch(error){
+
+    console.error(error);
+
+    showStatus(
+      "Could not load tournament: " +
+      error.message,
+      true
     );
 
   }
@@ -313,820 +1123,175 @@ async function loadTournament() {
 }
 
 
-// ======================================================
-// FIELD HELPER
-// ======================================================
+/* TYPE */
 
-function getField(
-  data,
-  fields,
-  fallback = ""
-) {
+function getRegistrationType(){
 
-  for (
-    const field of fields
-  ) {
+  const selected =
+    document.querySelector(
+      'input[name="registrationType"]:checked'
+    );
 
-    if (
-      data[field] !== undefined &&
-      data[field] !== null &&
-      data[field] !== ""
-    ) {
-
-      return data[field];
-
-    }
-
-  }
-
-  return fallback;
-}
-
-
-// ======================================================
-// TEXT HELPER
-// ======================================================
-
-function setText(
-  id,
-  value
-) {
-
-  const element =
-    document.getElementById(id);
-
-  if (element) {
-
-    element.textContent =
-      value;
-
-  }
+  return selected
+    ? selected.value
+    : "Captain";
 
 }
 
 
-// ======================================================
-// CREATE PLAYER FIELDS
-// ======================================================
+function updateFee(){
 
-function createPlayerFields() {
+  if(!tournamentData){
 
-  const container =
-    document.getElementById(
-      "playersContainer"
-    );
-
-  if (!container) {
-
-    console.error(
-      "playersContainer not found."
-    );
+    selectedFee.textContent =
+      "₹0";
 
     return;
-  }
-
-
-  container.innerHTML = "";
-
-
-  for (
-    let i = 1;
-    i <= maxPlayers;
-    i++
-  ) {
-
-    const required =
-      i <= minPlayers;
-
-
-    const player =
-      document.createElement(
-        "div"
-      );
-
-
-    player.className =
-      "player-card";
-
-
-    player.dataset.player =
-      i;
-
-
-    player.innerHTML = `
-
-      <div class="player-header">
-
-        <h3>
-          Player ${i}
-        </h3>
-
-        ${
-          required
-            ? `<span class="required-player">
-                REQUIRED
-              </span>`
-            : `<span class="optional-player">
-                OPTIONAL
-              </span>`
-        }
-
-      </div>
-
-
-      <!-- NAME -->
-
-      <div class="form-group">
-
-        <label>
-          Player Name
-          ${required ? "*" : ""}
-        </label>
-
-        <input
-          type="text"
-          name="player_${i}_name"
-          class="player-name"
-          data-player="${i}"
-          placeholder="Enter full name"
-          ${required ? "required" : ""}
-        >
-
-      </div>
-
-
-      <!-- MOBILE -->
-
-      <div class="form-group">
-
-        <label>
-          Mobile Number
-          ${required ? "*" : ""}
-        </label>
-
-        <input
-          type="tel"
-          name="player_${i}_mobile"
-          class="player-mobile"
-          data-player="${i}"
-          placeholder="10 digit mobile number"
-          inputmode="numeric"
-          maxlength="10"
-          pattern="[0-9]{10}"
-          ${required ? "required" : ""}
-        >
-
-      </div>
-
-
-      <!-- DOB -->
-
-      <div class="form-group">
-
-        <label>
-          Date of Birth
-          ${required ? "*" : ""}
-        </label>
-
-        <input
-          type="date"
-          name="player_${i}_dob"
-          class="player-dob"
-          data-player="${i}"
-          ${required ? "required" : ""}
-        >
-
-      </div>
-
-
-      <!-- AGE -->
-
-      <div class="form-group">
-
-        <label>
-          Age
-          ${required ? "*" : ""}
-        </label>
-
-        <input
-          type="number"
-          name="player_${i}_age"
-          class="player-age"
-          data-player="${i}"
-          min="1"
-          max="100"
-          placeholder="Age"
-          ${required ? "required" : ""}
-        >
-
-      </div>
-
-
-      <!-- ROLE -->
-
-      <div class="form-group">
-
-        <label>
-          Player Role
-          ${required ? "*" : ""}
-        </label>
-
-        <select
-          name="player_${i}_role"
-          class="player-role"
-          data-player="${i}"
-          ${required ? "required" : ""}
-        >
-
-          <option value="">
-            Select Role
-          </option>
-
-          <option value="Player">
-            Player
-          </option>
-
-          <option value="Captain">
-            Captain
-          </option>
-
-          <option value="Vice Captain">
-            Vice Captain
-          </option>
-
-          <option value="Goalkeeper">
-            Goalkeeper
-          </option>
-
-          <option value="Batsman">
-            Batsman
-          </option>
-
-          <option value="Bowler">
-            Bowler
-          </option>
-
-          <option value="All Rounder">
-            All Rounder
-          </option>
-
-        </select>
-
-      </div>
-
-
-      <!-- AADHAAR NUMBER -->
-
-      <div class="form-group">
-
-        <label>
-          Aadhaar Number
-          ${required ? "*" : ""}
-        </label>
-
-        <input
-          type="text"
-          name="player_${i}_aadhaar"
-          class="player-aadhaar"
-          data-player="${i}"
-          placeholder="12 digit Aadhaar number"
-          inputmode="numeric"
-          maxlength="12"
-          pattern="[0-9]{12}"
-          ${required ? "required" : ""}
-        >
-
-      </div>
-
-
-      <!-- AADHAAR FRONT -->
-
-      <div class="form-group">
-
-        <label>
-          Aadhaar Front Photo
-          ${required ? "*" : ""}
-        </label>
-
-        <input
-          type="file"
-          name="player_${i}_aadhaar_front"
-          class="player-aadhaar-front"
-          data-player="${i}"
-          accept="image/jpeg,image/png,image/webp"
-          ${required ? "required" : ""}
-        >
-
-        <small>
-          JPG, PNG or WEBP
-        </small>
-
-      </div>
-
-
-      <!-- AADHAAR BACK -->
-
-      <div class="form-group">
-
-        <label>
-          Aadhaar Back Photo
-          ${required ? "*" : ""}
-        </label>
-
-        <input
-          type="file"
-          name="player_${i}_aadhaar_back"
-          class="player-aadhaar-back"
-          data-player="${i}"
-          accept="image/jpeg,image/png,image/webp"
-          ${required ? "required" : ""}
-        >
-
-        <small>
-          JPG, PNG or WEBP
-        </small>
-
-      </div>
-
-
-    `;
-
-
-    container.appendChild(
-      player
-    );
 
   }
 
 
-  // ----------------------------------------------
-  // AUTO AGE FROM DOB
-  // ----------------------------------------------
+  const type =
+    getRegistrationType();
 
-  container
-    .querySelectorAll(
-      ".player-dob"
-    )
-    .forEach(
-      (dobInput) => {
 
-        dobInput.addEventListener(
-          "change",
-          () => {
-
-            const player =
-              dobInput.dataset.player;
-
-            const ageInput =
-              container.querySelector(
-                `.player-age[data-player="${player}"]`
-              );
-
-            if (!ageInput) return;
-
-            const age =
-              calculateAge(
-                dobInput.value
-              );
-
-            if (age !== null) {
-
-              ageInput.value =
-                age;
-
-            }
-
-          }
+  const fee =
+    type === "Captain"
+      ? (
+          tournamentData.captainFee ??
+          tournamentData.captainEntryFee ??
+          0
+        )
+      : (
+          tournamentData.playerFee ??
+          tournamentData.playerEntryFee ??
+          0
         );
 
-      }
-    );
+
+  selectedFee.textContent =
+    "₹" + fee;
 
 }
 
 
-// ======================================================
-// CALCULATE AGE
-// ======================================================
+document
+.querySelectorAll(
+  'input[name="registrationType"]'
+)
+.forEach(input => {
+
+  input.addEventListener(
+    "change",
+    () => {
+
+      captainOption
+        .classList
+        .toggle(
+          "active",
+          input.value === "Captain" &&
+          input.checked
+        );
+
+      playerOption
+        .classList
+        .toggle(
+          "active",
+          input.value === "Player" &&
+          input.checked
+        );
+
+      updateFee();
 
-function calculateAge(
-  dob
-) {
-
-  if (!dob) return null;
-
-  const birth =
-    new Date(dob);
-
-  if (
-    isNaN(
-      birth.getTime()
-    )
-  ) {
-    return null;
-  }
-
-
-  const today =
-    new Date();
-
-
-  let age =
-    today.getFullYear() -
-    birth.getFullYear();
-
-
-  const month =
-    today.getMonth() -
-    birth.getMonth();
-
-
-  if (
-    month < 0 ||
-    (
-      month === 0 &&
-      today.getDate() <
-      birth.getDate()
-    )
-  ) {
-
-    age--;
-
-  }
-
-
-  return age;
-
-}
-
-
-// ======================================================
-// VALIDATE PLAYER
-// ======================================================
-
-function validatePlayer(
-  player,
-  index
-) {
-
-  const name =
-    player.name.trim();
-
-  const mobile =
-    player.mobile.trim();
-
-  const dob =
-    player.dob;
-
-  const age =
-    Number(player.age);
-
-  const role =
-    player.role;
-
-  const aadhaar =
-    player.aadhaar.trim();
-
-
-  if (!name) {
-
-    throw new Error(
-      `Player ${index}: Name is required.`
-    );
-
-  }
-
-
-  if (
-    !/^[0-9]{10}$/.test(
-      mobile
-    )
-  ) {
-
-    throw new Error(
-      `Player ${index}: Enter valid 10 digit mobile number.`
-    );
-
-  }
-
-
-  if (!dob) {
-
-    throw new Error(
-      `Player ${index}: Date of Birth is required.`
-    );
-
-  }
-
-
-  if (
-    !Number.isFinite(age) ||
-    age < 1 ||
-    age > 100
-  ) {
-
-    throw new Error(
-      `Player ${index}: Enter valid age.`
-    );
-
-  }
-
-
-  if (!role) {
-
-    throw new Error(
-      `Player ${index}: Select player role.`
-    );
-
-  }
-
-
-  if (
-    !/^[0-9]{12}$/.test(
-      aadhaar
-    )
-  ) {
-
-    throw new Error(
-      `Player ${index}: Aadhaar number must be 12 digits.`
-    );
-
-  }
-
-
-  if (!player.frontFile) {
-
-    throw new Error(
-      `Player ${index}: Aadhaar front photo is required.`
-    );
-
-  }
-
-
-  if (!player.backFile) {
-
-    throw new Error(
-      `Player ${index}: Aadhaar back photo is required.`
-    );
-
-  }
-
-
-  return true;
-
-}
-
-
-// ======================================================
-// GET PLAYERS
-// ======================================================
-
-function getPlayers() {
-
-  const players = [];
-
-
-  for (
-    let i = 1;
-    i <= maxPlayers;
-    i++
-  ) {
-
-    const nameInput =
-      document.querySelector(
-        `.player-name[data-player="${i}"]`
-      );
-
-    const mobileInput =
-      document.querySelector(
-        `.player-mobile[data-player="${i}"]`
-      );
-
-    const dobInput =
-      document.querySelector(
-        `.player-dob[data-player="${i}"]`
-      );
-
-    const ageInput =
-      document.querySelector(
-        `.player-age[data-player="${i}"]`
-      );
-
-    const roleInput =
-      document.querySelector(
-        `.player-role[data-player="${i}"]`
-      );
-
-    const aadhaarInput =
-      document.querySelector(
-        `.player-aadhaar[data-player="${i}"]`
-      );
-
-    const frontInput =
-      document.querySelector(
-        `.player-aadhaar-front[data-player="${i}"]`
-      );
-
-    const backInput =
-      document.querySelector(
-        `.player-aadhaar-back[data-player="${i}"]`
-      );
-
-
-    if (!nameInput) continue;
-
-
-    const name =
-      nameInput.value.trim();
-
-    const mobile =
-      mobileInput?.value.trim() || "";
-
-    const dob =
-      dobInput?.value || "";
-
-    const age =
-      ageInput?.value || "";
-
-    const role =
-      roleInput?.value || "";
-
-    const aadhaar =
-      aadhaarInput?.value.trim() || "";
-
-    const frontFile =
-      frontInput?.files?.[0] || null;
-
-    const backFile =
-      backInput?.files?.[0] || null;
-
-
-    const isEmpty =
-      !name &&
-      !mobile &&
-      !dob &&
-      !age &&
-      !role &&
-      !aadhaar &&
-      !frontFile &&
-      !backFile;
-
-
-    // Optional empty player
-    if (
-      i > minPlayers &&
-      isEmpty
-    ) {
-
-      continue;
-
-    }
-
-
-    const player = {
-
-      index: i,
-
-      name,
-
-      mobile,
-
-      phone: mobile,
-
-      mobileNumber: mobile,
-
-      dob,
-
-      dateOfBirth: dob,
-
-      age: Number(age),
-
-      role,
-
-      aadhaarNumber: aadhaar,
-
-      aadhaar: aadhaar,
-
-      frontFile,
-
-      backFile
-
-    };
-
-
-    validatePlayer(
-      player,
-      i
-    );
-
-
-    players.push(
-      player
-    );
-
-  }
-
-
-  if (
-    players.length <
-    minPlayers
-  ) {
-
-    throw new Error(
-      `Minimum ${minPlayers} players are required.`
-    );
-
-  }
-
-
-  if (
-    players.length >
-    maxPlayers
-  ) {
-
-    throw new Error(
-      `Maximum ${maxPlayers} players are allowed.`
-    );
-
-  }
-
-
-  return players;
-
-}
-
-
-// ======================================================
-// UPLOAD IMAGE
-// ======================================================
-
-async function uploadPlayerImage(
-  file,
-  tournamentId,
-  registrationId,
-  playerNumber,
-  side
-) {
-
-  if (!file) {
-    return "";
-  }
-
-
-  const extension =
-    file.name
-      .split(".")
-      .pop()
-      .toLowerCase();
-
-
-  const filePath =
-    `registrations/${tournamentId}/${registrationId}/player-${playerNumber}/aadhaar-${side}.${extension}`;
-
-
-  const storageRef =
-    ref(
-      storage,
-      filePath
-    );
-
-
-  await uploadBytes(
-    storageRef,
-    file,
-    {
-      contentType:
-        file.type
     }
   );
 
-
-  const downloadURL =
-    await getDownloadURL(
-      storageRef
-    );
+});
 
 
-  return downloadURL;
+/* AGE */
 
-}
+dob.addEventListener(
+  "change",
+  () => {
+
+    if(!dob.value){
+
+      age.value = "";
+
+      return;
+
+    }
 
 
-// ======================================================
-// TEAM FORM SUBMIT
-// ======================================================
+    const birth =
+      new Date(
+        dob.value
+      );
 
-form?.addEventListener(
+    const today =
+      new Date();
+
+    let calculatedAge =
+      today.getFullYear() -
+      birth.getFullYear();
+
+
+    const month =
+      today.getMonth() -
+      birth.getMonth();
+
+
+    if(
+      month < 0 ||
+      (
+        month === 0 &&
+        today.getDate() <
+        birth.getDate()
+      )
+    ){
+
+      calculatedAge--;
+
+    }
+
+
+    age.value =
+      calculatedAge;
+
+  }
+);
+
+
+/* WHATSAPP ONLY NUMBERS */
+
+whatsapp.addEventListener(
+  "input",
+  () => {
+
+    whatsapp.value =
+      whatsapp.value
+        .replace(/\D/g,"")
+        .slice(0,10);
+
+  }
+);
+
+
+/* SUBMIT */
+
+form.addEventListener(
   "submit",
-  async (event) => {
+  async event => {
 
     event.preventDefault();
 
 
-    if (!currentUser) {
+    if(!currentUser){
 
-      alert(
-        "Please login first."
+      showStatus(
+        "Please login with Google first.",
+        true
       );
 
       return;
@@ -1134,442 +1299,313 @@ form?.addEventListener(
     }
 
 
-    const submitBtn =
-      form.querySelector(
-        'button[type="submit"]'
+    if(!tournamentData){
+
+      showStatus(
+        "Tournament information is loading.",
+        true
       );
 
+      return;
 
-    try {
-
-      if (submitBtn) {
-
-        submitBtn.disabled =
-          true;
-
-        submitBtn.textContent =
-          "Submitting...";
-
-      }
+    }
 
 
-      // ----------------------------------------------
-      // TEAM DETAILS
-      // ----------------------------------------------
-
-      const teamName =
-        document.getElementById(
-          "teamName"
-        )?.value.trim() || "";
+    const type =
+      getRegistrationType();
 
 
-      const captainName =
-        document.getElementById(
-          "captainName"
-        )?.value.trim() || "";
+    const name =
+      document
+        .getElementById("playerName")
+        .value
+        .trim();
 
 
-      const teamContact =
-        document.getElementById(
-          "teamContact"
-        )?.value.trim() || "";
+    const whatsappNumber =
+      whatsapp.value.trim();
 
 
-      if (!teamName) {
-
-        throw new Error(
-          "Team name is required."
-        );
-
-      }
+    const dobValue =
+      dob.value;
 
 
-      if (!captainName) {
-
-        throw new Error(
-          "Captain name is required."
-        );
-
-      }
+    const ageValue =
+      Number(age.value);
 
 
-      if (
-        !/^[0-9]{10}$/.test(
-          teamContact
-        )
-      ) {
-
-        throw new Error(
-          "Enter valid 10 digit team contact number."
-        );
-
-      }
+    const role =
+      document
+        .getElementById("playerRole")
+        .value;
 
 
-      // ----------------------------------------------
-      // PLAYERS
-      // ----------------------------------------------
+    const utr =
+      document
+        .getElementById("utr")
+        .value
+        .trim();
 
-      const players =
-        getPlayers();
+
+    if(!name){
+
+      showStatus(
+        "Enter your full name.",
+        true
+      );
+
+      return;
+
+    }
 
 
-      // ----------------------------------------------
-      // CREATE REGISTRATION ID
-      // ----------------------------------------------
+    if(!/^[0-9]{10}$/.test(
+      whatsappNumber
+    )){
 
-      const registrationRef =
-        doc(
-          collection(
-            db,
-            "registrations"
+      showStatus(
+        "Enter a valid 10 digit WhatsApp number.",
+        true
+      );
+
+      return;
+
+    }
+
+
+    if(!dobValue){
+
+      showStatus(
+        "Select your date of birth.",
+        true
+      );
+
+      return;
+
+    }
+
+
+    if(
+      !Number.isFinite(ageValue) ||
+      ageValue < 1 ||
+      ageValue > 100
+    ){
+
+      showStatus(
+        "Invalid age.",
+        true
+      );
+
+      return;
+
+    }
+
+
+    if(!role){
+
+      showStatus(
+        "Select your playing role.",
+        true
+      );
+
+      return;
+
+    }
+
+
+    if(!utr){
+
+      showStatus(
+        "Enter payment UTR / Transaction ID.",
+        true
+      );
+
+      return;
+
+    }
+
+
+    const fee =
+      type === "Captain"
+        ? (
+            tournamentData.captainFee ??
+            tournamentData.captainEntryFee ??
+            0
           )
-        );
-
-
-      const registrationId =
-        registrationRef.id;
-
-
-      // ----------------------------------------------
-      // UPLOAD PLAYER DOCUMENTS
-      // ----------------------------------------------
-
-      const finalPlayers = [];
-
-
-      for (
-        let index = 0;
-        index < players.length;
-        index++
-      ) {
-
-        const player =
-          players[index];
-
-
-        if (submitBtn) {
-
-          submitBtn.textContent =
-            `Uploading Player ${index + 1}/${players.length}...`;
-
-        }
-
-
-        const frontUrl =
-          await uploadPlayerImage(
-            player.frontFile,
-            tournamentId,
-            registrationId,
-            player.index,
-            "front"
+        : (
+            tournamentData.playerFee ??
+            tournamentData.playerEntryFee ??
+            0
           );
 
 
-        const backUrl =
-          await uploadPlayerImage(
-            player.backFile,
-            tournamentId,
-            registrationId,
-            player.index,
-            "back"
-          );
+    submitBtn.disabled =
+      true;
 
+    submitBtn.textContent =
+      "Submitting...";
 
-        finalPlayers.push({
 
-          playerNumber:
-            player.index,
-
-          name:
-            player.name,
-
-          mobile:
-            player.mobile,
-
-          mobileNumber:
-            player.mobile,
-
-          phone:
-            player.mobile,
-
-          dob:
-            player.dob,
-
-          dateOfBirth:
-            player.dob,
-
-          age:
-            player.age,
-
-          role:
-            player.role,
-
-          aadhaarNumber:
-            player.aadhaarNumber,
-
-          aadhaar:
-            player.aadhaarNumber,
-
-          aadhaarFrontUrl:
-            frontUrl,
-
-          aadhaarBackUrl:
-            backUrl,
-
-          aadhaarFront:
-            frontUrl,
-
-          aadhaarBack:
-            backUrl
-
-        });
-
-      }
-
-
-      // ----------------------------------------------
-      // PAYMENT
-      // ----------------------------------------------
-
-      const utr =
-        document.getElementById(
-          "utr"
-        )?.value.trim() || "";
-
-
-      const paymentScreenshot =
-        document.getElementById(
-          "paymentScreenshot"
-        )?.files?.[0] || null;
-
-
-      // ----------------------------------------------
-      // PAYMENT SCREENSHOT
-      // ----------------------------------------------
-
-      let paymentScreenshotUrl =
-        "";
-
-
-      if (paymentScreenshot) {
-
-        if (submitBtn) {
-
-          submitBtn.textContent =
-            "Uploading payment proof...";
-
-        }
-
-
-        paymentScreenshotUrl =
-          await uploadPlayerImage(
-            paymentScreenshot,
-            tournamentId,
-            registrationId,
-            "team",
-            "payment"
-          );
-
-      }
-
-
-      // ----------------------------------------------
-      // FIRESTORE DATA
-      // ----------------------------------------------
-
-      const registrationData = {
-
-        // ID
-        registrationId,
-
-        tournamentId,
-
-        // USER
-        userId:
-          currentUser.uid,
-
-        uid:
-          currentUser.uid,
-
-        email:
-          currentUser.email || "",
-
-        googleName:
-          currentUser.displayName || "",
-
-        googlePhoto:
-          currentUser.photoURL || "",
-
-
-        // TEAM
-        teamName,
-
-        captainName,
-
-        teamContact,
-
-        contactNumber:
-          teamContact,
-
-
-        // TOURNAMENT
-        tournamentName:
-          getField(
-            tournamentData,
-            [
-              "name",
-              "tournamentName",
-              "title"
-            ],
-            ""
-          ),
-
-        sport:
-          getField(
-            tournamentData,
-            [
-              "sport",
-              "category",
-              "type"
-            ],
-            ""
-          ),
-
-
-        // PLAYERS
-        players:
-          finalPlayers,
-
-        playerCount:
-          finalPlayers.length,
-
-        minimumPlayers:
-          minPlayers,
-
-        maximumPlayers:
-          maxPlayers,
-
-
-        // PAYMENT
-        utr,
-
-        paymentScreenshotUrl,
-
-        paymentStatus:
-          "pending",
-
-
-        // REGISTRATION
-        status:
-          "pending",
-
-        approved:
-          false,
-
-        createdAt:
-          serverTimestamp(),
-
-        updatedAt:
-          serverTimestamp()
-
-      };
-
-
-      // ----------------------------------------------
-      // SAVE
-      // ----------------------------------------------
-
-      if (submitBtn) {
-
-        submitBtn.textContent =
-          "Saving registration...";
-
-      }
-
+    try{
 
       await addDoc(
         collection(
           db,
           "registrations"
         ),
-        registrationData
+        {
+
+          registrationType:
+            type,
+
+          name:
+            name,
+
+          playerName:
+            name,
+
+          age:
+            ageValue,
+
+          dob:
+            dobValue,
+
+          dateOfBirth:
+            dobValue,
+
+          whatsapp:
+            whatsappNumber,
+
+          whatsappNumber:
+            whatsappNumber,
+
+          phone:
+            whatsappNumber,
+
+          role:
+            role,
+
+          tournamentId:
+            tournamentId,
+
+          tournamentName:
+            tournamentData.name ||
+            tournamentData.tournamentName ||
+            tournamentData.title ||
+            "",
+
+          venue:
+            tournamentData.venue ||
+            "",
+
+          matchDate:
+            tournamentData.date ||
+            "",
+
+          registrationDeadline:
+            tournamentData.deadline ||
+            "",
+
+          auctionDate:
+            tournamentData.auctionDate ||
+            "",
+
+          entryFee:
+            fee,
+
+          utr:
+            utr,
+
+          paymentStatus:
+            "submitted",
+
+          status:
+            "pending",
+
+          approved:
+            false,
+
+          userId:
+            currentUser.uid,
+
+          uid:
+            currentUser.uid,
+
+          email:
+            currentUser.email || "",
+
+          googleName:
+            currentUser.displayName || "",
+
+          createdAt:
+            serverTimestamp(),
+
+          updatedAt:
+            serverTimestamp()
+
+        }
       );
 
 
-      alert(
+      showStatus(
         "Registration submitted successfully!"
       );
 
 
-      window.location.href =
-        "index.html";
+      form.reset();
+
+      captainOption
+        .classList
+        .add("active");
+
+      playerOption
+        .classList
+        .remove("active");
+
+      age.value = "";
+
+      updateFee();
 
 
-    } catch (error) {
+      submitBtn.disabled =
+        false;
+
+      submitBtn.textContent =
+        "Submit Registration";
+
+
+    }catch(error){
 
       console.error(
-        "REGISTRATION ERROR:",
+        "Registration error:",
         error
       );
 
 
-      alert(
-        error.message ||
-        "Registration failed."
+      showStatus(
+        "Registration failed: " +
+        error.message,
+        true
       );
 
 
-      if (submitBtn) {
+      submitBtn.disabled =
+        false;
 
-        submitBtn.disabled =
-          false;
-
-        submitBtn.textContent =
-          "Submit Registration";
-
-      }
+      submitBtn.textContent =
+        "Submit Registration";
 
     }
 
   }
 );
 
-
-// ======================================================
-// MOBILE INPUT ONLY NUMBERS
-// ======================================================
-
-document.addEventListener(
-  "input",
-  (event) => {
-
-    if (
-      event.target.matches(
-        ".player-mobile"
-      ) ||
-      event.target.matches(
-        ".player-aadhaar"
-      )
-    ) {
-
-      event.target.value =
-        event.target.value
-          .replace(
-            /\D/g,
-            ""
-          );
-
-    }
-
-  }
-);
-
-
-// ======================================================
-// CONSOLE
-// ======================================================
 
 console.log(
-  "KPL Registration System Loaded"
+  "KPL Simple Registration Loaded"
 );
+
+</script>
+
+</body>
+</html>
