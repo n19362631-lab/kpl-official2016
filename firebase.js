@@ -29,32 +29,20 @@ const firebaseConfig = {
   measurementId: "G-2ZL7YEVQZ4"
 };
 
-
-// Firebase App
 const app = initializeApp(firebaseConfig);
 
-
-// Firebase Authentication
 const auth = getAuth(app);
 
-
-// Google Login
 const provider = new GoogleAuthProvider();
 
 provider.setCustomParameters({
   prompt: "select_account"
 });
 
-
-// Firestore Database
 const db = getFirestore(app);
 
-
-// Firebase Storage
 const storage = getStorage(app);
 
-
-// Export everything
 export {
   app,
   auth,
